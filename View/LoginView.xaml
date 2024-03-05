@@ -1,0 +1,40 @@
+﻿<Window x:Class="AdministradorDeTareas.View.LoginView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AdministradorDeTareas.View"
+        mc:Ignorable="d"
+        Title="LoginView" Height="550" Width="800"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        MouseDown="Window_MouseDown"
+        AllowsTransparency="True"
+        ResizeMode="NoResize"
+        Background="Transparent"      
+        >
+    <Border CornerRadius="50">
+        <Border.Background>
+            <ImageBrush ImageSource="/Imagenes/FONDO.JPG"
+                        Stretch="fill"/>
+        </Border.Background>
+        <Border CornerRadius="50"
+            Opacity="0.93"
+            BorderThickness="3">
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#0047FF" Offset="0."/>
+                    <GradientStop Color="#FF00F5" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                    <GradientStop Color="#5E00FF" Offset="0.1"/>
+                    <GradientStop Color="#C645FF" Offset="0.75"/>
+                </LinearGradientBrush>
+            </Border.Background>
+        
+        </Border>
+    </Border>
+</Window>
