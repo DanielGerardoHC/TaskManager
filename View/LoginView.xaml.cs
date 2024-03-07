@@ -43,7 +43,9 @@ namespace AdministradorDeTareas.View
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-
+            MainWindow Main = new MainWindow();
+            Main.Show();
+            this.Close();
         }
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)

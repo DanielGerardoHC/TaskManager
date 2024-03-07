@@ -125,7 +125,8 @@
             </Grid>
             
             <StackPanel
-                    Width="250"
+                    Width="auto"
+                    Height="auto"
                     Grid.Row="2"
                     Grid.Column="0"
                     HorizontalAlignment="Center"
@@ -133,7 +134,38 @@
                     Orientation="Vertical"
                                         
                     >
-                    <Image Source="\Imagenes\icon.png" Margin="50,0,50,10"></Image>
+                    <Image Source="\Imagenes\icon.png" Width="150" Height="150">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <EventTrigger RoutedEvent="MouseEnter">
+                                        <EventTrigger.Actions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation From="175" To="175" Duration="0:0:1" 
+                                                     Storyboard.TargetProperty="Width"/>
+                                                    <DoubleAnimation From="175" To="175" Duration="0:0:1" 
+                                                     Storyboard.TargetProperty="Height"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger.Actions>
+                                    </EventTrigger>
+                                    <EventTrigger RoutedEvent="MouseLeave">
+                                        <EventTrigger.Actions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation From="150" To="150" Duration="0:0:1" 
+                                                     Storyboard.TargetProperty="Width"/>
+                                                    <DoubleAnimation From="150" To="150" Duration="0:0:1" 
+                                                     Storyboard.TargetProperty="Height"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger.Actions>
+                                    </EventTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
                     <TextBlock HorizontalAlignment="Center" 
                                FontSize="25" 
                                Foreground="White"
@@ -141,6 +173,7 @@
                         Task Manager
                     </TextBlock>
                     <TextBlock 
+                        Width="250"
                         Text="Organize and manage your pending tasks effortlessly"
                         HorizontalAlignment="Center"
                         FontSize="16"

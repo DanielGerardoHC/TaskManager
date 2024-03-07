@@ -5,8 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdministradorDeTareas"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="MainWindow"
+        Width="1300"
+        Height="700"
+        WindowStyle="None"
+        Loaded="Window_Loaded"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent" 
+        >
+    <Border CornerRadius="20"
+            Background="#5D00FF">
+        
+        <Border CornerRadius="20"
+     Opacity="0.9"
+     BorderThickness="3">
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#0047FF" Offset="0."/>
+                    <GradientStop Color="#FF00F5" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+        </Border>
+    </Border>
 </Window>
