@@ -30,8 +30,8 @@
 
             <Border.Background>
                 <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
-                    <GradientStop Color="#5E00FF" Offset="0.1"/>
-                    <GradientStop Color="#C645FF" Offset="0.75"/>
+                    <GradientStop Color="#2B1380" Offset="1"/>
+                    <GradientStop Color="#5E00FF" Offset="0"/>
                 </LinearGradientBrush>
             </Border.Background>
             <Grid>

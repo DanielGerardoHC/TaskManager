@@ -12,6 +12,7 @@
     <None Remove="Imagenes\fondo.jpg" />
     <None Remove="Imagenes\Icon.png" />
     <None Remove="Imagenes\Key.png" />
+    <None Remove="Imagenes\Menu-Icon.jpg" />
     <None Remove="Imagenes\User.png" />
   </ItemGroup>
 
@@ -24,6 +25,7 @@
     <Resource Include="Imagenes\fondo.jpg" />
     <Resource Include="Imagenes\Icon.png" />
     <Resource Include="Imagenes\Key.png" />
+    <Resource Include="Imagenes\Menu-Icon.jpg" />
     <Resource Include="Imagenes\User.png" />
   </ItemGroup>
 

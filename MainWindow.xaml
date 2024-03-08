@@ -12,25 +12,62 @@
         Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen"
         Background="Transparent" 
+        AllowsTransparency="true"
+        
         >
     <Border CornerRadius="20"
-            Background="#5D00FF">
-        
-        <Border CornerRadius="20"
-     Opacity="0.9"
-     BorderThickness="3">
+                BorderThickness="4">
             <Border.BorderBrush>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                     <GradientStop Color="#0047FF" Offset="0."/>
                     <GradientStop Color="#FF00F5" Offset="1"/>
                 </LinearGradientBrush>
             </Border.BorderBrush>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="250"/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-            </Grid>
-        </Border>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border CornerRadius="10,0,0,10"
+                    Grid.Column="0"
+                    >
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,0.7">
+                        <GradientStop Color="#2E207F" Offset="0"/>
+                        <GradientStop Color="#2F2E7F" Offset="0"/>
+                        <GradientStop Color="#2B1380" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+            <Border CornerRadius="0,10,10,0"
+                    Grid.Column="1"
+                    >
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,0.7">
+ 
+                        <GradientStop Color="#18177f" Offset="1"/>
+                        <GradientStop Color="#18177f" Offset="0"/>
+                        <GradientStop Color="#2B1380" Offset="0"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+            <StackPanel Grid.Column="0">
+                <StackPanel
+                    Orientation="Horizontal"
+                    Height="35"
+                    Margin="20,25,0,40">
+                    <Image Source="/Imagenes/icon.png"/>
+                    <TextBlock VerticalAlignment="Center"
+                               FontSize="25"
+                               Margin="10,0,0,0"
+                               Foreground="WhiteSmoke"
+                               FontFamily="Didot">
+                        Task Manager
+                    </TextBlock>
+                   
+                </StackPanel>
+            
+            </StackPanel>
+        </Grid>
     </Border>
 </Window>
