@@ -12,28 +12,28 @@
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         Background="Transparent" 
-        AllowsTransparency="true"
+        AllowsTransparency="true">
+    <Border BorderThickness="4">
         
-        >
-    <Grid>
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-  
-          <Border CornerRadius="20,0,0,20"
+
+        <Border CornerRadius="15,0,0,15"
                     Grid.Column="0"
                     >
-                <Border.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,0.7">
-                        <GradientStop Color="#2E207F" Offset="0"/>
-                        <GradientStop Color="#2F2E7F" Offset="0"/>
-                        <GradientStop Color="#2B1380" Offset="1.2"/>
-                    </LinearGradientBrush>
-                </Border.Background>
-            
-          </Border>
-            <Border CornerRadius="0,20,20,0"
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,0.7">
+                    <GradientStop Color="#2E207F" Offset="0"/>
+                    <GradientStop Color="#2F2E7F" Offset="0"/>
+                    <GradientStop Color="#2B1380" Offset="1.2"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+        </Border>
+        <Border CornerRadius="0,15,15,0"
                     Grid.Column="1"
                     >
                 <Border.Background>
@@ -46,12 +46,14 @@
                 </Border.Background>
             </Border>
             <!--Principal Bar-->
-            <StackPanel Grid.Column="0">
+            <ScrollViewer
+             VerticalScrollBarVisibility="Auto">
+                <StackPanel Grid.Column="0">
                 <StackPanel
                     Orientation="Horizontal"
                     Height="35"
-                    Margin="20,45,0,30">
-                    <Image Source="/Imagenes/icon.png"/>
+                    Margin="20,30,0,30">
+                    <Image Source="/Images/icon.png"/>
                     <TextBlock VerticalAlignment="Center"
                                FontSize="25"
                                Margin="10,0,0,0"
@@ -96,16 +98,17 @@
                         <fa:IconImage Icon="pentosquare" HorizontalAlignment="Left" Foreground="White" Margin="10,0,0,0" Height="30" Width="30"/>
                         <TextBlock Text="Task Operations" Margin="13,0,0,0" VerticalAlignment="Center" FontSize="18"  HorizontalAlignment="Center" />
                     </StackPanel>
-                </RadioButton>
-            </StackPanel>
+                 </RadioButton>
+              </StackPanel>
+            </ScrollViewer>
             <Border Grid.Column="1">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="30"/>
                         <RowDefinition Height="35"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <StackPanel x:Name="pnlControlBar"
+                <StackPanel x:Name="pnlControlBar"
                                 Grid.Row="0"
                                 Orientation="Horizontal"
                                 FlowDirection="RightToLeft"
@@ -113,10 +116,36 @@
                                 Margin="0,0,5,0"
                                 MouseLeftButtonDown="pnlControlBar_MouseLeftButtonDown"
                                 MouseEnter="pnlControlBar_MouseEnter">
-                    </StackPanel>
-                </Grid>
+                    
+                    <Button Cursor="Hand"
+                            Content="X"
+                            Foreground="White"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Click="btnClose_Click"
+                            Style="{StaticResource controlBtn}">
+                    </Button>
+                    <Button Cursor="Hand"
+                            Content="❏"
+                            Foreground="White"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Click="btnMaximize_Click"
+                            Style="{StaticResource controlBtn}">
+                    </Button>
+                    <Button Cursor="Hand"
+                            Content="—"
+                            Foreground="White"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Click="btnMinimize_Click"
+                            Style="{StaticResource controlBtn}">
+                    </Button>
+                </StackPanel>
+                    
+            </Grid>
             </Border>
 
         </Grid>
-
+    </Border>
 </Window>

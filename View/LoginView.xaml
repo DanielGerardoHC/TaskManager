@@ -16,10 +16,10 @@
         >
     <Border CornerRadius="20">
         <Border.Background>
-            <ImageBrush ImageSource="/Imagenes/FONDO.JPG"
+            <ImageBrush ImageSource="/Images/FONDO.JPG"
                         Stretch="fill"/>
         </Border.Background>
-        <Border CornerRadius="20"
+        <Border CornerRadius="15"
             Opacity="0.95">
             <Border.Background>
                 <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
@@ -48,7 +48,7 @@
                         BorderThickness="0"
                         Foreground="White"
                         Content="-"                      
-                        FontFamily="Montserrat"
+                        FontFamily="Didot"
                         FontSize="16"
                         Cursor="Hand"
                         Grid.Column="1"
@@ -67,7 +67,6 @@
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Border
-                                      
                                       Width="18"
                                       Height="18"
                                       CornerRadius="9"
@@ -127,7 +126,7 @@
                     Orientation="Vertical"
                                         
                     >
-                    <Image Source="\Imagenes\icon.png" Width="150" Height="150">
+                    <Image Source="\Images\icon.png" Width="150" Height="150">
                         <Image.Style>
                             <Style TargetType="Image">
                                 <Style.Triggers>
@@ -220,7 +219,7 @@
                         Padding="25,0,0,0"
                         >
                         <TextBox.Background>
-                            <ImageBrush ImageSource="\Imagenes\user.png"
+                            <ImageBrush ImageSource="\Images\User.png"
                                         AlignmentX="Left"
                                         >
                                 <ImageBrush.ViewportUnits>
@@ -256,7 +255,7 @@
                         Padding="25,0,0,0"
                         >
                         <PasswordBox.Background>
-                            <ImageBrush ImageSource="\Imagenes\key.png"
+                            <ImageBrush ImageSource="\Images\key.png"
                                         AlignmentX="Left"
                                         >
                                 <ImageBrush.ViewportUnits>
