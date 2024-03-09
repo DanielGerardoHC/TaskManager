@@ -17,11 +17,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Remove="AppSource\BtnSource.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Model\" />
     <Folder Include="ViewModel\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FontAwesome.Sharp" Version="6.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="AppSource\BtnSource.xaml" />
     <Resource Include="Imagenes\fondo.jpg" />
     <Resource Include="Imagenes\Icon.png" />
     <Resource Include="Imagenes\Key.png" />

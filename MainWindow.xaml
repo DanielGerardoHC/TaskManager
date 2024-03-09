@@ -4,58 +4,53 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdministradorDeTareas"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         mc:Ignorable="d"
         Title="MainWindow"
-        Width="1300"
-        Height="700"
+        Width="1100"
+        Height="600"
         WindowStyle="None"
-        Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen"
         Background="Transparent" 
         AllowsTransparency="true"
         
         >
-    <Border CornerRadius="20"
-                BorderThickness="4">
-            <Border.BorderBrush>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="#0047FF" Offset="0."/>
-                    <GradientStop Color="#FF00F5" Offset="1"/>
-                </LinearGradientBrush>
-            </Border.BorderBrush>
-        <Grid>
+    <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Border CornerRadius="10,0,0,10"
+  
+          <Border CornerRadius="20,0,0,20"
                     Grid.Column="0"
                     >
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,0.7">
                         <GradientStop Color="#2E207F" Offset="0"/>
                         <GradientStop Color="#2F2E7F" Offset="0"/>
-                        <GradientStop Color="#2B1380" Offset="1"/>
+                        <GradientStop Color="#2B1380" Offset="1.2"/>
                     </LinearGradientBrush>
                 </Border.Background>
-            </Border>
-            <Border CornerRadius="0,10,10,0"
+            
+          </Border>
+            <Border CornerRadius="0,20,20,0"
                     Grid.Column="1"
                     >
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,0.7">
  
-                        <GradientStop Color="#18177f" Offset="1"/>
+                        <GradientStop Color="#18177f" Offset="1.5"/>
                         <GradientStop Color="#18177f" Offset="0"/>
                         <GradientStop Color="#2B1380" Offset="0"/>
                     </LinearGradientBrush>
                 </Border.Background>
             </Border>
+            <!--Principal Bar-->
             <StackPanel Grid.Column="0">
                 <StackPanel
                     Orientation="Horizontal"
                     Height="35"
-                    Margin="20,25,0,40">
+                    Margin="20,45,0,30">
                     <Image Source="/Imagenes/icon.png"/>
                     <TextBlock VerticalAlignment="Center"
                                FontSize="25"
@@ -64,10 +59,64 @@
                                FontFamily="Didot">
                         Task Manager
                     </TextBlock>
-                   
                 </StackPanel>
-            
+                <RadioButton Style="{StaticResource menuButton}"                          
+                             Command="{Binding ShowHomeViewCommand}"
+                             HorizontalAlignment="Center"
+                             Width="250">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="gear" HorizontalAlignment="Left" Foreground="White" Margin="10,0,0,0" Height="30" Width="30"/>
+                        <TextBlock Text="Task Management" Margin="13,0,0,0" VerticalAlignment="Center" FontSize="18"  HorizontalAlignment="Center" />
+                    </StackPanel>
+                </RadioButton>
+                <RadioButton Style="{StaticResource menuButton}"                          
+                             Command="{Binding ShowHomeViewCommand}"
+                             HorizontalAlignment="Center"
+                             Width="250"
+                             Click="RadioButton_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="wandmagicsparkles" HorizontalAlignment="Left" Foreground="White" Margin="10,0,0,0" Height="30" Width="30"/>
+                        <TextBlock Text="Edit Actions" Margin="13,0,0,0" VerticalAlignment="Center" FontSize="18"  HorizontalAlignment="Center" />
+                    </StackPanel>
+                </RadioButton>
+                <RadioButton Style="{StaticResource menuButton}"                          
+                             Command="{Binding ShowHomeViewCommand}"
+                             HorizontalAlignment="Center"
+                             Width="250">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="Eye" HorizontalAlignment="Left" Foreground="White" Margin="10,0,0,0" Height="30" Width="30"/>
+                        <TextBlock Text="View Options" Margin="13,0,0,0" VerticalAlignment="Center" FontSize="18"  HorizontalAlignment="Center" />
+                    </StackPanel>
+                </RadioButton>
+                <RadioButton Style="{StaticResource menuButton}"                          
+                             Command="{Binding ShowHomeViewCommand}"
+                             HorizontalAlignment="Center"
+                             Width="250">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="pentosquare" HorizontalAlignment="Left" Foreground="White" Margin="10,0,0,0" Height="30" Width="30"/>
+                        <TextBlock Text="Task Operations" Margin="13,0,0,0" VerticalAlignment="Center" FontSize="18"  HorizontalAlignment="Center" />
+                    </StackPanel>
+                </RadioButton>
             </StackPanel>
+            <Border Grid.Column="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel x:Name="pnlControlBar"
+                                Grid.Row="0"
+                                Orientation="Horizontal"
+                                FlowDirection="RightToLeft"
+                                Background="Transparent"
+                                Margin="0,0,5,0"
+                                MouseLeftButtonDown="pnlControlBar_MouseLeftButtonDown"
+                                MouseEnter="pnlControlBar_MouseEnter">
+                    </StackPanel>
+                </Grid>
+            </Border>
+
         </Grid>
-    </Border>
+
 </Window>

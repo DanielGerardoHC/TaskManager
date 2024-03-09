@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdministradorDeTareas.View"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         mc:Ignorable="d"
         Title="LoginView" Height="550" Width="850"
         WindowStyle="None"
@@ -19,15 +20,7 @@
                         Stretch="fill"/>
         </Border.Background>
         <Border CornerRadius="20"
-            Opacity="0.9"
-            BorderThickness="3">
-            <Border.BorderBrush>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop Color="#0047FF" Offset="0."/>
-                    <GradientStop Color="#FF00F5" Offset="1"/>
-                </LinearGradientBrush>
-            </Border.BorderBrush>
-
+            Opacity="0.95">
             <Border.Background>
                 <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
                     <GradientStop Color="#2B1380" Offset="1"/>
@@ -211,6 +204,7 @@
                            Margin="0,0,0,10">
                         Username:
                     </Label>
+                    
                     <TextBox
                         Width="300"
                         HorizontalAlignment="left"
@@ -238,7 +232,7 @@
                                 <ImageBrush.Viewbox>
                                     <Rect>0,0,1,1</Rect>
                                 </ImageBrush.Viewbox>
-                            </ImageBrush>
+                            </ImageBrush>                         
                         </TextBox.Background>
                     </TextBox>
                     <Label HorizontalAlignment="left" 
