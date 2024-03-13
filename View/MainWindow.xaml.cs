@@ -1,4 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.ComponentModel;
+using AdministradorDeTareas.ViewModel;
 
 namespace AdministradorDeTareas
 {
@@ -21,9 +25,45 @@ namespace AdministradorDeTareas
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainViewModel();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
         }
 
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            if (sender is RadioButton radioButton && radioButton.IsChecked == true)
+            { 
+                if (radioButton.Content is StackPanel stackPanel)
+                {
+                    // search the textblock in the stackpanel
+                    var textBlock = FindVisualChild<TextBlock>(stackPanel);
+                    // select txtopcelected equals to the textblock
+                    txtOpCelected.Text = textBlock.Text;                                                  
+                }
+            }
+        }
+
+        // method to search the textblock
+        private T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child != null && child is T)
+                {
+                    return (T)child;
+                }
+                else
+                {
+                    T result = FindVisualChild<T>(child);
+                    if (result != null)
+                        return result;
+                }
+            }
+            return null;
+        }
+
+        // 72942237
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
          //   this.WindowState = WindowState.Maximized;
@@ -34,11 +74,6 @@ namespace AdministradorDeTareas
         {
             WindowInteropHelper helper = new WindowInteropHelper(this);
             SendMessage(helper.Handle, 161, 2, 0);
-        }
-
-        private void RadioButton_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("hola");
         }
         private void pnlControlBar_MouseEnter(object sender, MouseEventArgs e)
         {

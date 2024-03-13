@@ -20,7 +20,7 @@
                         Stretch="fill"/>
         </Border.Background>
         <Border CornerRadius="15"
-            Opacity="0.95">
+            Opacity="0.9">
             <Border.Background>
                 <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
                     <GradientStop Color="#2B1380" Offset="1"/>
@@ -205,6 +205,8 @@
                     </Label>
                     
                     <TextBox
+                        x:Name="UsernameBox"
+                        TextChanged="OnUserNameChange"
                         Width="300"
                         HorizontalAlignment="left"
                         FontSize="14"
@@ -242,6 +244,8 @@
                     </Label>
                     <PasswordBox
                         Width="300"
+                        PasswordChanged="OnPasswordChanged"
+                        x:Name="PasswordBox"
                         HorizontalAlignment="left"
                         FontSize="14"
                         Foreground="White"
@@ -272,6 +276,7 @@
                     </PasswordBox>
                     <Button
                      x:Name="btnLogin"
+                      IsEnabled="False"
                       BorderThickness="0"
                       Content="Log In"
                       Foreground="White"
