@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Checking.png" />
     <None Remove="Images\fondo.jpg" />
     <None Remove="Images\Icon.png" />
     <None Remove="Images\Key.png" />
@@ -22,10 +23,12 @@
 
   <ItemGroup>
     <PackageReference Include="FontAwesome.Sharp" Version="6.3.0" />
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="8.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="AppSource\BtnSource.xaml" />
+    <Resource Include="Images\Checking.png" />
     <Resource Include="Images\fondo.jpg" />
     <Resource Include="Images\Icon.png" />
     <Resource Include="Images\Key.png" />

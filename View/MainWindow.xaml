@@ -13,7 +13,9 @@
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         Background="Transparent" 
+        ResizeMode="CanResize"
         AllowsTransparency="true">
+
     <Window.Resources>
         <!--All views of the aplication-->
         <DataTemplate DataType="{x:Type viewModel:TaskManagmentModel}">
@@ -31,29 +33,33 @@
     </Window.DataContext>
     <Border BorderThickness="4">
         <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="33*"/>
+                <RowDefinition Height="41*"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-        <Border CornerRadius="15,0,0,15"
-                    Grid.Column="0"
-                    >
-            <Border.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="0,0.7">
-                    <GradientStop Color="#2E207F" Offset="0"/>
-                    <GradientStop Color="#2F2E7F" Offset="0"/>
-                    <GradientStop Color="#2B1380" Offset="1.2"/>
-                </LinearGradientBrush>
-            </Border.Background>
-
-        </Border>
-        <Border CornerRadius="0,15,15,0"
-                    Grid.Column="1"
+            <Border CornerRadius="15,0,0,15"
+                    Grid.Column="0" Grid.RowSpan="2"
                     >
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,0.7">
- 
+                        <GradientStop Color="#2E207F" Offset="0"/>
+                        <GradientStop Color="#2F2E7F" Offset="0"/>
+                        <GradientStop Color="#2B1380" Offset="1.2"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+            </Border>
+            <Border CornerRadius="0,15,15,0"
+                    Grid.Column="1" Grid.RowSpan="2"
+                    >
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,0.7">
+
                         <GradientStop Color="#18177f" Offset="1.5"/>
                         <GradientStop Color="#18177f" Offset="0"/>
                         <GradientStop Color="#2B1380" Offset="0"/>
@@ -62,43 +68,51 @@
             </Border>
             <!--Principal Bar-->
             <ScrollViewer
-             VerticalScrollBarVisibility="Auto">
+             VerticalScrollBarVisibility="Auto" Grid.RowSpan="2">
                 <StackPanel Grid.Column="0">
-                <StackPanel
+                    <StackPanel
                     Orientation="Horizontal"
                     Height="35"
                     Margin="20,30,0,30">
-                    <Image Source="/Images/icon.png"/>
-                    <TextBlock VerticalAlignment="Center"
+                        <Image Source="/Images/icon.png"/>
+                        <TextBlock VerticalAlignment="Center"
                                FontSize="25"
                                Margin="10,0,0,0"
                                Foreground="WhiteSmoke"
                                FontFamily="Didot">
                         Task Manager
-                    </TextBlock>
-                </StackPanel>
-                <RadioButton Style="{StaticResource menuButton}"                          
+                        </TextBlock>
+                    </StackPanel>
+                    <RadioButton Style="{StaticResource menuButton}"                          
                              Command="{Binding ShowTaskManagmentCommand}"
                              HorizontalAlignment="Center"
                              Width="250"
                              Name="btnTaskManagment"
                              Checked="RadioButton_Checked">
-                    <StackPanel Orientation="Horizontal">
-                        <fa:IconImage Icon="gear" HorizontalAlignment="Left" Foreground="White" Margin="10,0,0,0" Height="30" Width="30"/>
-                        <TextBlock Text="Task Management" Margin="13,0,0,0" VerticalAlignment="Center" FontSize="18"  HorizontalAlignment="Center" />
-                    </StackPanel>
-                </RadioButton>
-                <RadioButton Style="{StaticResource menuButton}"                          
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="gear" HorizontalAlignment="Left" Foreground="White" Margin="10,0,0,0" Height="30" Width="30"/>
+                            <TextBlock Text="Task Management" 
+                                   Margin="13,0,0,0" 
+                                   VerticalAlignment="Center" 
+                                   FontSize="15"  
+                                   HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton Style="{StaticResource menuButton}"                          
                              Command="{Binding ShowEditActionsCommand}"
                              HorizontalAlignment="Center"
                              Width="250"
                              x:Name="btnEditActions"
                             Checked="RadioButton_Checked">
-                    <StackPanel Orientation="Horizontal">
-                        <fa:IconImage Icon="wandmagicsparkles" HorizontalAlignment="Left" Foreground="White" Margin="10,0,0,0" Height="30" Width="30"/>
-                        <TextBlock Text="Edit Actions" Margin="13,0,0,0" VerticalAlignment="Center" FontSize="18"  HorizontalAlignment="Center" />
-                    </StackPanel>
-                </RadioButton>
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="wandmagicsparkles" HorizontalAlignment="Left" Foreground="White" Margin="10,0,0,0" Height="30" Width="30"/>
+                            <TextBlock Text="Edit Actions"
+                                       Margin="13,0,0,0" 
+                                       VerticalAlignment="Center" 
+                                       FontSize="15"  
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </RadioButton>
                     <RadioButton Style="{StaticResource menuButton}"                          
                              Command="{Binding ShowViewOptionsCommand}"
                              HorizontalAlignment="Center"
@@ -108,19 +122,23 @@
 
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="Eye" HorizontalAlignment="Left" Foreground="White" Margin="10,0,0,0" Height="30" Width="30"/>
-                            <TextBlock Text="View Options" Margin="13,0,0,0" VerticalAlignment="Center" FontSize="18"  HorizontalAlignment="Center" />
+                            <TextBlock Text="View Options" 
+                                       Margin="13,0,0,0" 
+                                       VerticalAlignment="Center" 
+                                       FontSize="15"  
+                                       HorizontalAlignment="Center" />
                         </StackPanel>
                     </RadioButton>
                 </StackPanel>
             </ScrollViewer>
-            <Border Grid.Column="1">
+            <Border Grid.Column="1" Grid.RowSpan="2">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="35"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                <StackPanel x:Name="pnlControlBar"
+                    <StackPanel x:Name="pnlControlBar"
                                 Grid.Row="0"
                                 Orientation="Horizontal"
                                 FlowDirection="RightToLeft"
@@ -129,24 +147,24 @@
                                 MouseLeftButtonDown="pnlControlBar_MouseLeftButtonDown"
                                 Cursor="Hand"
                                 MouseEnter="pnlControlBar_MouseEnter">
-                    
-                    <Button Cursor="Hand"
+
+                        <Button Cursor="Hand"
                             Content="X"
                             Foreground="White"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             Click="btnClose_Click"
                             Style="{StaticResource controlBtn}">
-                    </Button>
-                    <Button Cursor="Hand"
+                        </Button>
+                        <Button Cursor="Hand"
                             Content="❏"
                             Foreground="White"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             Click="btnMaximize_Click"
                             Style="{StaticResource controlBtn}">
-                    </Button>
-                    <Button Cursor="Hand"
+                        </Button>
+                        <Button Cursor="Hand"
                             Content="—"
                             Foreground="White"
                             VerticalAlignment="Center"
@@ -154,8 +172,8 @@
                             Click="btnMinimize_Click"
                             
                             Style="{StaticResource controlBtn}">
-                    </Button>
-                </StackPanel>
+                        </Button>
+                    </StackPanel>
                     <TextBlock HorizontalAlignment="Left"
                                x:Name="txtOpCelected"                             
                                Grid.Column="1"
@@ -171,7 +189,7 @@
                     <ContentControl 
                         Content="{Binding CurrentChildView}"
                                     Grid.Row="2"
-                                    Margin="25"/>
+                                    Margin="12"/>
                 </Grid>
             </Border>
 
