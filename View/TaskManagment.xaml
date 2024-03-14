@@ -7,19 +7,21 @@
              xmlns:viewModel="clr-namespace:AdministradorDeTareas.ViewModel"
              mc:Ignorable="d"
              Background="#2B1380"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
         <viewModel:TaskManagmentModel/>
     </UserControl.DataContext>
-
+    
     <ScrollViewer HorizontalScrollBarVisibility="Disabled"  VerticalScrollBarVisibility="Auto">
         <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <Border 
                 HorizontalAlignment="Left"
-                Margin="10"
+                Margin="8"
                 CornerRadius="12"
                 Width="370"
-                Height="220">
+                Height="220"
+                Style="{StaticResource panelControl}">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                         <GradientStop Color="#5bc3ff" Offset="1"/>
@@ -53,13 +55,13 @@
                     <TextBlock/>
                 </StackPanel>
             </Border>
-            <Border  Margin="10"
+            <Border  Margin="8"
                      HorizontalAlignment="Right"
                     CornerRadius="12"
                     Width="370"
                     Height="220"
                     Background="#1d659c"
-                    >
+                    Style="{StaticResource panelControl}">
                 <StackPanel>
                     <TextBlock Text="Outstanding Tasks"
                                Margin="15,0,0,0"
@@ -79,65 +81,91 @@
                                Foreground="White"/>
                 </StackPanel>
             </Border>
-            <Border Margin="10"
+            <Border Margin="8"
                     CornerRadius="12"
                     Width="240"
                     Height="220"
-                    Background="#2bb884">
+                    Background="#2bb884"
+                    Style="{StaticResource panelControl}">
                 <StackPanel>
-                    <TextBlock Text="Tareas"
+                    <TextBlock Text="Task Schem"
                                FontSize="30"
+                               Margin="0,0,0,0"
+                               HorizontalAlignment="Center"
                                Foreground="White"/>
+                    <lvc:PieChart Series="{Binding SeriesCollection}"
+                      LegendLocation="Bottom"
+                                  Width="240"
+                                  Height="140"/>
                     <TextBlock/>
                 </StackPanel>
             </Border>
-            <Border Margin="10" 
+            <Border Margin="8" 
                     CornerRadius="12"
-                    Width="240"
+                    Width="370"
                     Height="220"
-                    Background="#51d53a">
+                    Background="#51d53a"
+                    Style="{StaticResource panelControl}">
 
                 <StackPanel>
-                    <TextBlock Text="Tareas"
+                    <TextBlock Text="Expired task"
                                FontSize="30"
+                               Margin="15,0,0,0"
+                               Foreground="White"/>
+                    <TextBlock/>
+                    <TextBlock Text="Expired task"
+                               FontSize="18"
+                               Margin="15,0,0,0"
+                               Foreground="White"/>
+                    <TextBlock/>
+                    <TextBlock Text="Expired task"
+                               FontSize="18"
+                               Margin="15,0,0,0"
                                Foreground="White"/>
                     <TextBlock/>
                 </StackPanel>
             </Border>
-            <Border Margin="10" 
+            <Border Margin="8" 
                     CornerRadius="12"
-                    Width="240"
+                    Width="370"
                     Height="220"
-                    Background="#9ae342">
+                    Background="#9ae342"
+                    Style="{StaticResource panelControl}">
                 <StackPanel>
-                    <TextBlock Text="Tareas"
+                    <TextBlock Text="Last Task Added"
                                FontSize="30"
+                               Margin="15,0,0,0"
+                               Foreground="White"/>
+                    <TextBlock/>
+                    <TextBlock Text="Task Name: "
+                               FontSize="18"
+                               Margin="15,0,0,0"
+                               Foreground="White"/>
+                    <TextBlock/>
+                    <TextBlock Text="Description task"
+                               FontSize="18"
+                               Margin="15,0,0,0"
                                Foreground="White"/>
                     <TextBlock/>
                 </StackPanel>
             </Border>
-            <Border Margin="10" 
+            <Border Margin="8" 
                     CornerRadius="12"
                     Width="240"
                     Height="220"
-                    Background="#e6f14b">
+                    Background="#e6f14b"
+                    Style="{StaticResource panelControl}">
                 <StackPanel>
-                    <TextBlock Text="Tareas"
+                    <TextBlock Text="Task Completed"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,0"
                                FontSize="30"
                                Foreground="White"/>
                     <TextBlock/>
-                </StackPanel>
-            </Border>
-            <Border Margin="10" 
-                    CornerRadius="12"
-                    Width="240"
-                    Height="220"
-                    Background="#ffc654">
-                <StackPanel>
-                    <TextBlock Text="Tareas"
-                               FontSize="30"
-                               Foreground="White"/>
-                    <TextBlock/>
+                    <lvc:PieChart Series="{Binding TaskCompletedCollection}"
+                      LegendLocation="Bottom"
+                                  Width="240"
+                                  Height="140"/>
                 </StackPanel>
             </Border>
         </WrapPanel>

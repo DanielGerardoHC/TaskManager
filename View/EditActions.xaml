@@ -5,11 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AdministradorDeTareas.View"
              mc:Ignorable="d" 
+             xmlns:viewModel="clr-namespace:AdministradorDeTareas.ViewModel"
              Background="#2B1380"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center"
-                   Text="Edit Actions Hola mundo"
-                   FontSize="30"/>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled"  VerticalScrollBarVisibility="Auto">
+            <StackPanel Orientation="Vertical">
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>

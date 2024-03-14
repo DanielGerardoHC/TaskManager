@@ -8,5 +8,7 @@ namespace AdministradorDeTareas.ViewModel
 {
     public class EditActionsModel : ViewModelBase
     {
+
+
     }
 }
