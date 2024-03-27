@@ -40,9 +40,9 @@
         </Setter>
     </Style>
     <Style x:Key="controlBtn" TargetType="Button">
-            <Setter Property="Background" Value="#0047FF"/>
-            <Setter Property="Template">
-              <Setter.Value>
+        <Setter Property="Background" Value="#0047FF"/>
+        <Setter Property="Template">
+            <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border
                      Width="20"
@@ -55,14 +55,39 @@
                         HorizontalAlignment="Center"/>
                     </Border>
                 </ControlTemplate>
-              </Setter.Value>
-            </Setter>
-        
+            </Setter.Value>
+        </Setter>
+
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="blue"/>
             </Trigger>
         </Style.Triggers>
-        
+    </Style>
+    <Style x:Key="EditTaskbtn" TargetType="Button">
+        <Setter Property="Height" Value="60"/>
+        <Setter Property="Background" Value="#2B1372"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderBrush" Value="White"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Border x:Name="Border"
+                           Background="{TemplateBinding Background}"
+                           BorderThickness="0,0,0,0"
+                           CornerRadius="0"
+                           BorderBrush="{TemplateBinding BorderBrush}">
+                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="#000066"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>
