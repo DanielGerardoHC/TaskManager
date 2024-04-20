@@ -4,7 +4,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using AdministradorDeTareas.Model;
+using AdministradorDeTareas.View;
 using Task = AdministradorDeTareas.Model.Task;
 
 namespace AdministradorDeTareas.ViewModel
@@ -12,7 +14,7 @@ namespace AdministradorDeTareas.ViewModel
     public class EditActionsModel : ViewModelBase
     {
         private List<Task> _tasks;
-
+        public ICommand ShowAddTask { get; }
         public List<Task> Tasks
         {
 
@@ -28,6 +30,8 @@ namespace AdministradorDeTareas.ViewModel
 
         public EditActionsModel()
         {
+            ShowAddTask = new ViewModelCommand(ExecuteShowAddTask);
+
             // inicializacion de la lista
             Tasks = new List<Task>
             {
@@ -52,6 +56,11 @@ namespace AdministradorDeTareas.ViewModel
     new Task { title = "Ordenar el escritorio", description = "Mi escritorio está lleno de papeles, así que necesito organizarlo", priority = "medium"},
     new Task { title = "Aprender un nuevo idioma", description = "Voy a dedicar un tiempo cada día a aprender un nuevo idioma", priority = "high"},
 };
+        }
+        private void ExecuteShowAddTask(object obj)
+        {
+            AddTask viewAddTask = new AddTask();
+            viewAddTask.ShowDialog();
         }
     }
 }

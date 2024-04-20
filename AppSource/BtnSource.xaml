@@ -76,7 +76,7 @@
                         <Border x:Name="Border"
                            Background="{TemplateBinding Background}"
                            BorderThickness="0,0,0,0"
-                           CornerRadius="0"
+                           CornerRadius="7"
                            BorderBrush="{TemplateBinding BorderBrush}">
                             <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         </Border>

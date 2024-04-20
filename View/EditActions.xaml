@@ -130,6 +130,21 @@
             </ListBox>
          </ScrollViewer>
         </Border>
+        <ComboBox Margin="0,2,0,0"
+                  Height="25"
+                  Width="130"
+                  Grid.Column="0"
+                  Grid.Row="0"
+                  VerticalAlignment="Top"
+                  Background="Blue">
+            <ComboBox.ItemsSource>
+                <x:Array Type="{x:Type sys:String}">
+                    <sys:String>Higth</sys:String>
+                    <sys:String>Medium</sys:String>
+                    <sys:String>Low</sys:String>
+                </x:Array>
+            </ComboBox.ItemsSource>
+        </ComboBox>
         <Border
             CornerRadius="15"
             Grid.Column="0"
@@ -152,6 +167,7 @@
                             Width="130"  
                             Margin="0,20,0,5"
                             Height="50"
+                            Command="{Binding ShowAddTask}"
                             Style="{StaticResource EditTaskbtn}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="Add" HorizontalAlignment="Left" 
@@ -209,16 +225,6 @@
                             </TextBlock>
                         </StackPanel>
                     </Button>
-                    <ComboBox Margin="0,20,0,5"
-                              Background="Transparent">
-                        <ComboBox.ItemsSource>
-                            <x:Array Type="{x:Type sys:String}">
-                                <sys:String>Higth</sys:String>
-                                <sys:String>Medium</sys:String>
-                                <sys:String>Low</sys:String>
-                            </x:Array>
-                        </ComboBox.ItemsSource>
-                    </ComboBox>
                 </StackPanel>
             </ScrollViewer>
         </Border>
