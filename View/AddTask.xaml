@@ -9,7 +9,7 @@
         Title="AddTask"
         WindowStyle="None"
         ResizeMode="NoResize"
-        Height="450" Width="800"
+        Height="320" Width="800"
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="True"
         Background="Transparent">
@@ -22,11 +22,10 @@
         </Border.Background>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition Height="150"/>
-                <RowDefinition />
-                <RowDefinition />
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="80"/>
+                <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
             <StackPanel
                 Orientation="Horizontal"
@@ -89,29 +88,77 @@
                         BorderBrush="Transparent"
                         Grid.Row="2"/>
             </StackPanel>
-            <StackPanel Grid.Row="2">
+            <StackPanel Grid.Row="2"
+                        Orientation="Horizontal">
                 <fa:IconImage
                     Icon="PenToSquare" 
                     HorizontalAlignment="Left" 
                     Height="30"
-                    Margin="40,12,0,0"
+                    Margin="45,12,0,0"
                     Foreground="White"/>
-                <Label>
-                    
-                </Label>
+                <TextBox
+                        Width="630"
+                        HorizontalAlignment="left"
+                        FontSize="14"
+                        Background="Transparent"
+                        Foreground="White"
+                        FontFamily="Didot"
+                        CaretBrush="LightGray"
+                        BorderBrush="Gray"
+                        BorderThickness="0,0,0,1"
+                        Height="25"                 
+                        VerticalAlignment="Center"
+                        Margin="20,5,0,0"
+                        Padding="0,0,0,0"
+                        Grid.Row="1"
+                        />
             </StackPanel>
             <StackPanel Grid.Row="4"
                         HorizontalAlignment="Right"
                         Orientation="Horizontal"
                         VerticalAlignment="Center">
-                <Button
-                    Content="Cancel"
-                    Margin="10"
-                    Click="CloseWindow" Background="#FF713434">
+                <Button Cursor="Hand"
+                           Width="90"   
+                           Height="35"                        
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"    
+                           Margin="0,0,10,0"
+                           Style="{StaticResource EditTaskbtn}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="FilePen" HorizontalAlignment="Left" 
+                                     Height="20"
+                                     Margin="8,0,0,0"
+                                     Foreground="White"/>
+                        <TextBlock Text="Create"
+                                  Margin="13,0,0,0"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Center"
+                                  FontSize="13"
+                                  >
+                        </TextBlock>
+                    </StackPanel>
                 </Button>
-                <Button
-                    Content="Create"
-                    Margin="10">
+                <Button Cursor="Hand"
+                           Width="90"   
+                           Height="35"                        
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"    
+                           Margin="0,0,10,0"
+                           Click="CloseWindow"
+                           Style="{StaticResource EditTaskbtn}">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="Cancel" HorizontalAlignment="Left" 
+                                     Height="20"
+                                     Margin="8,0,0,0"
+                                     Foreground="White"/>
+                        <TextBlock Text="Cancel"
+                                  Margin="13,0,0,0"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Center"
+                                  FontSize="13"
+                                  >
+                        </TextBlock>
+                    </StackPanel>
                 </Button>
             </StackPanel>
         </Grid>

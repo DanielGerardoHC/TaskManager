@@ -23,7 +23,7 @@
             <ColumnDefinition Width="130"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Border Background="Gray" 
+        <Border Background="#000033" 
                 BorderBrush="#CCCCCC" 
                 BorderThickness="1" 
                 CornerRadius="5"
@@ -31,41 +31,19 @@
                 Grid.Column="1">
             <!-- Barra de búsqueda -->
             <Grid>
-                <!-- Icono de búsqueda -->
                 <Grid Margin="5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition  Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Name="txtSearch" 
+                    <TextBox x:Name="txtBoxSearch" 
                              Grid.Column="1" 
                              Margin="5,0,0,0" 
                              VerticalContentAlignment="Center" Background="Transparent" 
                              BorderThickness="0"
+                             Text="{Binding Path= TxtSearch, Mode=TwoWay}"
                              FontSize="14" Foreground="White"/>
                 </Grid>
-                <!-- Botón de búsqueda -->
-                <Button Cursor="Hand"
-                            Width="70"   
-                            Height="25"    
-                            Margin="0,0,5,0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            Style="{StaticResource EditTaskbtn}">
-                    <StackPanel Orientation="Horizontal">
-                        <fa:IconImage Icon="PenToSquare" HorizontalAlignment="Left" 
-                                      Height="15"
-                                      Margin="10,0,0,0"
-                                      Foreground="White"/>
-                        <TextBlock Text="Buscar"
-                                   Margin="0,0,0,0"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   FontSize="12"
-                                   >
-                        </TextBlock>
-                    </StackPanel>
-                </Button>
             </Grid>
         </Border>
         <Border
@@ -88,16 +66,16 @@
                       Grid.Row="1"
                       Margin="10"
                       Background="Transparent">
-            <ScrollViewer.Resources>
-                <Style TargetType="ScrollBar">
-                    <Setter Property="Background" Value="Transparent"/>
-                    <Setter Property="Foreground" Value="#000033"/>
-                    <Setter Property="BorderBrush" Value="Transparent"/>
-               
-                </Style>
-            </ScrollViewer.Resources>
-            <ListBox x:Name="ListPeople"
-                 ItemsSource="{Binding Path=Tasks}" 
+                <ScrollViewer.Resources>
+                    <Style TargetType="ScrollBar">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="#000033"/>
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+
+                    </Style>
+                </ScrollViewer.Resources>
+                <ListBox x:Name="ListPeople"
+                 ItemsSource="{Binding Path=TasksList}" 
                  SelectionMode="Single"
                  BorderBrush="Transparent"
                  Grid.Column="1"             
@@ -105,31 +83,67 @@
                  Width="auto"
                  Background="Transparent"
                  >
-                <!--Esta es la manera de mostrar los datos de un objeto
+                    <!--Esta es la manera de mostrar los datos de un objeto
                 en una list box esto seria utila cuando mandemos a llamr
                 a los datos de la api por medio de Json -->
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Vertical">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical">
                                 <TextBlock Margin="15,9,0,0"
                                        FontSize="16"
                                        Foreground="White"
-                                       Text="{Binding Path=title}">
+                                       Text="{Binding Path=Title}">
                                 </TextBlock>
                                 <TextBlock Margin="15,0,0,0"
                                        FontSize="12"
                                        Foreground="LightGray"
-                                Text="{Binding Path=priority, StringFormat='Priority: {0}' }"/>
+                                Text="{Binding Path=Priority.PriorityStatus, StringFormat='Task Status: {0}' }"/>
                                 <TextBlock Margin="15,0,0,9"
                                        FontSize="12"
                                        Foreground="LightGray"
-                                Text="{Binding Path=description, StringFormat='Description: {0}' }"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-         </ScrollViewer>
+                                Text="{Binding Path=Description, StringFormat='Description: {0}' }"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
         </Border>
+        <StackPanel Grid.Row="0"
+                    Grid.Column="0"
+                    Orientation="Horizontal">
+            <Button Cursor="Hand"
+                            Width="35"   
+                            Height="30"                        
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"    
+                            Margin="55,0,0,0"
+                            Command="{Binding GetTasks}"
+                            Style="{StaticResource EditTaskbtn}">
+                <StackPanel Orientation="Horizontal">
+                    <fa:IconImage Icon="ArrowsRotate" HorizontalAlignment="Left" 
+                                      Height="20"                                    
+                                      Margin="8,0,0,0"
+                                      Foreground="White"/>
+                </StackPanel>
+            </Button>
+            <!-- Botón de búsqueda -->
+            <Button Cursor="Hand"
+                            Width="35"   
+                            Height="30"    
+                            Margin="5,0,0,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Command="{Binding SearchTask}"
+                            Style="{StaticResource EditTaskbtn}">
+                <StackPanel Orientation="Horizontal">
+                    <fa:IconImage Icon="MagnifyingGlass" HorizontalAlignment="Left" 
+                                      Height="15"
+                                      Margin="10,0,3,0"
+                                      Foreground="White"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+        <!--
         <ComboBox Margin="0,2,0,0"
                   Height="25"
                   Width="130"
@@ -145,6 +159,7 @@
                 </x:Array>
             </ComboBox.ItemsSource>
         </ComboBox>
+        -->
         <Border
             CornerRadius="15"
             Grid.Column="0"
@@ -161,7 +176,7 @@
             <ScrollViewer VerticalScrollBarVisibility="auto"
                           HorizontalScrollBarVisibility="Disabled">
                 <StackPanel Orientation="Vertical">
-                <Button Cursor="Hand"                                               
+                    <Button Cursor="Hand"                                               
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"  
                             Width="130"  
@@ -169,41 +184,41 @@
                             Height="50"
                             Command="{Binding ShowAddTask}"
                             Style="{StaticResource EditTaskbtn}">
-                    <StackPanel Orientation="Horizontal">
-                        <fa:IconImage Icon="Add" HorizontalAlignment="Left" 
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="Add" HorizontalAlignment="Left" 
                                       Height="20"
                                       Margin="8,0,0,0"
                                       Foreground="White"/>
-                        <TextBlock Text="Add New Task"
+                            <TextBlock Text="Add New Task"
                                    Margin="13,0,0,0"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Center"
                                    FontSize="13"
                                    >
-                        </TextBlock>
-                    </StackPanel>
-                </Button>
-                <Button Cursor="Hand"    
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Cursor="Hand"    
                         Width="130"   
                         Height="50"      
                         Margin="0,20,0,5"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"                           
                         Style="{StaticResource EditTaskbtn}">
-                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="Trash" HorizontalAlignment="Left" 
                                       Height="20"
                                       Margin="8,0,0,0"
                                       Foreground="White"/>
-                        <TextBlock Text="Delete Task"
+                            <TextBlock Text="Delete Task"
                                    Margin="13,0,0,0"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Center"
                                    FontSize="13"
                                    >
-                        </TextBlock>
-                    </StackPanel>
-                </Button>
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
                     <Button Cursor="Hand"
                             Width="130"   
                             Height="50"                        

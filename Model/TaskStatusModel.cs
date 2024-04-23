@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace AdministradorDeTareas.Model
 {
-    public class Task
+    public class TaskStatusModel
     {
-         public string? title { get; set; }
-         public  string? priority {  get; set; }
-         public string? description { get; set; }
-        
+        public int? StatusID { get; set; }
+        public string? StatusName { get; set; }
     }
 }
