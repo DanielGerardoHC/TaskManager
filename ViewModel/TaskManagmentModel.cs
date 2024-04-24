@@ -2,115 +2,145 @@
 using AdministradorDeTareas.ViewModel;
 using LiveCharts;
 using LiveCharts.Wpf;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Text.Json.Nodes;
+using System.Windows;
+using LiveCharts.Helpers;
 
 namespace AdministradorDeTareas.ViewModel
 {
-    public class TaskManagmentModel : ViewModelBase, INotifyPropertyChanged
+    public class TaskManagmentModel : ViewModelBase
     {
-        public SeriesCollection SeriesCollection { get; set; }
-        public SeriesCollection TaskCompletedCollection { get; set; }
-
-        private int _pendingTasks;
-        public int PendingTasks
+        private static readonly HttpClient client = new HttpClient();
+        private List<TaskModel> _tasks;
+        private List<TaskModel> _pendingTasks;
+        private List<TaskModel> _highPriorityTasks;
+        private List<TaskModel> _lastTaskAdded;
+        public List<TaskModel> TasksList
         {
-            get => _pendingTasks;
+            // si o si debe cada propiedad debe tener su get y set
+            // junto con el metodo OnpropetyChanged
+            get { return _tasks; }
+            set
+            {
+                _tasks = value;
+                OnPropertyChanged(nameof(TasksList));
+            }
+        }
+        public List<TaskModel> PendingTasks
+        {
+            get { return _pendingTasks; }
             set
             {
                 _pendingTasks = value;
                 OnPropertyChanged(nameof(PendingTasks));
             }
         }
-        private int _mediumPriority;
-        public int MediumPriority
+        public List<TaskModel> HighPrirityTasks
         {
-            get => _mediumPriority;
+            get { return _highPriorityTasks; }
             set
             {
-                _mediumPriority = value;
-                OnPropertyChanged(nameof(MediumPriority));
+                _highPriorityTasks = value;
+                OnPropertyChanged(nameof(HighPrirityTasks));
             }
         }
-        private int _highPriority;
-        public int HighPriority
+        public List<TaskModel> LastTaskAdded
         {
-            get => _highPriority;
+            get { return _lastTaskAdded; }
             set
             {
-                _highPriority = value;
-                OnPropertyChanged(nameof(HighPriority));
+                _lastTaskAdded = value;
+                OnPropertyChanged(nameof(LastTaskAdded));
             }
-        }
+        }        
+        public SeriesCollection SeriesCollection { get; set; }
+        public SeriesCollection TaskCompletedCollection { get; set; }
         public TaskManagmentModel()
         {
-            this.PendingTasks = 10;
-            this.MediumPriority = 8;
-            this.HighPriority = 12;
-            // panel de la grafica
             SeriesCollection = new SeriesCollection();
             TaskCompletedCollection = new SeriesCollection();
-            // Ejemplo de datos de tareas
-            var tareas = new List<TaskPriorityData>
-            {
-                // este objeto veremos si lo podemos sustituir directamete
-                // por la entidad tarea de la base de datos, en caso contrario
-                // en una clase como esta almacenariamos los datos que provienen
-                // de la API *Recordatorio de cambiar*
-                new TaskPriorityData { Prioridad = "Bajo", Cantidad = 10 },
-                new TaskPriorityData { Prioridad = "Medio", Cantidad = 20 },
-                new TaskPriorityData { Prioridad = "Alto", Cantidad = 5 }
-            };
 
-            // Agregar los datos al gráfico de pastel
-            foreach (var tarea in tareas)
+            //end point para obtener todas las tareas y luego llenar los PieChart
+            GetTasksFromApi();
+        }
+        private async void GetTasksFromApi()
+        {
+            string apiUrl = "https://localhost:44384/api/Tasks";
+            try
             {
-                SeriesCollection.Add(new PieSeries
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
                 {
-                    Title = tarea.Prioridad,
-                    Values = new ChartValues<int> { tarea.Cantidad },
-                    DataLabels = true
-                });
+                    string json = await response.Content.ReadAsStringAsync();
+                    TasksList = JsonConvert.DeserializeObject<List<TaskModel>>(json);
+
+                    // Después de llenar TasksList, crear las series para los gráficos
+                    CreatePieCharts();
+                    ShowTasksInfo();
+                }
+                else
+                {
+                    MessageBox.Show($" Error al tratar de obtener los datos: {response.StatusCode}");
+                }
             }
-            var tasks = new List<TaskCompleted> { 
-               new TaskCompleted {Resolved = "completed", cantidad = 15},
-               new TaskCompleted {Resolved = "Pending", cantidad = 10}
-            };
-            foreach (var task in tasks)
+            catch (Exception ex)
+            {
+                MessageBox.Show($" Error en la solicitud HTTPS: {ex.Message}");
+            }
+        }
+        private void CreatePieCharts()
+        {
+            //agrupamos las tareas mediante su Priority y por la cantidad de registros
+            //que posean el mismo ProrityStatus
+            var tasksByPriority = TasksList.GroupBy(t => t.Priority.PriorityStatus)
+                              .Select(c => new { PriorityStatus = c.Key, Count = c.Count() });
+            //agrupamos las tareas mediante su TaskStatus y por la cantidad de registros
+            //que posean el mismo StatusName
+            var tasksByStatus = TasksList.GroupBy(t => t.TaskStatus.StatusName)
+                                 .Select(t => new { StatusName = t.Key, Count = t.Count() });
+
+            //agregar los datos al gráfico de pastel
+            foreach (var Group in tasksByStatus)
             {
                 TaskCompletedCollection.Add(new PieSeries
                 {
-                   Title = task.Resolved,
-                   Values = new ChartValues<int> { task.cantidad},
-                   DataLabels = true
+                    Title = Group.StatusName,
+                    Values = new ChartValues<int> { Group.Count }
+                });
+            }
+            foreach (var Group in tasksByPriority)
+            {
+                SeriesCollection.Add(new PieSeries
+                {
+                    Title = Group.PriorityStatus,
+                    Values = new ChartValues<int> { Group.Count }
                 });
             }
         }
-        // event to INotifyPropetyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        private void ShowTasksInfo()
+        { 
+            // filtramos las tareas que tengan un estado pendiente
+            var PendingTasks_aux = TasksList.Where(x => x.TaskStatus.StatusName == "Pending").Reverse();
+            var HighPriorityTasks_aux = TasksList.Where(x => x.Priority.PriorityStatus == "High").Reverse();
+            var LasTaskAdded_aux = TasksList.ToList();
+            LasTaskAdded_aux.Reverse();
+            HighPrirityTasks = HighPriorityTasks_aux.Take(3).ToList();
+            LastTaskAdded = LasTaskAdded_aux.Take(3).ToList();
+            PendingTasks = PendingTasks_aux.Take(3).ToList(); // usaremos unicamente los primeros 5 registros
         }
-        public class TaskPriorityData
-        {
-            public string Prioridad { get; set; }
-            public int Cantidad { get; set; }
-
-        }
-        public class TaskCompleted
-        {
-            public string Resolved { get; set; }
-            public int cantidad { get; set; }
-        }
+        
     }
 }

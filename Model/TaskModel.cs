@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,6 @@ namespace AdministradorDeTareas.Model
          public int? PriorityID { get; set; }
          public virtual TaskStatusModel? TaskStatus { get; set; }
          public virtual UsersModel? Users { get; set; }
-         public virtual PriorityModel? Priority { get; set; }
+         public virtual PriorityModel? Priority { get; set; }       
     }
 }

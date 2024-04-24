@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:AdministradorDeTareas.View"
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         mc:Ignorable="d"
+        xmlns:viewModel="clr-namespace:AdministradorDeTareas.ViewModel"
         Title="AddTask"
         WindowStyle="None"
         ResizeMode="NoResize"
@@ -13,6 +14,9 @@
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="True"
         Background="Transparent">
+    <Window.DataContext>
+        <viewModel:AddTaskViewModel/>
+    </Window.DataContext>
     <Border CornerRadius="20">
         <Border.Background>
             <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
@@ -67,18 +71,21 @@
                         VerticalAlignment="Center"
                         Margin="10,5,0,0"
                         Padding="0,0,0,0"
+                        Text="{Binding Title, Mode=TwoWay}"
                         Grid.Row="1"
                         />
                 <ComboBox 
                   Margin="25,5,0,0"
                   Height="25"
                   Width="130"
+                  x:Name="ComboPriority"
                   Grid.Column="0"
                   Grid.Row="0"
+                  SelectedIndex="{Binding PrioritySelect, Mode=TwoWay}"
                   VerticalAlignment="Center">
-                    <ComboBoxItem Content="High"/>
-                    <ComboBoxItem Content="Medium"/>
                     <ComboBoxItem Content="Low"/>
+                    <ComboBoxItem Content="Medium"/>
+                    <ComboBoxItem Content="High"/>
                 </ComboBox>
                 <DatePicker SelectedDate="{Binding DueDate, Mode=TwoWay}" 
                         Width="150"
@@ -110,6 +117,7 @@
                         VerticalAlignment="Center"
                         Margin="20,5,0,0"
                         Padding="0,0,0,0"
+                        Text="{Binding Description, Mode=TwoWay}"
                         Grid.Row="1"
                         />
             </StackPanel>
@@ -123,6 +131,7 @@
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"    
                            Margin="0,0,10,0"
+                           Command="{Binding CreateTask}"
                            Style="{StaticResource EditTaskbtn}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="FilePen" HorizontalAlignment="Left" 

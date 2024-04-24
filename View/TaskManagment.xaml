@@ -8,7 +8,8 @@
              mc:Ignorable="d"
              Background="#2B1380"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
-             d:DesignHeight="450" d:DesignWidth="800">
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             d:DesignHeight="536.05" d:DesignWidth="1200">
     <UserControl.DataContext>
         <viewModel:TaskManagmentModel/>
     </UserControl.DataContext>
@@ -62,23 +63,42 @@
                     Height="220"
                     Background="#1d659c"
                     Style="{StaticResource panelControl}">
-                <StackPanel>
-                    <TextBlock Text="Outstanding Tasks"
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Pending Tasks"
                                Margin="15,0,0,0"
                                FontSize="30"
                                Foreground="White"/>
-                    <TextBlock Text="{Binding Path=PendingTasks, StringFormat='Pending Tasks: {0}'}"
-                               Margin="15,15,0,0"
-                               FontSize="18"
-                               Foreground="White"/>
-                    <TextBlock Text="{Binding Path=MediumPriority, StringFormat='Medium Priority Tasks: {0}'}"
-                               Margin="15,15,0,0"
-                               FontSize="18"
-                               Foreground="White"/>
-                    <TextBlock Text="{Binding Path=HighPriority, StringFormat='High Priority Tasks: {0}'}"
-                               Margin="15,15,0,0"
-                               FontSize="18"
-                               Foreground="White"/>
+                    <ListBox
+                        ItemsSource="{Binding Path=PendingTasks}" 
+                        SelectionMode="Extended"
+                        BorderBrush="Transparent"
+                        Background="Transparent" 
+                        d:ItemsSource="{d:SampleData ItemCount=3}"
+                        IsHitTestVisible="False">
+                        <!--Este atributo me permite eliminar la opcion de selection mode-->
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Margin="15,9,0,0"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       Text="{Binding Path=Title}">
+                                    </TextBlock>
+                                    <StackPanel Orientation="Horizontal">
+                                        <fa:IconImage Icon="Clock"
+                                                  Foreground="White"
+                                                  Height="13"
+                                                  Width="13"
+                                                  Margin="15,0,0,0"/>
+                                        <TextBlock Margin="5,0,0,0"
+                                       FontSize="13"
+                                       Foreground="White"
+                                       Text="{Binding Path=DueDate, StringFormat='{}{0:d}' }"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </StackPanel>
             </Border>
             <Border Margin="8"
@@ -88,7 +108,7 @@
                     Background="#2bb884"
                     Style="{StaticResource panelControl}">
                 <StackPanel>
-                    <TextBlock Text="Task Schem"
+                    <TextBlock Text="Tasks for Priority"
                                FontSize="30"
                                Margin="0,0,0,0"
                                HorizontalAlignment="Center"
@@ -106,23 +126,42 @@
                     Height="220"
                     Background="#51d53a"
                     Style="{StaticResource panelControl}">
-
-                <StackPanel>
-                    <TextBlock Text="Expired task"
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="High Priority Tasks"
                                FontSize="30"
                                Margin="15,0,0,0"
                                Foreground="White"/>
-                    <TextBlock/>
-                    <TextBlock Text="Expired task"
-                               FontSize="18"
-                               Margin="15,0,0,0"
-                               Foreground="White"/>
-                    <TextBlock/>
-                    <TextBlock Text="Expired task"
-                               FontSize="18"
-                               Margin="15,0,0,0"
-                               Foreground="White"/>
-                    <TextBlock/>
+                    <ListBox
+                        ItemsSource="{Binding Path=HighPrirityTasks}" 
+                        SelectionMode="Extended"
+                        BorderBrush="Transparent"
+                        Background="Transparent" 
+                        d:ItemsSource="{d:SampleData ItemCount=3}"
+                        IsHitTestVisible="False">
+                        <!--Este atributo me permite eliminar la opcion de selection mode-->
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Margin="15,9,0,0"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       Text="{Binding Path=Title}">
+                                    </TextBlock>
+                                    <StackPanel Orientation="Horizontal">
+                                        <fa:IconImage Icon="Comment"
+                                                  Foreground="White"
+                                                  Height="13"
+                                                  Width="13"
+                                                  Margin="15,0,0,0"/>
+                                        <TextBlock Margin="5,0,0,0"
+                                       FontSize="13"
+                                       Foreground="White"
+                                       Text="{Binding Path=Description, StringFormat='{}{0}' }"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </StackPanel>
             </Border>
             <Border Margin="8" 
@@ -131,22 +170,42 @@
                     Height="220"
                     Background="#9ae342"
                     Style="{StaticResource panelControl}">
-                <StackPanel>
+                <StackPanel Orientation="Vertical">
                     <TextBlock Text="Last Task Added"
                                FontSize="30"
                                Margin="15,0,0,0"
                                Foreground="White"/>
-                    <TextBlock/>
-                    <TextBlock Text="Task Name: "
-                               FontSize="18"
-                               Margin="15,0,0,0"
-                               Foreground="White"/>
-                    <TextBlock/>
-                    <TextBlock Text="Description task"
-                               FontSize="18"
-                               Margin="15,0,0,0"
-                               Foreground="White"/>
-                    <TextBlock/>
+                    <ListBox
+                        ItemsSource="{Binding Path=LastTaskAdded}" 
+                        SelectionMode="Extended"
+                        BorderBrush="Transparent"
+                        Background="Transparent" 
+                        d:ItemsSource="{d:SampleData ItemCount=3}"
+                        IsHitTestVisible="False">
+                        <!--Este atributo me permite eliminar la opcion de selection mode-->
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Margin="15,9,0,0"
+                                       FontSize="16"
+                                       Foreground="White"
+                                       Text="{Binding Path=Title}">
+                                    </TextBlock>
+                                    <StackPanel Orientation="Horizontal">
+                                        <fa:IconImage Icon="Comment"
+                                                  Foreground="White"
+                                                  Height="13"
+                                                  Width="13"
+                                                  Margin="15,0,0,0"/>
+                                        <TextBlock Margin="5,0,0,0"
+                                       FontSize="13"
+                                       Foreground="White"
+                                       Text="{Binding Path=Description, StringFormat='{}{0}' }"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </StackPanel>
             </Border>
             <Border Margin="8" 
@@ -156,7 +215,7 @@
                     Background="#e6f14b"
                     Style="{StaticResource panelControl}">
                 <StackPanel>
-                    <TextBlock Text="Task Completed"
+                    <TextBlock Text="Tasks for Status"
                                HorizontalAlignment="Center"
                                Margin="0,0,0,0"
                                FontSize="30"

@@ -60,7 +60,7 @@
                 </LinearGradientBrush>
             </Border.Background>
             <ScrollViewer HorizontalScrollBarVisibility="Auto"  
-                      VerticalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Auto"                     
                       CanContentScroll="True"
                       Grid.Column="1"
                       Grid.Row="1"
@@ -71,21 +71,19 @@
                         <Setter Property="Background" Value="Transparent"/>
                         <Setter Property="Foreground" Value="#000033"/>
                         <Setter Property="BorderBrush" Value="Transparent"/>
-
                     </Style>
                 </ScrollViewer.Resources>
-                <ListBox x:Name="ListPeople"
+                <ListBox x:Name="ListBoxTasks"
                  ItemsSource="{Binding Path=TasksList}" 
                  SelectionMode="Single"
                  BorderBrush="Transparent"
                  Grid.Column="1"             
                  Grid.Row="1"
-                 Width="auto"
                  Background="Transparent"
                  >
                     <!--Esta es la manera de mostrar los datos de un objeto
                 en una list box esto seria utila cuando mandemos a llamr
-                a los datos de la api por medio de Json -->
+                a los datos de la api por medio de un Json -->
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Vertical">
@@ -94,14 +92,49 @@
                                        Foreground="White"
                                        Text="{Binding Path=Title}">
                                 </TextBlock>
-                                <TextBlock Margin="15,0,0,0"
-                                       FontSize="12"
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:IconImage Icon="CheckCircle"
+                                                  Foreground="White"
+                                                  Height="13"
+                                                  Width="13"
+                                                  Margin="15,0,0,0"/>
+                                    <TextBlock Margin="5,0,0,0"
+                                       FontSize="13"
                                        Foreground="LightGray"
-                                Text="{Binding Path=Priority.PriorityStatus, StringFormat='Task Status: {0}' }"/>
-                                <TextBlock Margin="15,0,0,9"
-                                       FontSize="12"
+                                Text="{Binding Path=TaskStatus.StatusName, StringFormat='{}{0}' }"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:IconImage Icon="ExclamationTriangle"
+                                                  Foreground="White"
+                                                  Height="13"
+                                                  Width="13"
+                                                  Margin="15,0,0,0"/>
+                                    <TextBlock Margin="5,0,0,0"
+                                       FontSize="13"
                                        Foreground="LightGray"
-                                Text="{Binding Path=Description, StringFormat='Description: {0}' }"/>
+                                Text="{Binding Path=Priority.PriorityStatus, StringFormat='{}{0}' }"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:IconImage Icon="Clock"
+                                                  Foreground="White"
+                                                  Width="13"
+                                                  Margin="15,0,0,0"/>
+                                    <TextBlock Margin="5,0,0,0"
+                                       FontSize="13"
+                                       Foreground="LightGray"
+                                Text="{Binding Path=DueDate, StringFormat='{}{0:d}' }"/>
+                                </StackPanel>
+                                
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:IconImage Icon="Comment"
+                                                  Foreground="White"
+                                                  Width="13"
+                                                  Margin="15,0,0,9"/>
+                                    <TextBlock Margin="5,0,0,9"
+                                       FontSize="13"
+                                       Foreground="WhiteSmoke"
+                                Text="{Binding Path=Description, StringFormat='{}{0}' }"/>
+                                </StackPanel>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -137,7 +170,7 @@
                             Style="{StaticResource EditTaskbtn}">
                 <StackPanel Orientation="Horizontal">
                     <fa:IconImage Icon="MagnifyingGlass" HorizontalAlignment="Left" 
-                                      Height="15"
+                                      Height="20"
                                       Margin="10,0,3,0"
                                       Foreground="White"/>
                 </StackPanel>

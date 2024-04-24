@@ -21,7 +21,6 @@ namespace AdministradorDeTareas.ViewModel
         private static readonly HttpClient client = new HttpClient();
 
         private List<TaskModel> _tasks;
-
         private string _txtSearch;
         public ICommand ShowAddTask { get; }
         public ICommand SearchTask { get; }
