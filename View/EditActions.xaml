@@ -5,7 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AdministradorDeTareas.View"
              mc:Ignorable="d" 
-             xmlns:viewModel="clr-namespace:AdministradorDeTareas.ViewModel" xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:viewModel="clr-namespace:AdministradorDeTareas.ViewModel" 
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              Background="#2B1380"
              Width="auto"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -20,7 +22,7 @@
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="130"/>
+            <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Border Background="#000033" 
@@ -31,7 +33,7 @@
                 Grid.Column="1">
             <!-- Barra de búsqueda -->
             <Grid>
-                <Grid Margin="5">
+                <Grid Margin="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition  Width="Auto"/>
                         <ColumnDefinition Width="*"/>
@@ -62,30 +64,27 @@
             <ScrollViewer HorizontalScrollBarVisibility="Auto"  
                       VerticalScrollBarVisibility="Auto"                     
                       CanContentScroll="True"
-                      Grid.Column="1"
+                      Grid.Column="1"                 
                       Grid.Row="1"
                       Margin="10"
                       Background="Transparent">
-                <ScrollViewer.Resources>
-                    <Style TargetType="ScrollBar">
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="Foreground" Value="#000033"/>
-                        <Setter Property="BorderBrush" Value="Transparent"/>
-                    </Style>
-                </ScrollViewer.Resources>
                 <ListBox x:Name="ListBoxTasks"
                  ItemsSource="{Binding Path=TasksList}" 
+                 SelectedItem="{Binding SelectedTask}"
                  SelectionMode="Single"
                  BorderBrush="Transparent"
                  Grid.Column="1"             
                  Grid.Row="1"
-                 Background="Transparent"
-                 >
-                    <!--Esta es la manera de mostrar los datos de un objeto
-                en una list box esto seria utila cuando mandemos a llamr
-                a los datos de la api por medio de un Json -->
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
+                 Background="Transparent">
+                 <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
+                            <Setter Property="materialDesign:ListBoxItemAssist.HoverBackground" Value="#4600A6"/>
+                            <Setter Property="materialDesign:ListBoxItemAssist.SelectedFocusedBackground" Value="#00CCFF"/>
+                            <Setter Property="materialDesign:ListBoxItemAssist.SelectedUnfocusedBackground" Value="#00CCFF"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>              
+                        <DataTemplate>              
                             <StackPanel Orientation="Vertical">
                                 <TextBlock Margin="15,9,0,0"
                                        FontSize="16"
@@ -139,142 +138,103 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
+            
             </ScrollViewer>
         </Border>
+
         <StackPanel Grid.Row="0"
                     Grid.Column="0"
                     Orientation="Horizontal">
             <Button Cursor="Hand"
-                            Width="35"   
+                            Width="30"   
                             Height="30"                        
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"    
-                            Margin="55,0,0,0"
+                            Margin="15,0,0,0"
                             Command="{Binding GetTasks}"
-                            Style="{StaticResource EditTaskbtn}">
-                <StackPanel Orientation="Horizontal">
-                    <fa:IconImage Icon="ArrowsRotate" HorizontalAlignment="Left" 
-                                      Height="20"                                    
-                                      Margin="8,0,0,0"
-                                      Foreground="White"/>
-                </StackPanel>
+                            Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryDarkButton}">
+                <materialDesign:PackIcon
+              Width="20"
+              Height="20"
+              Kind="ArrowRotateRight" />
             </Button>
+
             <!-- Botón de búsqueda -->
             <Button Cursor="Hand"
-                            Width="35"   
-                            Height="30"    
-                            Margin="5,0,0,0"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Command="{Binding SearchTask}"
-                            Style="{StaticResource EditTaskbtn}">
-                <StackPanel Orientation="Horizontal">
-                    <fa:IconImage Icon="MagnifyingGlass" HorizontalAlignment="Left" 
-                                      Height="20"
-                                      Margin="10,0,3,0"
-                                      Foreground="White"/>
-                </StackPanel>
+                      Width="30"
+                      Height="30"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Center" 
+                      Margin="15,0,0,0"
+                      Command="{Binding SearchTask}"
+                      Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryDarkButton}">
+                <materialDesign:PackIcon
+              Width="20"
+              Height="20"
+              Kind="Magnify" />
             </Button>
         </StackPanel>
-        <!--
-        <ComboBox Margin="0,2,0,0"
-                  Height="25"
-                  Width="130"
-                  Grid.Column="0"
-                  Grid.Row="0"
-                  VerticalAlignment="Top"
-                  Background="Blue">
-            <ComboBox.ItemsSource>
-                <x:Array Type="{x:Type sys:String}">
-                    <sys:String>Higth</sys:String>
-                    <sys:String>Medium</sys:String>
-                    <sys:String>Low</sys:String>
-                </x:Array>
-            </ComboBox.ItemsSource>
-        </ComboBox>
-        -->
-        <Border
-            CornerRadius="15"
-            Grid.Column="0"
-            Grid.Row="1"
-            Margin="0,10,0,0"
-            >
-            <Border.Background>
-                <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
-                    <GradientStop Color="#000066" Offset="1"/>
-                    <GradientStop Color="#000066" Offset="1"/>
-                    <GradientStop Color="#000033" Offset="0.6"/>
-                </LinearGradientBrush>
-            </Border.Background>
-            <ScrollViewer VerticalScrollBarVisibility="auto"
-                          HorizontalScrollBarVisibility="Disabled">
-                <StackPanel Orientation="Vertical">
-                    <Button Cursor="Hand"                                               
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center"  
-                            Width="130"  
-                            Margin="0,20,0,5"
-                            Height="50"
-                            Command="{Binding ShowAddTask}"
-                            Style="{StaticResource EditTaskbtn}">
-                        <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Add" HorizontalAlignment="Left" 
-                                      Height="20"
-                                      Margin="8,0,0,0"
-                                      Foreground="White"/>
-                            <TextBlock Text="Add New Task"
-                                   Margin="13,0,0,0"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   FontSize="13"
-                                   >
-                            </TextBlock>
-                        </StackPanel>
-                    </Button>
-                    <Button Cursor="Hand"    
-                        Width="130"   
-                        Height="50"      
-                        Margin="0,20,0,5"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center"                           
-                        Style="{StaticResource EditTaskbtn}">
-                        <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Trash" HorizontalAlignment="Left" 
-                                      Height="20"
-                                      Margin="8,0,0,0"
-                                      Foreground="White"/>
-                            <TextBlock Text="Delete Task"
-                                   Margin="13,0,0,0"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   FontSize="13"
-                                   >
-                            </TextBlock>
-                        </StackPanel>
-                    </Button>
-                    <Button Cursor="Hand"
-                            Width="130"   
-                            Height="50"                        
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center"    
-                            Margin="0,20,0,5"
-                            Style="{StaticResource EditTaskbtn}">
-                        <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="PenToSquare" HorizontalAlignment="Left" 
-                                      Height="20"
-                                      Margin="8,0,0,0"
-                                      Foreground="White"/>
-                            <TextBlock Text="Edit This Task"
-                                   Margin="13,0,0,0"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   FontSize="13"
-                                   >
-                            </TextBlock>
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
-            </ScrollViewer>
-        </Border>
+        <ScrollViewer VerticalScrollBarVisibility="auto"
+                          HorizontalScrollBarVisibility="Disabled"
+                       Grid.Column="0"
+                       Grid.Row="1">
+            <StackPanel Orientation="Vertical">
+                <Button
+                   Width="90"
+                   Height="40"
+                   Margin="0,25,0,0"
+                   materialDesign:RippleAssist.Feedback="#DD000000"
+                   Command="{Binding ShowAddTask}"
+                   IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                   Style="{StaticResource MaterialDesignRaisedSecondaryButton}">
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <TextBlock Text="Add"
+                                   Margin="10,0,5,0"/>
+                        <materialDesign:PackIcon
+                     Width="18"
+                     Height="18"
+                     Kind="AddCircle"/>
+                    </StackPanel>
+                </Button>
+                <Button
+                   Width="90"
+                   Height="40"
+                   Margin="0,25,0,0"
+                   materialDesign:HintAssist.IsFloating="False"
+                   materialDesign:HintAssist.HelperText="Hola"
+                   materialDesign:RippleAssist.Feedback="#DD000000"
+                   Command="{Binding ShowViewDeleteTask}"
+                   Style="{StaticResource MaterialDesignRaisedSecondaryButton}">
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <TextBlock Text="Delete"
+                                   Margin="0,0,0,0"/>
+                        <materialDesign:PackIcon
+                     Width="18"
+                     Height="18"
+                     Kind="Delete"/>
+                    </StackPanel>
+                </Button>
+                <Button
+                   Width="90"
+                   Height="40"
+                   Margin="0,25,0,0"
+                   materialDesign:RippleAssist.Feedback="#DD000000"
+                   Command="{Binding ShowAddTask}"
+                   IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                   Style="{StaticResource MaterialDesignRaisedSecondaryButton}">
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <TextBlock Text="Edit"
+                                   Margin="10,0,5,0"/>
+                        <materialDesign:PackIcon
+                     Width="18"
+                     Height="18"
+                     Kind="Pen"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>

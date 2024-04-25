@@ -22,9 +22,11 @@ namespace AdministradorDeTareas.ViewModel
 
         private List<TaskModel> _tasks;
         private string _txtSearch;
+        private TaskModel _selectedTask { get; set; }
         public ICommand ShowAddTask { get; }
         public ICommand SearchTask { get; }
         public ICommand GetTasks { get; }  
+        public ICommand ShowViewDeleteTask {  get; }
         public List<TaskModel> TasksList
         {
             // si o si debe cada propiedad debe tener su get y set
@@ -47,11 +49,21 @@ namespace AdministradorDeTareas.ViewModel
         }
         public EditActionsModel()
         {
+            // inicializamos todos los comandos que usaremos
             ShowAddTask = new ViewModelCommand(ExecuteShowAddTask);
             SearchTask = new ViewModelCommand(ExecuteSearchTask);
             GetTasks = new ViewModelCommand(ExecuteGetTasks);
+            ShowViewDeleteTask = new ViewModelCommand(ExecuteShowViewDeleteTask);
             GetTasksFromApi();
             TxtSearch = "";
+        }
+        public TaskModel SelectedTask 
+        { get { return _selectedTask; } 
+          set {
+                _selectedTask = value;
+                OnPropertyChanged(nameof(SelectedTask));
+              }
+        
         }
         private void ExecuteSearchTask(object obj)
         {
@@ -62,12 +74,17 @@ namespace AdministradorDeTareas.ViewModel
         }
         private void ExecuteShowAddTask(object obj)
         {
-          AddTask viewAddTask = new AddTask();
-          viewAddTask.ShowDialog();
+            ViewAddTask viewAddTask = new ViewAddTask();
+            viewAddTask.ShowDialog();
         }
         private void ExecuteGetTasks(object obj)
         {
             GetTasksFromApi();
+        }
+        public void ExecuteShowViewDeleteTask(object obj)
+        {
+            ViewDeleteTask viewDeleteTask = new ViewDeleteTask(SelectedTask);
+            viewDeleteTask.ShowDialog();
         }
         public async Task GetTasksFromApi()
         {

@@ -3,6 +3,7 @@ using AdministradorDeTareas.View;
 using FontAwesome.Sharp;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace AdministradorDeTareas.ViewModel
         public ICommand ShowEditActionsCommand { get; }
         public ICommand ShowTaskManagmentCommand { get; }
         public ICommand ShowViewOptionsCommand { get; }
+        public ICommand OpenGithubProfile {  get; }
         public ViewModelBase CurrentChildView
         {
             get
@@ -35,11 +37,21 @@ namespace AdministradorDeTareas.ViewModel
             ShowViewOptionsCommand = new ViewModelCommand(ExecuteShowViewOptionsCommand);
             ShowEditActionsCommand = new ViewModelCommand(ExecuteShowEditActionsCommand);
             ShowTaskManagmentCommand = new ViewModelCommand(ExecuteShowTaskManagmentCommand);
-
+            OpenGithubProfile = new ViewModelCommand(ExecuteOpenGithubProfile);
             //Default 
             ExecuteShowTaskManagmentCommand(null);
         }
 
+        private void ExecuteOpenGithubProfile(object obj)
+        {
+            string url = "https://github.com/DanielGerardoHC";
+            // abre el enlace en el navegador predeterminado del sistema
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = url,
+                UseShellExecute = true
+            });
+        }
         private void ExecuteShowEditActionsCommand(object obj)
         {
             CurrentChildView = new EditActionsModel();
@@ -52,5 +64,6 @@ namespace AdministradorDeTareas.ViewModel
         {
             CurrentChildView = new TaskManagmentModel();
         }
+
     }
 }

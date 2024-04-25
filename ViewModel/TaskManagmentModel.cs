@@ -105,11 +105,11 @@ namespace AdministradorDeTareas.ViewModel
         {
             //agrupamos las tareas mediante su Priority y por la cantidad de registros
             //que posean el mismo ProrityStatus
-            var tasksByPriority = TasksList.GroupBy(t => t.Priority.PriorityStatus)
+            var tasksByPriority = TasksList.Where(x => x.Priority != null).GroupBy(t => t.Priority.PriorityStatus)
                               .Select(c => new { PriorityStatus = c.Key, Count = c.Count() });
             //agrupamos las tareas mediante su TaskStatus y por la cantidad de registros
             //que posean el mismo StatusName
-            var tasksByStatus = TasksList.GroupBy(t => t.TaskStatus.StatusName)
+            var tasksByStatus = TasksList.Where(x => x.TaskStatus != null).GroupBy(t => t.TaskStatus.StatusName)
                                  .Select(t => new { StatusName = t.Key, Count = t.Count() });
 
             //agregar los datos al gráfico de pastel
@@ -134,7 +134,7 @@ namespace AdministradorDeTareas.ViewModel
         { 
             // filtramos las tareas que tengan un estado pendiente
             var PendingTasks_aux = TasksList.Where(x => x.TaskStatus.StatusName == "Pending").Reverse();
-            var HighPriorityTasks_aux = TasksList.Where(x => x.Priority.PriorityStatus == "High").Reverse();
+            var HighPriorityTasks_aux = TasksList.Where(x => x.Priority != null).Where(x => x.Priority.PriorityStatus == "High").Reverse();
             var LasTaskAdded_aux = TasksList.ToList();
             LasTaskAdded_aux.Reverse();
             HighPrirityTasks = HighPriorityTasks_aux.Take(3).ToList();

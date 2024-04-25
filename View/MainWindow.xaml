@@ -6,8 +6,9 @@
         xmlns:viewModel="clr-namespace:AdministradorDeTareas.ViewModel"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         Title="MainWindow"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Width="1100"
         Height="600"
         WindowStyle="None"
@@ -34,8 +35,7 @@
     <Border BorderThickness="4">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="33*"/>
-                <RowDefinition Height="41*"/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="250"/>
@@ -129,6 +129,20 @@
                                        HorizontalAlignment="Center" />
                         </StackPanel>
                     </RadioButton>
+                    <Button
+                      Width="35"
+                      Height="35"
+                      Margin="16"
+                      HorizontalAlignment="Left"
+                      Command="{Binding OpenGithubProfile}"
+                      IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                      Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}"
+                      ToolTip="Hi im Daniel please check my profile in GitHub :D">
+                      <materialDesign:PackIcon
+                           Width="30"
+                           Height="30"
+                           Kind="Github" />
+                   </Button>
                 </StackPanel>
             </ScrollViewer>
             <Border Grid.Column="1" Grid.RowSpan="2">
@@ -147,31 +161,44 @@
                                 MouseLeftButtonDown="pnlControlBar_MouseLeftButtonDown"
                                 Cursor="Hand"
                                 MouseEnter="pnlControlBar_MouseEnter">
-
-                        <Button Cursor="Hand"
-                            Content="X"
-                            Foreground="White"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center"
-                            Click="btnClose_Click"
-                            Style="{StaticResource controlBtn}">
+                      <Button
+                      Width="20"
+                      Height="20"
+                      Margin="0,5,8,0"
+                      HorizontalAlignment="Left"
+                      Click="btnClose_Click"
+                      Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}"
+                      ToolTip="Boom the App!! D:">
+                            <materialDesign:PackIcon
+                           Width="15"
+                           Height="15"
+                           Kind="Minecraft" />
                         </Button>
-                        <Button Cursor="Hand"
-                            Content="❏"
-                            Foreground="White"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center"
-                            Click="btnMaximize_Click"
-                            Style="{StaticResource controlBtn}">
+                        <Button
+                      Width="20"
+                      Height="20"
+                      Margin="0,5,8,0"
+                      HorizontalAlignment="Left"
+                      Click="btnMaximize_Click"
+                      Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}"
+                      ToolTip="Maximize">
+                            <materialDesign:PackIcon
+                           Width="15"
+                           Height="15"
+                           Kind="Maximize" />
                         </Button>
-                        <Button Cursor="Hand"
-                            Content="—"
-                            Foreground="White"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center"
-                            Click="btnMinimize_Click"
-                            
-                            Style="{StaticResource controlBtn}">
+                        <Button
+                      Width="20"
+                      Height="20"
+                      Margin="0,5,0,0"
+                      HorizontalAlignment="Left"
+                      Click="btnMinimize_Click"
+                      Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}"
+                      ToolTip="Minimize">
+                            <materialDesign:PackIcon
+                           Width="15"
+                           Height="15"
+                           Kind="Minimize" />
                         </Button>
                     </StackPanel>
                     <TextBlock HorizontalAlignment="Left"
@@ -192,7 +219,6 @@
                                     Margin="12"/>
                 </Grid>
             </Border>
-
         </Grid>
     </Border>
 </Window>

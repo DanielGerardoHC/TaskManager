@@ -15,15 +15,14 @@ using System.Windows.Shapes;
 namespace AdministradorDeTareas.View
 {
     /// <summary>
-    /// Lógica de interacción para AddTask.xaml
+    /// Lógica de interacción para ViewAddTask.xaml
     /// </summary>
-    public partial class AddTask : Window
+    public partial class ViewAddTask : Window
     {
-        public AddTask()
+        public ViewAddTask()
         {
             InitializeComponent();
         }
-
         private void CloseWindow(object sender, RoutedEventArgs e)
         {
             this.Close();

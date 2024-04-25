@@ -1,9 +1,10 @@
-﻿<Window x:Class="AdministradorDeTareas.View.AddTask"
+﻿<Window x:Class="AdministradorDeTareas.View.ViewAddTask"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdministradorDeTareas.View"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"    
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         mc:Ignorable="d"
         xmlns:viewModel="clr-namespace:AdministradorDeTareas.ViewModel"
@@ -74,26 +75,29 @@
                         Text="{Binding Title, Mode=TwoWay}"
                         Grid.Row="1"
                         />
-                <ComboBox 
-                  Margin="25,5,0,0"
-                  Height="25"
-                  Width="130"
-                  x:Name="ComboPriority"
-                  Grid.Column="0"
-                  Grid.Row="0"
-                  SelectedIndex="{Binding PrioritySelect, Mode=TwoWay}"
-                  VerticalAlignment="Center">
+                <ComboBox
+                     Width="130"
+                     Height="36"
+                     Margin="20,0,0,10"
+                     x:Name="ComboPriority"
+                     Background="WhiteSmoke"                    
+                     materialDesign:HintAssist.Hint="Select Priority"
+                     materialDesign:TextFieldAssist.HasClearButton="True"
+                     SelectedIndex="{Binding PrioritySelect, Mode=TwoWay}"                  
+                     Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                     <ComboBoxItem Content="Low"/>
                     <ComboBoxItem Content="Medium"/>
                     <ComboBoxItem Content="High"/>
                 </ComboBox>
-                <DatePicker SelectedDate="{Binding DueDate, Mode=TwoWay}" 
-                        Width="150"
-                        Height="25"
-                        Margin="25,5,0,0"
-                        Language="en-US"
-                        BorderBrush="Transparent"
-                        Grid.Row="2"/>
+                <DatePicker
+                  Width="127"
+                  Height="36"
+                  Background="White"
+                  Margin="20,0,0,10"
+                  SelectedDate="{Binding DueDate, Mode=TwoWay}"
+                  materialDesign:HintAssist.Hint="Pick Date"
+                  materialDesign:TextFieldAssist.HasClearButton="True"
+                  Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
             </StackPanel>
             <StackPanel Grid.Row="2"
                         Orientation="Horizontal">

@@ -79,7 +79,7 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Vertical">
-                                    <TextBlock Margin="15,9,0,0"
+                                    <TextBlock Margin="15,0,0,0"
                                        FontSize="16"
                                        Foreground="White"
                                        Text="{Binding Path=Title}">
@@ -142,13 +142,13 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Vertical">
-                                    <TextBlock Margin="15,9,0,0"
+                                    <TextBlock Margin="15,0,0,0"
                                        FontSize="16"
                                        Foreground="White"
                                        Text="{Binding Path=Title}">
                                     </TextBlock>
                                     <StackPanel Orientation="Horizontal">
-                                        <fa:IconImage Icon="Comment"
+                                        <fa:IconImage Icon="Clock"
                                                   Foreground="White"
                                                   Height="13"
                                                   Width="13"
@@ -156,7 +156,7 @@
                                         <TextBlock Margin="5,0,0,0"
                                        FontSize="13"
                                        Foreground="White"
-                                       Text="{Binding Path=Description, StringFormat='{}{0}' }"/>
+                                       Text="{Binding Path=DueDate, StringFormat='{}{0:d}' }"/>
                                     </StackPanel>
                                 </StackPanel>
                             </DataTemplate>
@@ -186,13 +186,13 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Vertical">
-                                    <TextBlock Margin="15,9,0,0"
+                                    <TextBlock Margin="15,0,0,0"
                                        FontSize="16"
                                        Foreground="White"
                                        Text="{Binding Path=Title}">
                                     </TextBlock>
                                     <StackPanel Orientation="Horizontal">
-                                        <fa:IconImage Icon="Comment"
+                                        <fa:IconImage Icon="Clock"
                                                   Foreground="White"
                                                   Height="13"
                                                   Width="13"
@@ -200,7 +200,7 @@
                                         <TextBlock Margin="5,0,0,0"
                                        FontSize="13"
                                        Foreground="White"
-                                       Text="{Binding Path=Description, StringFormat='{}{0}' }"/>
+                                       Text="{Binding Path=DueDate, StringFormat='{}{0:d}' }"/>
                                     </StackPanel>
                                 </StackPanel>
                             </DataTemplate>

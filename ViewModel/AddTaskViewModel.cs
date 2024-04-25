@@ -1,4 +1,5 @@
 ﻿using AdministradorDeTareas.Model;
+using AdministradorDeTareas.View;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-
 namespace AdministradorDeTareas.ViewModel
 {
-    public class AddTaskViewModel : ViewModelBase
+    public class AddTaskViewModel : EditActionsModel
     {
         private static readonly HttpClient client = new HttpClient();
         private int? _prioritySelect;
@@ -21,23 +21,23 @@ namespace AdministradorDeTareas.ViewModel
         private string? _title;
         private DateTime? _dueDate;
         public int? PrioritySelect
-         {
-           get { return _prioritySelect; } 
-           set 
+        {
+            get { return _prioritySelect; }
+            set
             {
                 _prioritySelect = value;
                 OnPropertyChanged(nameof(PrioritySelect));
-           } 
-         }
+            }
+        }
         public string? Title
-         {
-            get { return _title;  }
+        {
+            get { return _title; }
             set
             {
-                _title = value; 
+                _title = value;
                 OnPropertyChanged(nameof(Title));
             }
-         }
+        }
         public string? Description
         {
             get { return _description; }
@@ -47,16 +47,17 @@ namespace AdministradorDeTareas.ViewModel
                 OnPropertyChanged(nameof(Description));
 
             }
-        }     
+        }
         public DateTime? DueDate
         {
             get { return _dueDate; }
-            set { 
-                _dueDate = value; 
-                 OnPropertyChanged(nameof(DueDate));
+            set
+            {
+                _dueDate = value;
+                OnPropertyChanged(nameof(DueDate));
             }
         }
-        public ICommand CreateTask {  get; }
+        public ICommand CreateTask { get; }
         public AddTaskViewModel()
         {
             CreateTask = new ViewModelCommand(ExecuteCreateTask);
@@ -88,15 +89,39 @@ namespace AdministradorDeTareas.ViewModel
                 HttpResponseMessage response = await client.PostAsync(urlApi, new StringContent(JsonTask, Encoding.UTF8, "application/json"));
                 // verificar si la solicitud fue exitosa
                 if (response.IsSuccessStatusCode)
-                {
-                    MessageBox.Show("La tarea se creó exitosamente.");
+                { 
+                    // recargamos la lista de tareas ejecutando el metodo del patre
+                    // EditTaskModel
+
+                    GetTasksFromApi();
+                    string? description = "Task Added Successflly";
+                    CustomMessageBox messageBox = new CustomMessageBox(description);
+                    messageBox.ShowDialog();
+                    //  obtenemos la ventana asociada a al viewmodel actual
+                    Window window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == this);
+                    // cerrar la ventana si se encuentra
+                    if (window != null)
+                    {
+                        window.Close();
+                    }
                 }
                 else
                 {
-                    MessageBox.Show($"Error al crear la tarea: {response.StatusCode}");
+                    if (Description.Length > 90 || Title.Length > 25)
+                    {
+                        string maxLenght = "Description should be maximum 90 characters, and title should be maximum 25 characters.";
+                        CustomMessageBox messageBox = new CustomMessageBox(maxLenght);
+                        messageBox.ShowDialog();
+                    }
+                    else
+                    {
+                        string badDecription = "Please fill out all fields for the task";
+                        CustomMessageBox messageBox = new CustomMessageBox(badDecription);
+                        messageBox.ShowDialog();
+                    }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Error al ingresar la tarea: " + ex.Message);
             }
