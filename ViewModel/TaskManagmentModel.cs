@@ -25,11 +25,11 @@ namespace AdministradorDeTareas.ViewModel
     public class TaskManagmentModel : ViewModelBase
     {
         private static readonly HttpClient client = new HttpClient();
-        private TaskModelDAO taskModelDAO = new TaskModelDAO();
-        private List<TaskModel> _tasks;
-        private List<TaskModel> _pendingTasks;
-        private List<TaskModel> _highPriorityTasks;
-        private List<TaskModel> _lastTaskAdded;
+        private TaskModelDAO  taskModelDAO = new TaskModelDAO();
+        private List<TaskModel>? _tasks;
+        private List<TaskModel>? _pendingTasks;
+        private List<TaskModel>? _highPriorityTasks;
+        private List<TaskModel>? _lastTaskAdded;
         public List<TaskModel> TasksList
         { 
             get { return _tasks; }
@@ -77,18 +77,18 @@ namespace AdministradorDeTareas.ViewModel
             GetTasksFromApi();
         }
         // metodo para ejecutar el verbo get de la api y mostrar las estadisticas
-        private async void GetTasksFromApi()
+        private async Task GetTasksFromApi()
         {
             try
             {
-                TasksList = taskModelDAO.GetAll("https://localhost:44384/api/Tasks");
+                TasksList = await Task.Run(() => taskModelDAO.GetAll("https://localhost:44384/api/Tasks"));
                 if (TasksList != null)
                 {
                     CreatePieCharts();
                     ShowTasksInfo();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 string errorMessage = $"Error: Operation could not be completed. Message: {ex.Message}";
                 CustomMessageBox customMessageBox = new CustomMessageBox(errorMessage);

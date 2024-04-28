@@ -147,7 +147,7 @@ namespace AdministradorDeTareas.Model.DAO
                 return false;
             }
         }
-        public bool Put(UsersModel user)
+        public bool Put(int id , UsersModel user)
         {
             try
             {

@@ -14,7 +14,7 @@ namespace AdministradorDeTareas.Interfaces
         bool Delete(int id);
         bool Post(T obj);
         T GetEspecificObject(int id);
-        public bool Put(T obj);
+        public bool Put(int id ,T obj);
 
     }
 }

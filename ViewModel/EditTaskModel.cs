@@ -72,24 +72,13 @@ namespace AdministradorDeTareas.ViewModel
         public EditTaskModel()
         {
             CreateTask = new ViewModelCommand(ExecuteEditTask);
-
         }
         private void ExecuteEditTask(object obj)
         {
-            TaskModel newTask = new TaskModel();
-            newTask.UserID = SelectedTask.UserID;
-            newTask.TaskID = SelectedTask.TaskID;
-            newTask.StatusID = SelectedTask.StatusID;
-            newTask.PriorityID = PrioritySelect;
-            newTask.Title = Title;
-            newTask.Description = Description;
-            newTask.DueDate = DueDate;
-            newTask.Priority = null; 
-            newTask.TaskStatus = null;
-            newTask.Users = null;
-
             // llamamos al metodo que ejecutara el verbo put 
-            if(taskModelDAO.Put(newTask))
+            SelectedTask.PriorityID = SelectedTask.PriorityID + 1;
+            MessageBox.Show($"{SelectedTask.PriorityID}");
+            if (taskModelDAO.Put((int)SelectedTask.TaskID,SelectedTask))
             {
                 // buscamos la ventana actual
                 Window window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == this);

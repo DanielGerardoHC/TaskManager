@@ -164,13 +164,12 @@ namespace AdministradorDeTareas.Model.DAO
                 return null;
             }
         }
-        public bool Put(TaskModel task)
+        public bool Put(int id , TaskModel task)
         {
             try
             {
+                string urlApi = $"https://localhost:44384/api/Tasks/{id}";
                 string jsonPrioritie = JsonConvert.SerializeObject(task);
-                string urlApi = $"https://localhost:44384/api/Tasks/{task.TaskID}";
-
                 // configurar la solicitud HTTP Put con el contenido JSON
                 HttpResponseMessage response = client.PutAsync(urlApi, new StringContent(jsonPrioritie, Encoding.UTF8, "application/json")).Result;
                 // verificar si la solicitud fue exitosa
@@ -183,7 +182,7 @@ namespace AdministradorDeTareas.Model.DAO
                 }
                 else
                 {
-                    string Message = $"Error: Operation could not be completed. Cod: {response.StatusCode}";
+                    string Message = $"Error: Operation could not be completed. Server Cod: {response.StatusCode}";
                     CustomMessageBox customMessageBox = new CustomMessageBox(Message);
                     customMessageBox.ShowDialog();
                     return false;

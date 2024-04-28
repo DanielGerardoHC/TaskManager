@@ -48,7 +48,7 @@
                    Margin="8,20,0,0">
                 </Label>
                 <Label
-                   Content="{Binding SelectedTask.Title, Mode=OneWayToSource}"
+                   Content="{Binding SelectedTask.Title, Mode=TwoWay}"
                    FontSize="27"
                    Foreground="White"
                    Margin="8,20,0,0">
