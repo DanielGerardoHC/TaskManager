@@ -32,13 +32,13 @@ namespace AdministradorDeTareas
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             if (sender is RadioButton radioButton && radioButton.IsChecked == true)
-            { 
+            {
                 if (radioButton.Content is StackPanel stackPanel)
                 {
                     // search the textblock in the stackpanel
                     var textBlock = FindVisualChild<TextBlock>(stackPanel);
                     // select txtopcelected equals to the textblock
-                    txtOpCelected.Text = textBlock.Text;                                                  
+                    txtOpCelected.Text = textBlock.Text;
                 }
             }
         }
@@ -66,7 +66,7 @@ namespace AdministradorDeTareas
         // 72942237
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-         //   this.WindowState = WindowState.Maximized;
+            //   this.WindowState = WindowState.Maximized;
         }
         [DllImport("user32.dll")]
         public static extern IntPtr SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);

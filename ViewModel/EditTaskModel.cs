@@ -1,4 +1,4 @@
-﻿using AdministradorDeTareas.Model;
+﻿ using AdministradorDeTareas.Model;
 using AdministradorDeTareas.Model.DAO;
 using AdministradorDeTareas.View;
 using Newtonsoft.Json;
@@ -6,21 +6,31 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Security.Policy;
-using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+
 namespace AdministradorDeTareas.ViewModel
 {
-    public class AddTaskViewModel : EditActionsModel
+    public class EditTaskModel : EditActionsModel
     {
-        private static readonly TaskModelDAO taskModelDao = new TaskModelDAO();
+        private TaskModelDAO taskModelDAO = new TaskModelDAO();
         private int? _prioritySelect;
         private string? _description;
         private string? _title;
         private DateTime? _dueDate;
+        private TaskModel _selectedTask;
+        public new TaskModel  SelectedTask
+        {
+            get { return _selectedTask;  }
+            set
+            {
+                _selectedTask = value;
+                _selectedTask.PriorityID = value.PriorityID - 1;
+                OnPropertyChanged(nameof(SelectedTask));
+            }
+        }
         public int? PrioritySelect
         {
             get { return _prioritySelect; }
@@ -59,27 +69,27 @@ namespace AdministradorDeTareas.ViewModel
             }
         }
         public ICommand CreateTask { get; }
-        public AddTaskViewModel()
+        public EditTaskModel()
         {
-            CreateTask = new ViewModelCommand(ExecuteCreateTask);
+            CreateTask = new ViewModelCommand(ExecuteEditTask);
+
         }
-        private void ExecuteCreateTask(object obj)
+        private void ExecuteEditTask(object obj)
         {
             TaskModel newTask = new TaskModel();
-            newTask.StatusID = 1;
-            newTask.PriorityID = PrioritySelect + 1;
+            newTask.UserID = SelectedTask.UserID;
+            newTask.TaskID = SelectedTask.TaskID;
+            newTask.StatusID = SelectedTask.StatusID;
+            newTask.PriorityID = PrioritySelect;
             newTask.Title = Title;
             newTask.Description = Description;
             newTask.DueDate = DueDate;
-            newTask.UserID = 1;
-            newTask.TaskID = null;
-            newTask.Priority = null;
+            newTask.Priority = null; 
             newTask.TaskStatus = null;
             newTask.Users = null;
 
-            // llamamos al metodo de la clase DAO
-
-            if(taskModelDao.Post(newTask))
+            // llamamos al metodo que ejecutara el verbo put 
+            if(taskModelDAO.Put(newTask))
             {
                 // buscamos la ventana actual
                 Window window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == this);
@@ -89,6 +99,8 @@ namespace AdministradorDeTareas.ViewModel
                     window.Close();
                 }
             }
+
         }
     }
+
 }

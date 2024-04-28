@@ -1,7 +1,11 @@
-﻿using Microsoft.VisualBasic;
+﻿
+using AdministradorDeTareas.View;
+using Microsoft.VisualBasic;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -19,6 +23,6 @@ namespace AdministradorDeTareas.Model
          public int? PriorityID { get; set; }
          public virtual TaskStatusModel? TaskStatus { get; set; }
          public virtual UsersModel? Users { get; set; }
-         public virtual PriorityModel? Priority { get; set; }       
+         public virtual PriorityModel? Priority { get; set; }
     }
 }

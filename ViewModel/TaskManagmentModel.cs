@@ -17,20 +17,21 @@ using System.Windows.Media;
 using System.Text.Json.Nodes;
 using System.Windows;
 using LiveCharts.Helpers;
+using AdministradorDeTareas.Model.DAO;
+using AdministradorDeTareas.View;
 
 namespace AdministradorDeTareas.ViewModel
 {
     public class TaskManagmentModel : ViewModelBase
     {
         private static readonly HttpClient client = new HttpClient();
+        private TaskModelDAO taskModelDAO = new TaskModelDAO();
         private List<TaskModel> _tasks;
         private List<TaskModel> _pendingTasks;
         private List<TaskModel> _highPriorityTasks;
         private List<TaskModel> _lastTaskAdded;
         public List<TaskModel> TasksList
-        {
-            // si o si debe cada propiedad debe tener su get y set
-            // junto con el metodo OnpropetyChanged
+        { 
             get { return _tasks; }
             set
             {
@@ -72,33 +73,26 @@ namespace AdministradorDeTareas.ViewModel
             SeriesCollection = new SeriesCollection();
             TaskCompletedCollection = new SeriesCollection();
 
-            //end point para obtener todas las tareas y luego llenar los PieChart
+            // llamamos al metodo que ara la consulta get a la Api
             GetTasksFromApi();
         }
+        // metodo para ejecutar el verbo get de la api y mostrar las estadisticas
         private async void GetTasksFromApi()
         {
-            string apiUrl = "https://localhost:44384/api/Tasks";
             try
             {
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
-
-                if (response.IsSuccessStatusCode)
+                TasksList = taskModelDAO.GetAll("https://localhost:44384/api/Tasks");
+                if (TasksList != null)
                 {
-                    string json = await response.Content.ReadAsStringAsync();
-                    TasksList = JsonConvert.DeserializeObject<List<TaskModel>>(json);
-
-                    // Después de llenar TasksList, crear las series para los gráficos
                     CreatePieCharts();
                     ShowTasksInfo();
                 }
-                else
-                {
-                    MessageBox.Show($" Error al tratar de obtener los datos: {response.StatusCode}");
-                }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                MessageBox.Show($" Error en la solicitud HTTPS: {ex.Message}");
+                string errorMessage = $"Error: Operation could not be completed. Message: {ex.Message}";
+                CustomMessageBox customMessageBox = new CustomMessageBox(errorMessage);
+                customMessageBox.ShowDialog();
             }
         }
         private void CreatePieCharts()
@@ -133,8 +127,8 @@ namespace AdministradorDeTareas.ViewModel
         private void ShowTasksInfo()
         { 
             // filtramos las tareas que tengan un estado pendiente
-            var PendingTasks_aux = TasksList.Where(x => x.TaskStatus.StatusName == "Pending").Reverse();
-            var HighPriorityTasks_aux = TasksList.Where(x => x.Priority != null).Where(x => x.Priority.PriorityStatus == "High").Reverse();
+            var PendingTasks_aux = TasksList.Where(x => x.TaskStatus.StatusID == 1 ).Reverse();
+            var HighPriorityTasks_aux = TasksList.Where(x => x.Priority != null).Where(x => x.Priority.PriorityID == 3 ).Reverse();
             var LasTaskAdded_aux = TasksList.ToList();
             LasTaskAdded_aux.Reverse();
             HighPrirityTasks = HighPriorityTasks_aux.Take(3).ToList();

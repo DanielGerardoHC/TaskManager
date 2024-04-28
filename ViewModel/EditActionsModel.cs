@@ -13,16 +13,19 @@ using Newtonsoft.Json;
 using System.ServiceModel.Channels;
 using System.Windows;
 using System.Text.Json.Nodes;
+using AdministradorDeTareas.Model.DAO;
+using static System.Net.WebRequestMethods;
 
 namespace AdministradorDeTareas.ViewModel
 {
     public class EditActionsModel : ViewModelBase
     {
-        private static readonly HttpClient client = new HttpClient();
-
+        #region Atributos
+        private static TaskModelDAO taskModelDAO = new TaskModelDAO();
         private List<TaskModel> _tasks;
         private string _txtSearch;
         private TaskModel _selectedTask { get; set; }
+        public ICommand ShowEditTask { get;  }
         public ICommand ShowAddTask { get; }
         public ICommand SearchTask { get; }
         public ICommand GetTasks { get; }  
@@ -47,6 +50,17 @@ namespace AdministradorDeTareas.ViewModel
                 OnPropertyChanged(nameof(TxtSearch));
             }
         }
+        public TaskModel SelectedTask
+        {
+            get { return _selectedTask; }
+            set
+            {
+                _selectedTask = value;
+                OnPropertyChanged(nameof(SelectedTask));
+            }
+
+        }
+        #endregion
         public EditActionsModel()
         {
             // inicializamos todos los comandos que usaremos
@@ -54,22 +68,17 @@ namespace AdministradorDeTareas.ViewModel
             SearchTask = new ViewModelCommand(ExecuteSearchTask);
             GetTasks = new ViewModelCommand(ExecuteGetTasks);
             ShowViewDeleteTask = new ViewModelCommand(ExecuteShowViewDeleteTask);
-            GetTasksFromApi();
-            TxtSearch = "";
+            ShowEditTask = new ViewModelCommand(ExecuteShowEditTask);
+            // llenamos el listbox llamando al verbo get
+            GetAllTasks();
         }
-        public TaskModel SelectedTask 
-        { get { return _selectedTask; } 
-          set {
-                _selectedTask = value;
-                OnPropertyChanged(nameof(SelectedTask));
-              }
-        
-        }
+
+        #region MetodosDeComandos
         private void ExecuteSearchTask(object obj)
         {
             if (TxtSearch != null || TxtSearch != "")
             {
-                SearchTaskFromApi();
+                TasksList = taskModelDAO.GetWhere("https://localhost:44384/api/Tasks?TaskName=",TxtSearch);
             }
         }
         private void ExecuteShowAddTask(object obj)
@@ -79,57 +88,23 @@ namespace AdministradorDeTareas.ViewModel
         }
         private void ExecuteGetTasks(object obj)
         {
-            GetTasksFromApi();
+            GetAllTasks();
+        }
+        private void ExecuteShowEditTask(object obj)
+        {
+            ViewEditTask viewEditTask = new ViewEditTask(SelectedTask);
+            viewEditTask.ShowDialog();
         }
         public void ExecuteShowViewDeleteTask(object obj)
         {
             ViewDeleteTask viewDeleteTask = new ViewDeleteTask(SelectedTask);
             viewDeleteTask.ShowDialog();
         }
-        public async Task GetTasksFromApi()
+
+        public async Task GetAllTasks()
         {
-            string apiUrl = "https://localhost:44384/api/Tasks";
-            try
-            {
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string json = response.Content.ReadAsStringAsync().Result;
-                    TasksList = JsonConvert.DeserializeObject<List<TaskModel>>(json);
-                }
-                else
-                {
-                    MessageBox.Show($"Error al obtener las tareas. Código de estado: {response.StatusCode}");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al realizar la solicitud HTTP: {ex.Message}");
-            }
+            TasksList = taskModelDAO.GetAll("https://localhost:44384/api/Tasks");
         }
-        public async Task SearchTaskFromApi()
-        {
-
-            string apiUrl = $"https://localhost:44384/api/Tasks?TaskName={TxtSearch}";
-            try
-            {
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string json = response.Content.ReadAsStringAsync().Result;
-                    TasksList = JsonConvert.DeserializeObject<List<TaskModel>>(json);
-                }
-                else
-                {
-                    MessageBox.Show($"Error al obtener las tareas. Código de estado: {response.StatusCode}");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al realizar la solicitud HTTP: {ex.Message}");
-            }
-        }
+        #endregion
     }
 }

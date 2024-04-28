@@ -78,9 +78,9 @@
                  Background="Transparent">
                  <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
-                            <Setter Property="materialDesign:ListBoxItemAssist.HoverBackground" Value="#4600A6"/>
-                            <Setter Property="materialDesign:ListBoxItemAssist.SelectedFocusedBackground" Value="#00CCFF"/>
-                            <Setter Property="materialDesign:ListBoxItemAssist.SelectedUnfocusedBackground" Value="#00CCFF"/>
+                            <Setter Property="materialDesign:ListBoxItemAssist.HoverBackground" Value="#2F0080"/>
+                            <Setter Property="materialDesign:ListBoxItemAssist.SelectedFocusedBackground" Value="#4600A6"/>
+                            <Setter Property="materialDesign:ListBoxItemAssist.SelectedUnfocusedBackground" Value="#2F0080"/>
                         </Style>
                     </ListBox.ItemContainerStyle>
                     <ListBox.ItemTemplate>              
@@ -221,7 +221,7 @@
                    Height="40"
                    Margin="0,25,0,0"
                    materialDesign:RippleAssist.Feedback="#DD000000"
-                   Command="{Binding ShowAddTask}"
+                   Command="{Binding ShowEditTask}"
                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                    Style="{StaticResource MaterialDesignRaisedSecondaryButton}">
                     <StackPanel Orientation="Horizontal"

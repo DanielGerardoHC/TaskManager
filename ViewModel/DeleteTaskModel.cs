@@ -1,4 +1,5 @@
 ﻿using AdministradorDeTareas.Model;
+using AdministradorDeTareas.Model.DAO;
 using AdministradorDeTareas.View;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace AdministradorDeTareas.ViewModel
 {
     public class DeleteTaskModel : EditActionsModel
     {
-        private static readonly HttpClient client = new HttpClient();
+        private static readonly TaskModelDAO taskModelDAO = new TaskModelDAO();
         private TaskModel _selectedTask;
         public TaskModel SelectedTask
         {
@@ -26,57 +27,30 @@ namespace AdministradorDeTareas.ViewModel
             }
         }
         public ICommand DeleteTask { get; }
-
         public DeleteTaskModel()
         {
             DeleteTask = new ViewModelCommand(ExecuteDeleteTask);
         }
+
+        // metodo para eliminar tarea
         private void ExecuteDeleteTask(object obj)
         {
-            DeleteTaskFromApi();
+            DeleteTaskAsync();
         }
-        public async Task DeleteTaskFromApi()
+        public async void DeleteTaskAsync()
         {
-            int taskId = (int)SelectedTask.TaskID;
-            if (taskId == null)
+            int taskID = (int)SelectedTask.TaskID;
+            if (taskModelDAO.Delete(taskID))
             {
-                taskId = 0;
-            }
-            string apiUrl = $"https://localhost:44384/api/Tasks/{taskId}";
-            try
-            {
-                HttpResponseMessage response = await client.DeleteAsync(apiUrl);
-                if (response.IsSuccessStatusCode)
+                // buscamos la ventana actual
+                Window window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == this);
+                // cerrar la ventana si se encuentra y si la tarea se modifico con exito
+                if (window != null)
                 {
-                     string Message = "Task Delete Successeflly";
-                     CustomMessageBox customMessageBox = new CustomMessageBox(Message);
-                     customMessageBox.ShowDialog();
-                   //  obtenemos la ventana asociada a al viewmodel actual
-                    Window window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == this);
-                   // cerrar la ventana si se encuentra
-                   if (window != null)
-                   {
-                       window.Close();
-                   }
-                }
-                else
-                {
-                    string Message = "Task not deleted";
-                    CustomMessageBox customMessageBox = new CustomMessageBox(Message);
-                    customMessageBox.ShowDialog();
-                    // obtenemos la ventana asociada a al viewmodel actual
-                    Window window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == this);
-                    // cerrar la ventana si se encuentra
-                    if (window != null)
-                    {
-                        window.Close();
-                    }
+                    window.Close();
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al realizar la solicitud HTTP: {ex.Message}");
-            }
+            TasksList = taskModelDAO.GetAll("https://localhost:44384/api/Tasks");
         }
     }
 }
