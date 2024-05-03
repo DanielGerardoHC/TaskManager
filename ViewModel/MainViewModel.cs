@@ -62,7 +62,7 @@ namespace AdministradorDeTareas.ViewModel
         }
         private void ExecuteShowTaskManagmentCommand(object obj)
         {
-            CurrentChildView = new TaskManagmentModel();
+            CurrentChildView = new DashboardModel();
         }
 
     }

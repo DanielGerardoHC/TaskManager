@@ -22,7 +22,7 @@ using AdministradorDeTareas.View;
 
 namespace AdministradorDeTareas.ViewModel
 {
-    public class TaskManagmentModel : ViewModelBase
+    public class DashboardModel : ViewModelBase
     {
         private static readonly HttpClient client = new HttpClient();
         private TaskModelDAO  taskModelDAO = new TaskModelDAO();
@@ -68,7 +68,7 @@ namespace AdministradorDeTareas.ViewModel
         }        
         public SeriesCollection SeriesCollection { get; set; }
         public SeriesCollection TaskCompletedCollection { get; set; }
-        public TaskManagmentModel()
+        public DashboardModel()
         {
             SeriesCollection = new SeriesCollection();
             TaskCompletedCollection = new SeriesCollection();

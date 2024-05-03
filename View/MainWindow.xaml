@@ -19,7 +19,7 @@
 
     <Window.Resources>
         <!--All views of the aplication-->
-        <DataTemplate DataType="{x:Type viewModel:TaskManagmentModel}">
+        <DataTemplate DataType="{x:Type viewModel:DashboardModel}">
             <local:TaskManagment/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:EditActionsModel}">
@@ -90,8 +90,8 @@
                              Name="btnTaskManagment"
                              Checked="RadioButton_Checked">
                         <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="gear" HorizontalAlignment="Left" Foreground="White" Margin="10,0,0,0" Height="30" Width="30"/>
-                            <TextBlock Text="Task Management" 
+                            <fa:IconImage Icon="HomeAlt" HorizontalAlignment="Left" Foreground="White" Margin="10,0,0,0" Height="30" Width="30"/>
+                            <TextBlock Text="Dashboard" 
                                    Margin="13,0,0,0" 
                                    VerticalAlignment="Center" 
                                    FontSize="15"  
@@ -121,8 +121,8 @@
                              Checked="RadioButton_Checked">
 
                         <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Eye" HorizontalAlignment="Left" Foreground="White" Margin="10,0,0,0" Height="30" Width="30"/>
-                            <TextBlock Text="View Options" 
+                            <fa:IconImage Icon="UserGear" HorizontalAlignment="Left" Foreground="White" Margin="10,0,0,0" Height="30" Width="30"/>
+                            <TextBlock Text="User Account" 
                                        Margin="13,0,0,0" 
                                        VerticalAlignment="Center" 
                                        FontSize="15"  
