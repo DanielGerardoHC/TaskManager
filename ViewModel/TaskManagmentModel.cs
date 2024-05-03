@@ -81,7 +81,7 @@ namespace AdministradorDeTareas.ViewModel
         {
             try
             {
-                TasksList = await Task.Run(() => taskModelDAO.GetAll("https://localhost:44384/api/Tasks"));
+                TasksList = await Task.Run(() => taskModelDAO.GetAll((int)ViewModelBase.user.UserID));
                 if (TasksList != null)
                 {
                     CreatePieCharts();
@@ -90,7 +90,7 @@ namespace AdministradorDeTareas.ViewModel
             }
             catch (Exception ex)
             {
-                string errorMessage = $"Error: Operation could not be completed. Message: {ex.Message}";
+                string errorMessage = $"Error: Operation could not be completed. message: {ex.Message}";
                 CustomMessageBox customMessageBox = new CustomMessageBox(errorMessage);
                 customMessageBox.ShowDialog();
             }
@@ -127,13 +127,14 @@ namespace AdministradorDeTareas.ViewModel
         private void ShowTasksInfo()
         { 
             // filtramos las tareas que tengan un estado pendiente
-            var PendingTasks_aux = TasksList.Where(x => x.TaskStatus.StatusID == 1 ).Reverse();
-            var HighPriorityTasks_aux = TasksList.Where(x => x.Priority != null).Where(x => x.Priority.PriorityID == 3 ).Reverse();
+            var PendingTasks_aux = TasksList.Where(x => x.TaskStatus.StatusName == "Pendiente" ).Reverse();
+            var HighPriorityTasks_aux = TasksList.Where(x => x.Priority != null).Where(x => x.Priority.PriorityStatus == "High" ).Reverse();
             var LasTaskAdded_aux = TasksList.ToList();
             LasTaskAdded_aux.Reverse();
+            // usaremos unicamente los primeros 3 registros
             HighPrirityTasks = HighPriorityTasks_aux.Take(3).ToList();
             LastTaskAdded = LasTaskAdded_aux.Take(3).ToList();
-            PendingTasks = PendingTasks_aux.Take(3).ToList(); // usaremos unicamente los primeros 5 registros
+            PendingTasks = PendingTasks_aux.Take(3).ToList(); 
         }
         
     }

@@ -185,7 +185,6 @@
                    Margin="0,25,0,0"
                    materialDesign:RippleAssist.Feedback="#DD000000"
                    Command="{Binding ShowAddTask}"
-                   IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                    Style="{StaticResource MaterialDesignRaisedSecondaryButton}">
                     <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Right">
@@ -222,7 +221,6 @@
                    Margin="0,25,0,0"
                    materialDesign:RippleAssist.Feedback="#DD000000"
                    Command="{Binding ShowEditTask}"
-                   IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                    Style="{StaticResource MaterialDesignRaisedSecondaryButton}">
                     <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Right">

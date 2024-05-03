@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Remove="AppSource\BtnSource.xaml" />
+    <Page Remove="AppResource\BtnSource.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="AppSource\BtnSource.xaml" />
+    <Resource Include="AppResource\BtnSource.xaml" />
     <Resource Include="Images\Checking.png" />
     <Resource Include="Images\fondo.jpg" />
     <Resource Include="Images\Icon.png" />

@@ -16,10 +16,11 @@ namespace AdministradorDeTareas.Model.DAO
     public class TaskModelDAO : ITaskManagerServiceDAO<TaskModel>
     {
         public static readonly HttpClient client = new HttpClient();
-        public List<TaskModel> GetAll(string apiUrl)
+        public List<TaskModel> GetAll(int userID)
         {
             try
             {
+                string apiUrl = (string)Application.Current.FindResource("GetTasksUrl")+userID;
                 List<TaskModel> tasksList;
                 HttpResponseMessage response = client.GetAsync(apiUrl).Result;
                 if (response.IsSuccessStatusCode)
@@ -44,11 +45,11 @@ namespace AdministradorDeTareas.Model.DAO
                 return null;
             }
         }
-        public List<TaskModel> GetWhere(string url, string title)
+        public List<TaskModel> GetWhere(string title, int userID)
         {
-            string apiUrl = url + title;
             try
             {
+                string apiUrl = (string)Application.Current.FindResource("GetTasksWhere?")+title+ "&userId="+userID;
                 List<TaskModel> tasksList = new List<TaskModel>();
                 HttpResponseMessage response = client.GetAsync(apiUrl).Result;
 
@@ -76,7 +77,7 @@ namespace AdministradorDeTareas.Model.DAO
         }
         public bool Delete(int id)
         {
-            string apiUrl = $"https://localhost:44384/api/Tasks/{id}";
+            string apiUrl = (string)Application.Current.FindResource("DeleteTask")+id;
             try
             {
                 HttpResponseMessage response = client.DeleteAsync(apiUrl).Result;
@@ -108,7 +109,8 @@ namespace AdministradorDeTareas.Model.DAO
             try
             {
                 string JsonTask = JsonConvert.SerializeObject(task);
-                string urlApi = "https://localhost:44384/api/Tasks";
+                // hacemos referencia al recurso donde se encuentran las Url de la Api
+                string urlApi = (string)Application.Current.FindResource("PostTask");
                 // configurar la solicitud HTTP POST con el contenido JSON
                 HttpResponseMessage response = client.PostAsync(urlApi, new StringContent(JsonTask, Encoding.UTF8, "application/json")).Result;
                 // verificar si la solicitud fue exitosa
@@ -135,12 +137,12 @@ namespace AdministradorDeTareas.Model.DAO
                 return false;
             }
         }
-        public TaskModel GetEspecificObject(int id)
+        public TaskModel GetEspecificObject(int id, int userID)
         {
             try
             {
                 TaskModel task;
-                string apiUrl = $"https://localhost:44384/api/Tasks/{id}"; 
+                string apiUrl = (string)Application.Current.FindResource("GetEspecificTask")+id;
                 HttpResponseMessage response = client.GetAsync(apiUrl).Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -168,7 +170,7 @@ namespace AdministradorDeTareas.Model.DAO
         {
             try
             {
-                string urlApi = $"https://localhost:44384/api/Tasks/{id}";
+                string urlApi = (string)Application.Current.FindResource("PutTask")+id;
                 string jsonPrioritie = JsonConvert.SerializeObject(task);
                 // configurar la solicitud HTTP Put con el contenido JSON
                 HttpResponseMessage response = client.PutAsync(urlApi, new StringContent(jsonPrioritie, Encoding.UTF8, "application/json")).Result;

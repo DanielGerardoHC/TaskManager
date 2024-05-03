@@ -11,7 +11,7 @@
         Title="AddTask"
         WindowStyle="None"
         ResizeMode="NoResize"
-        Height="320" Width="800"
+        Height="320" Width="860"
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="True"
         Background="Transparent">
@@ -104,7 +104,21 @@
                   materialDesign:HintAssist.Hint="Pick Date"
                   materialDesign:TextFieldAssist.HasClearButton="True"
                   Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                <ComboBox
+                     Width="130"
+                     Height="36"
+                     Margin="20,0,0,10"
+                     Background="WhiteSmoke"                    
+                     materialDesign:HintAssist.Hint="Select Status"
+                     materialDesign:TextFieldAssist.HasClearButton="True"
+                     SelectedIndex="{Binding SelectedTask.StatusID, Mode=TwoWay}"                  
+                     Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                    <ComboBoxItem Content="Pending"/>
+                    <ComboBoxItem Content="In Progress"/>
+                    <ComboBoxItem Content="Completed"/>
+                </ComboBox>
             </StackPanel>
+              
             <StackPanel Grid.Row="2"
                         Orientation="Horizontal">
                 <fa:IconImage
@@ -114,7 +128,7 @@
                     Margin="45,12,0,0"
                     Foreground="White"/>
                 <TextBox
-                        Width="630"
+                        Width="700"
                         HorizontalAlignment="left"
                         FontSize="14"
                         Background="Transparent"

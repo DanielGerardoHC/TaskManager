@@ -12,8 +12,12 @@
         MouseDown="Window_MouseDown"
         AllowsTransparency="True"
         ResizeMode="NoResize"
-        Background="Transparent"      
+        Background="Transparent"    
+        xmlns:viewModel="clr-namespace:AdministradorDeTareas.ViewModel" 
         >
+    <Window.DataContext>
+        <viewModel:LoginViewModel/>
+    </Window.DataContext>
     <Border CornerRadius="20">
         <Border.Background>
             <ImageBrush ImageSource="/Images/FONDO.JPG"
@@ -206,7 +210,7 @@
                     
                     <TextBox
                         x:Name="UsernameBox"
-                        TextChanged="OnUserNameChange"
+                        Text="{Binding Username, Mode=TwoWay}"
                         Width="300"
                         HorizontalAlignment="left"
                         FontSize="14"
@@ -242,10 +246,10 @@
                            Margin="0,40,0,10">
                         Password:
                     </Label>
-                    <PasswordBox
+                    <TextBox
                         Width="300"
-                        PasswordChanged="OnPasswordChanged"
                         x:Name="PasswordBox"
+                        Text="{Binding Password, Mode=TwoWay}"
                         HorizontalAlignment="left"
                         FontSize="14"
                         Foreground="White"
@@ -258,7 +262,7 @@
                         Margin="0,5,0,0"
                         Padding="25,0,0,0"
                         >
-                        <PasswordBox.Background>
+                        <TextBox.Background>
                             <ImageBrush ImageSource="\Images\key.png"
                                         AlignmentX="Left"
                                         >
@@ -272,18 +276,18 @@
                                     <Rect>0,0,1,1</Rect>
                                 </ImageBrush.Viewbox>
                             </ImageBrush>
-                        </PasswordBox.Background>
-                    </PasswordBox>
+                        </TextBox.Background>
+                    </TextBox>
                     <Button
                      x:Name="btnLogin"
-                      IsEnabled="False"
+                      IsEnabled="true"
                       BorderThickness="0"
                       Content="Log In"
                       Foreground="White"
                       FontFamily="Didot"
                       FontSize="16"
-                      Cursor="Hand"
-                      Click="btnLogin_Click">
+                      Command="{Binding LoginCommand}"
+                      Cursor="Hand">
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Setter Property="Background" Value="#FF00F5"/>
@@ -319,7 +323,6 @@
                     </TextBlock>
                     <Button
                         x:Name="btnRegister"
-                        Click="btnRegister_Click"
                         Content="Register!"
                         Background="Transparent"
                         FontSize="16"

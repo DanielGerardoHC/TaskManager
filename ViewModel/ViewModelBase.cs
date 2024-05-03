@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdministradorDeTareas.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace AdministradorDeTareas.ViewModel
 {
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
+        public static UsersModel user = new UsersModel();
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string propertyName)
         {

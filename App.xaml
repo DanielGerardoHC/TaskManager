@@ -9,8 +9,9 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
-                <ResourceDictionary Source="\AppSource\BtnSource.xaml"/>
-                <ResourceDictionary Source="\AppSource\PanelSource.xaml"/>
+                <ResourceDictionary Source="\AppResource\BtnSource.xaml"/>
+                <ResourceDictionary Source="\AppResource\PanelSource.xaml"/>
+                <ResourceDictionary Source="\AppResource\ApiUrl.xaml"/>
                 <ResourceDictionary Source="\MaterialDesignTheme\DefaultThemes.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

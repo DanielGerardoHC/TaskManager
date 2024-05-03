@@ -71,7 +71,7 @@ namespace AdministradorDeTareas.ViewModel
             newTask.Title = Title;
             newTask.Description = Description;
             newTask.DueDate = DueDate;
-            newTask.UserID = 16;
+            newTask.UserID = ViewModelBase.user.UserID;
             newTask.TaskID = null;
             newTask.Priority = null;
             newTask.TaskStatus = null;

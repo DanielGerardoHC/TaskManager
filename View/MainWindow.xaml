@@ -135,7 +135,6 @@
                       Margin="16"
                       HorizontalAlignment="Left"
                       Command="{Binding OpenGithubProfile}"
-                      IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                       Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}"
                       ToolTip="Hi im Daniel please check my profile in GitHub :D">
                       <materialDesign:PackIcon

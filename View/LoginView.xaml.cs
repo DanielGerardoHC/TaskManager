@@ -48,18 +48,5 @@ namespace AdministradorDeTareas.View
             Main.Show();
             this.Close();
         }
-
-        private void btnRegister_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void OnPasswordChanged(object sender, RoutedEventArgs e )
-        {
-            btnLogin.IsEnabled = !string.IsNullOrEmpty(PasswordBox.Password);
-        }
-        private void OnUserNameChange(object  sender, RoutedEventArgs e)
-        {
-            btnLogin.IsEnabled = !string.IsNullOrEmpty(UsernameBox.Text);
-        }
     }
 }

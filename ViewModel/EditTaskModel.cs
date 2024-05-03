@@ -28,6 +28,7 @@ namespace AdministradorDeTareas.ViewModel
             {
                 _selectedTask = value;
                 _selectedTask.PriorityID = value.PriorityID - 1;
+                _selectedTask.StatusID = value.StatusID - 1;
                 OnPropertyChanged(nameof(SelectedTask));
             }
         }
@@ -76,8 +77,10 @@ namespace AdministradorDeTareas.ViewModel
         private void ExecuteEditTask(object obj)
         {
             // llamamos al metodo que ejecutara el verbo put 
-            SelectedTask.PriorityID = SelectedTask.PriorityID + 1;
-            MessageBox.Show($"{SelectedTask.PriorityID}");
+            SelectedTask.PriorityID++;
+            SelectedTask.StatusID++;
+            SelectedTask.Priority.PriorityID = SelectedTask.PriorityID;
+            SelectedTask.TaskStatus.StatusID = SelectedTask.StatusID;
             if (taskModelDAO.Put((int)SelectedTask.TaskID,SelectedTask))
             {
                 // buscamos la ventana actual

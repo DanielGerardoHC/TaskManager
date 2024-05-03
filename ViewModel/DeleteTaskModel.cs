@@ -50,7 +50,7 @@ namespace AdministradorDeTareas.ViewModel
                     window.Close();
                 }
             }
-            TasksList = taskModelDAO.GetAll("https://localhost:44384/api/Tasks");
+            TasksList = taskModelDAO.GetAll(1);
         }
     }
 }

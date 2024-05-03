@@ -76,10 +76,7 @@ namespace AdministradorDeTareas.ViewModel
         #region MetodosDeComandos
         private void ExecuteSearchTask(object obj)
         {
-            if (TxtSearch != null || TxtSearch != "")
-            {
-                TasksList = taskModelDAO.GetWhere("https://localhost:44384/api/Tasks?TaskName=",TxtSearch);
-            }
+            GetTaskWhere();
         }
         private void ExecuteShowAddTask(object obj)
         {
@@ -101,9 +98,16 @@ namespace AdministradorDeTareas.ViewModel
             viewDeleteTask.ShowDialog();
         }
 
+        public async Task GetTaskWhere()
+        {
+            if (TxtSearch != null || TxtSearch != "")
+            {
+                TasksList = await Task.Run(() => taskModelDAO.GetWhere(TxtSearch, (int)ViewModelBase.user.UserID));
+            }
+        }
         public async Task GetAllTasks()
         {
-            TasksList = taskModelDAO.GetAll("https://localhost:44384/api/Tasks");
+            TasksList = await Task.Run(() => taskModelDAO.GetAll((int)ViewModelBase.user.UserID));
         }
         #endregion
     }

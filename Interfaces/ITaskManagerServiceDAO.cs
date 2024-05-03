@@ -9,11 +9,11 @@ namespace AdministradorDeTareas.Interfaces
 {
     interface ITaskManagerServiceDAO<T> where T : class
     {
-        List<T> GetAll(string url);
-        List<T> GetWhere(string url, string Title);
+        List<T> GetAll(int userID);
+        List<T> GetWhere(string Title, int userID);
         bool Delete(int id);
         bool Post(T obj);
-        T GetEspecificObject(int id);
+        T GetEspecificObject(int id, int userID);
         public bool Put(int id ,T obj);
 
     }
