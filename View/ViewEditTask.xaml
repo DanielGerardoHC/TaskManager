@@ -21,7 +21,7 @@
     <Border CornerRadius="20">
         <Border.Background>
             <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
-                <GradientStop Color="#2B1380" Offset="0.9"/>
+                <GradientStop Color="#FFD700" Offset="1"/>
                 <GradientStop Color="#5E00FF" Offset="0.1"/>
             </LinearGradientBrush>
         </Border.Background>
@@ -42,13 +42,7 @@
                     Margin="40,12,0,0"
                     Foreground="White"/>
                 <Label
-                   Content="Edit Task: "
-                   FontSize="27"
-                   Foreground="White"
-                   Margin="8,20,0,0">
-                </Label>
-                <Label
-                   Content="{Binding SelectedTask.Title, Mode=TwoWay}"
+                   Content="Edit Task"
                    FontSize="27"
                    Foreground="White"
                    Margin="8,20,0,0">
@@ -85,8 +79,7 @@
                      Width="130"
                      Height="36"
                      Margin="20,0,0,10"
-                     x:Name="ComboPriority"
-                     Background="WhiteSmoke"                    
+                     x:Name="ComboPriority"                    
                      materialDesign:HintAssist.Hint="Select Priority"
                      materialDesign:TextFieldAssist.HasClearButton="True"
                      SelectedIndex="{Binding SelectedTask.PriorityID, Mode=TwoWay}"                  
@@ -98,7 +91,6 @@
                 <DatePicker
                   Width="127"
                   Height="36"
-                  Background="White"
                   Margin="20,0,0,10"
                   SelectedDate="{Binding SelectedTask.DueDate, Mode=TwoWay}"
                   materialDesign:HintAssist.Hint="Pick Date"
@@ -107,8 +99,7 @@
                 <ComboBox
                      Width="130"
                      Height="36"
-                     Margin="20,0,0,10"
-                     Background="WhiteSmoke"                    
+                     Margin="20,0,0,10"                  
                      materialDesign:HintAssist.Hint="Select Status"
                      materialDesign:TextFieldAssist.HasClearButton="True"
                      SelectedIndex="{Binding SelectedTask.StatusID, Mode=TwoWay}"                  

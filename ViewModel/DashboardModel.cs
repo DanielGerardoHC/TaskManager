@@ -91,8 +91,7 @@ namespace AdministradorDeTareas.ViewModel
             catch (Exception ex)
             {
                 string errorMessage = $"Error: Operation could not be completed. message: {ex.Message}";
-                CustomMessageBox customMessageBox = new CustomMessageBox(errorMessage);
-                customMessageBox.ShowDialog();
+                CustomMessageBox.MostrarCustomMessageBox(errorMessage);
             }
         }
         private void CreatePieCharts()
@@ -127,7 +126,7 @@ namespace AdministradorDeTareas.ViewModel
         private void ShowTasksInfo()
         { 
             // filtramos las tareas que tengan un estado pendiente
-            var PendingTasks_aux = TasksList.Where(x => x.TaskStatus.StatusName == "Pendiente" ).Reverse();
+            var PendingTasks_aux = TasksList.Where(x => x.TaskStatus.StatusName == "Pending" ).Reverse();
             var HighPriorityTasks_aux = TasksList.Where(x => x.Priority != null).Where(x => x.Priority.PriorityStatus == "High" ).Reverse();
             var LasTaskAdded_aux = TasksList.ToList();
             LasTaskAdded_aux.Reverse();

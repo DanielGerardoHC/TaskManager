@@ -19,16 +19,31 @@ namespace AdministradorDeTareas.View
     /// </summary>
     public partial class CustomMessageBox : Window
     {
-        public string? description {  get; set; }
-        public CustomMessageBox(string? description="Action Completed")
+        public string? description { get; set; }
+
+        public CustomMessageBox(string description)
         {
             InitializeComponent();
             this.description = description;
+            Loaded += CustomMessageBox_Loaded; // manejador del evento Loaded
+        }
+
+        // manejador del evento Loaded para establecer el DataContext
+        private void CustomMessageBox_Loaded(object sender, RoutedEventArgs e)
+        {
             DataContext = this;
         }
+
         private void Close_Window(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        public static void MostrarCustomMessageBox(string description)
+        {
+              CustomMessageBox customMessageBox = new CustomMessageBox(description);
+              customMessageBox.ShowDialog(); // muestra la ventana de manera modal
+
         }
     }
 }

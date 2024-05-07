@@ -167,7 +167,7 @@
                       HorizontalAlignment="Left"
                       Click="btnClose_Click"
                       Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}"
-                      ToolTip="Boom the App!! D:">
+                      ToolTip="Boom the App!!">
                             <materialDesign:PackIcon
                            Width="15"
                            Height="15"

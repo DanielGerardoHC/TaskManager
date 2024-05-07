@@ -326,6 +326,7 @@
                         Content="Register!"
                         Background="Transparent"
                         FontSize="16"
+                        Command="{Binding RegisterCommand}"
                         BorderBrush="Transparent"
                         Cursor="Hand"
                         FontFamily="Didot">

@@ -16,6 +16,8 @@ namespace AdministradorDeTareas.ViewModel
     public class EditTaskModel : EditActionsModel
     {
         private TaskModelDAO taskModelDAO = new TaskModelDAO();
+        public delegate void TaskEditedEventHandler();
+        public event TaskEditedEventHandler TaskEdited;
         private int? _prioritySelect;
         private string? _description;
         private string? _title;
@@ -83,6 +85,7 @@ namespace AdministradorDeTareas.ViewModel
             SelectedTask.TaskStatus.StatusID = SelectedTask.StatusID;
             if (taskModelDAO.Put((int)SelectedTask.TaskID,SelectedTask))
             {
+                TaskEdited.Invoke();
                 // buscamos la ventana actual
                 Window window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == this);
                 // cerrar la ventana si se encuentra y si la tarea se modifico con exito

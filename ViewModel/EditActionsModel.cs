@@ -78,10 +78,22 @@ namespace AdministradorDeTareas.ViewModel
         {
             GetTaskWhere();
         }
+        private void RechargeTaskList()
+        {
+            GetAllTasks();
+        }
         private void ExecuteShowAddTask(object obj)
         {
+            // Creamos una instancia de la vista viewAddTask
             ViewAddTask viewAddTask = new ViewAddTask();
-            viewAddTask.ShowDialog();
+            AddTaskViewModel addTaskModel = viewAddTask.DataContext as AddTaskViewModel;
+            if (addTaskModel != null)
+            {
+                // enviamos el metodo RechargeTaskList al delegado del viewModel de
+                // la vista viewAddTask
+                addTaskModel.TaskAdded += RechargeTaskList;
+                viewAddTask.ShowDialog();
+            }
         }
         private void ExecuteGetTasks(object obj)
         {
@@ -89,15 +101,41 @@ namespace AdministradorDeTareas.ViewModel
         }
         private void ExecuteShowEditTask(object obj)
         {
-            ViewEditTask viewEditTask = new ViewEditTask(SelectedTask);
-            viewEditTask.ShowDialog();
+            if (SelectedTask != null)
+            {
+                ViewEditTask viewEditTask = new ViewEditTask(SelectedTask);
+                EditTaskModel editTaskModel = viewEditTask.DataContext as EditTaskModel;
+                if (editTaskModel != null)
+                {
+                    editTaskModel.TaskEdited += RechargeTaskList;
+                    viewEditTask.ShowDialog();
+                }
+            }
+            else
+            {
+                CustomMessageBox.MostrarCustomMessageBox("Please select a task");
+            }
+            
         }
         public void ExecuteShowViewDeleteTask(object obj)
         {
-            ViewDeleteTask viewDeleteTask = new ViewDeleteTask(SelectedTask);
-            viewDeleteTask.ShowDialog();
+            if (SelectedTask != null)
+            {
+                ViewDeleteTask viewDeleteTask = new ViewDeleteTask(SelectedTask);
+                // Asignacion del viewModel como contexto de datos para la vista ViewDeleteTask
+                DeleteTaskModel deleteTaskModel = viewDeleteTask.DataContext as DeleteTaskModel;
+                if (deleteTaskModel != null)
+                {
+                    // asignacion del metodo RechargeTaskList al delegado de la VistaModelo
+                    deleteTaskModel.TaskDeleted += RechargeTaskList;
+                    viewDeleteTask.ShowDialog();
+                }
+            }
+            else
+            {
+                CustomMessageBox.MostrarCustomMessageBox("Please select a task");
+            }
         }
-
         public async Task GetTaskWhere()
         {
             if (TxtSearch != null || TxtSearch != "")

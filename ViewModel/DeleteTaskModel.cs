@@ -16,6 +16,8 @@ namespace AdministradorDeTareas.ViewModel
     public class DeleteTaskModel : EditActionsModel
     {
         private static readonly TaskModelDAO taskModelDAO = new TaskModelDAO();
+        public delegate void TaskDeletedEventHandler();
+        public event TaskDeletedEventHandler TaskDeleted;
         private TaskModel _selectedTask;
         public TaskModel SelectedTask
         {
@@ -42,6 +44,7 @@ namespace AdministradorDeTareas.ViewModel
             int taskID = (int)SelectedTask.TaskID;
             if (taskModelDAO.Delete(taskID))
             {
+                TaskDeleted?.Invoke();
                 // buscamos la ventana actual
                 Window window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == this);
                 // cerrar la ventana si se encuentra y si la tarea se modifico con exito

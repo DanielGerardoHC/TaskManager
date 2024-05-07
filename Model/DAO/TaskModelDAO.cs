@@ -21,7 +21,8 @@ namespace AdministradorDeTareas.Model.DAO
             try
             {
                 string apiUrl = (string)Application.Current.FindResource("GetTasksUrl")+userID;
-                List<TaskModel> tasksList;
+                List<TaskModel> tasksList = new List<TaskModel>();
+
                 HttpResponseMessage response = client.GetAsync(apiUrl).Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -31,17 +32,15 @@ namespace AdministradorDeTareas.Model.DAO
                 }
                 else
                 {
-                    string errorMessage = $"Error: Operation could not be completed. Code: {response.StatusCode}";
-                    CustomMessageBox customMessageBox = new CustomMessageBox(errorMessage);
-                    customMessageBox.ShowDialog();
+                    string errorMessage = $"Error: Operation could not be completed 'GetTasks'. Cod: {response.StatusCode}";
+                    CustomMessageBox.MostrarCustomMessageBox(errorMessage);
                     return null;
                 }
             }
             catch (Exception ex)
             {
-                string errorMessage = $"Error: Operation could not be completed. Message: {ex.Message}";
-                CustomMessageBox customMessageBox = new CustomMessageBox(errorMessage);
-                customMessageBox.ShowDialog();
+                string errorMessage = $"Error: Operation could not be completed 'GetTasks'. Message: {ex.Message}";
+                CustomMessageBox.MostrarCustomMessageBox(errorMessage);
                 return null;
             }
         }
@@ -61,17 +60,15 @@ namespace AdministradorDeTareas.Model.DAO
                 }
                 else
                 {
-                    string Message = $"Error: Operation could not be completed. Cod: {response.StatusCode}";
-                    CustomMessageBox customMessageBox = new CustomMessageBox(Message);
-                    customMessageBox.ShowDialog();
+                    string Message = $"Error: Operation could not be completed 'GetTasks'. Cod: {response.StatusCode}";
+                    CustomMessageBox.MostrarCustomMessageBox(Message);
                     return null;
                 }
             }
             catch (Exception ex)
             {
-                string Message = $"Error: Operation could not be completed. Cod: {ex.Message}";
-                CustomMessageBox customMessageBox = new CustomMessageBox(Message);
-                customMessageBox.ShowDialog();
+                string Message = $"Error: Operation could not be completed 'GetTasks'. Cod: {ex.Message}";
+                CustomMessageBox.MostrarCustomMessageBox(Message);
                 return null;
             }
         }
@@ -84,23 +81,20 @@ namespace AdministradorDeTareas.Model.DAO
                 if (response.IsSuccessStatusCode)
                 {
                     string Message = "Task deleted successfully";
-                    CustomMessageBox customMessageBox = new CustomMessageBox(Message);
-                    customMessageBox.ShowDialog();
+                    CustomMessageBox.MostrarCustomMessageBox(Message);
                     return true;
                 }
                 else
                 {
                     string Message = $"Task not deleted. Error Code: {response.StatusCode}";
-                    CustomMessageBox customMessageBox = new CustomMessageBox(Message);
-                    customMessageBox.ShowDialog();
+                    CustomMessageBox.MostrarCustomMessageBox(Message);
                     return false;
                 }
             }
             catch (Exception ex)
             {
                 string Message = $"Task not deleted. Error Code: {ex.Message}";
-                CustomMessageBox customMessageBox = new CustomMessageBox(Message);
-                customMessageBox.ShowDialog();
+                CustomMessageBox.MostrarCustomMessageBox(Message);
                 return false;
             }
         }
@@ -117,23 +111,20 @@ namespace AdministradorDeTareas.Model.DAO
                 if (response.IsSuccessStatusCode)
                 {
                     string description = "Task Added Successflly";
-                    CustomMessageBox messageBox = new CustomMessageBox(description);
-                    messageBox.ShowDialog();
+                    CustomMessageBox.MostrarCustomMessageBox(description);
                     return true;
                 }
                 else
                 {
-                    string Message = $"Error: Operation could not be completed. Cod: {response.StatusCode}";
-                    CustomMessageBox customMessageBox = new CustomMessageBox(Message);
-                    customMessageBox.ShowDialog();
+                    string Message = $"Error: Operation could not be completed. 'AddTasks' Cod: {response.StatusCode}";
+                    CustomMessageBox.MostrarCustomMessageBox(Message);
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                string Message = $"Error: Operation could not be completed. CodServer: {ex.Message}";
-                CustomMessageBox customMessageBox = new CustomMessageBox(Message);
-                customMessageBox.ShowDialog();
+                string Message = $"Error: Operation could not be completed. 'AddTasks' CodServer: {ex.Message}";
+                CustomMessageBox.MostrarCustomMessageBox(Message);
                 return false;
             }
         }
@@ -153,16 +144,14 @@ namespace AdministradorDeTareas.Model.DAO
                 else
                 {
                     string errorMessage = $"Error: Operation could not be completed. Code: {response.StatusCode}";
-                    CustomMessageBox customMessageBox = new CustomMessageBox(errorMessage);
-                    customMessageBox.ShowDialog();
+                    CustomMessageBox.MostrarCustomMessageBox(errorMessage);
                     return null;
                 }
             }
             catch (Exception ex)
             {
                 string errorMessage = $"Error: Operation could not be completed. Message: {ex.Message}";
-                CustomMessageBox customMessageBox = new CustomMessageBox(errorMessage);
-                customMessageBox.ShowDialog();
+                CustomMessageBox.MostrarCustomMessageBox(errorMessage);
                 return null;
             }
         }
@@ -178,23 +167,20 @@ namespace AdministradorDeTareas.Model.DAO
                 if (response.IsSuccessStatusCode)
                 {
                     string description = "Task Edited Successflly";
-                    CustomMessageBox messageBox = new CustomMessageBox(description);
-                    messageBox.ShowDialog();
+                    CustomMessageBox.MostrarCustomMessageBox(description);
                     return true;
                 }
                 else
                 {
                     string Message = $"Error: Operation could not be completed. Server Cod: {response.StatusCode}";
-                    CustomMessageBox customMessageBox = new CustomMessageBox(Message);
-                    customMessageBox.ShowDialog();
+                    CustomMessageBox.MostrarCustomMessageBox(Message);
                     return false;
                 }
             }
             catch (Exception ex)
             {
                 string Message = $"Error: Operation could not be completed. Cod: {ex.Message}";
-                CustomMessageBox customMessageBox = new CustomMessageBox(Message);
-                customMessageBox.ShowDialog();
+                CustomMessageBox.MostrarCustomMessageBox(Message);
                 return false;
             }
         }

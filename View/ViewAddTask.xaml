@@ -8,10 +8,11 @@
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         mc:Ignorable="d"
         xmlns:viewModel="clr-namespace:AdministradorDeTareas.ViewModel"
+        xmlns:dpconfig="http://schemas.bhandari.net.nz/2018/xaml/presentation"
         Title="AddTask"
         WindowStyle="None"
         ResizeMode="NoResize"
-        Height="320" Width="800"
+        Height="320" Width="730"
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="True"
         Background="Transparent">
@@ -21,7 +22,7 @@
     <Border CornerRadius="20">
         <Border.Background>
             <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
-                <GradientStop Color="#2B1380" Offset="0.9"/>
+                <GradientStop Color="#FFD700" Offset="1"/>
                 <GradientStop Color="#5E00FF" Offset="0.1"/>
             </LinearGradientBrush>
         </Border.Background>
@@ -79,8 +80,7 @@
                      Width="130"
                      Height="36"
                      Margin="20,0,0,10"
-                     x:Name="ComboPriority"
-                     Background="WhiteSmoke"                    
+                     x:Name="ComboPriority"                
                      materialDesign:HintAssist.Hint="Select Priority"
                      materialDesign:TextFieldAssist.HasClearButton="True"
                      SelectedIndex="{Binding PrioritySelect, Mode=TwoWay}"                  
@@ -92,7 +92,6 @@
                 <DatePicker
                   Width="127"
                   Height="36"
-                  Background="White"
                   Margin="20,0,0,10"
                   SelectedDate="{Binding DueDate, Mode=TwoWay}"
                   materialDesign:HintAssist.Hint="Pick Date"
@@ -108,7 +107,7 @@
                     Margin="45,12,0,0"
                     Foreground="White"/>
                 <TextBox
-                        Width="630"
+                        Width="620"
                         HorizontalAlignment="left"
                         FontSize="14"
                         Background="Transparent"

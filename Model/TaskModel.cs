@@ -18,9 +18,9 @@ namespace AdministradorDeTareas.Model
          public  string? Title {  get; set; }
          public string? Description { get; set; }
          public DateTime? DueDate { get; set; }
-         public int? StatusID { get; set; }
-         public int? UserID { get; set; }
-         public int? PriorityID { get; set; }
+         public int StatusID { get; set; }
+         public int UserID { get; set; }
+         public int PriorityID { get; set; }
          public virtual TaskStatusModel? TaskStatus { get; set; }
          public virtual UsersModel? Users { get; set; }
          public virtual PriorityModel? Priority { get; set; }

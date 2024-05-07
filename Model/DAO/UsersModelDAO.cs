@@ -127,7 +127,7 @@ namespace AdministradorDeTareas.Model.DAO
                 // verificar si la solicitud fue exitosa
                 if (response.IsSuccessStatusCode)
                 {
-                    string description = "Prioritie Modified Successflly";
+                    string description = "User Modified Successflly";
                     CustomMessageBox messageBox = new CustomMessageBox(description);
                     messageBox.ShowDialog();
                     return true;
