@@ -91,15 +91,15 @@ namespace AdministradorDeTareas.ViewModel
             {
                 UsersModel newUser = new UsersModel();
                 newUser.UserName = this.userName;
-                newUser.Name = this.name;
+                newUser.FullName = this.name;
                 newUser.Email = this.email;
                 newUser.PasswordHash = this.password;
                 if (this.password != null && this.name != null
                  && this.userName != null && this.email != null)
                 {
-                    if (password.Length < 6)
+                    if (password.Length >= 6)
                     {
-                        if (usersModelDAO.Post(newUser))
+                        if (usersModelDAO.Post(newUser, ViewModelBase.JwtToken))
                         {
                             // regresamos al usuario a la vista del log in
                             LoginView loginView = new LoginView();
@@ -115,7 +115,7 @@ namespace AdministradorDeTareas.ViewModel
                     }
                     else
                     {
-                        CustomMessageBox.MostrarCustomMessageBox("Password must be at least 8 characters long");
+                        CustomMessageBox.MostrarCustomMessageBox("Password must be at least 6 characters long");
                     }
                 }
                 else

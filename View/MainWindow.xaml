@@ -25,7 +25,7 @@
         <DataTemplate DataType="{x:Type viewModel:EditActionsModel}">
             <local:EditActions/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:ViewOptionsModel}">
+        <DataTemplate DataType="{x:Type viewModel:ViewModelUserAccount}">
             <local:ViewOptions/>
         </DataTemplate>
     </Window.Resources>

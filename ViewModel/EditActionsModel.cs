@@ -140,12 +140,12 @@ namespace AdministradorDeTareas.ViewModel
         {
             if (TxtSearch != null || TxtSearch != "")
             {
-                TasksList = await Task.Run(() => taskModelDAO.GetWhere(TxtSearch, (int)ViewModelBase.user.UserID));
+                TasksList = await Task.Run(() => taskModelDAO.GetWhere(TxtSearch, ViewModelBase.JwtToken));
             }
         }
         public async Task GetAllTasks()
         {
-            TasksList = await Task.Run(() => taskModelDAO.GetAll((int)ViewModelBase.user.UserID));
+            TasksList = await Task.Run(() => taskModelDAO.GetAll(ViewModelBase.JwtToken));
         }
         #endregion
     }

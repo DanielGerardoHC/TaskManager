@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace AdministradorDeTareas.ViewModel
 {
-    public class ViewOptionsModel : ViewModelBase
+    public class ViewModelUserAccount : ViewModelBase
     {
 
     }

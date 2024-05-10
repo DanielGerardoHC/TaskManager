@@ -21,8 +21,9 @@ namespace AdministradorDeTareas.Model
          public int StatusID { get; set; }
          public int UserID { get; set; }
          public int PriorityID { get; set; }
+         public virtual PriorityModel? Priority { get; set; }
          public virtual TaskStatusModel? TaskStatus { get; set; }
          public virtual UsersModel? Users { get; set; }
-         public virtual PriorityModel? Priority { get; set; }
+        
     }
 }

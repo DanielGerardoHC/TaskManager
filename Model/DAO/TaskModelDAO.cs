@@ -1,11 +1,13 @@
 ﻿
 using AdministradorDeTareas.Interfaces;
 using AdministradorDeTareas.View;
+using AdministradorDeTareas.ViewModel;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,11 +18,12 @@ namespace AdministradorDeTareas.Model.DAO
     public class TaskModelDAO : ITaskManagerServiceDAO<TaskModel>
     {
         public static readonly HttpClient client = new HttpClient();
-        public List<TaskModel> GetAll(int userID)
+        public List<TaskModel> GetAll(string token)
         {
             try
             {
-                string apiUrl = (string)Application.Current.FindResource("GetTasksUrl")+userID;
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                string apiUrl = (string)Application.Current.FindResource("GetTasks");
                 List<TaskModel> tasksList = new List<TaskModel>();
 
                 HttpResponseMessage response = client.GetAsync(apiUrl).Result;
@@ -32,23 +35,24 @@ namespace AdministradorDeTareas.Model.DAO
                 }
                 else
                 {
-                    string errorMessage = $"Error: Operation could not be completed 'GetTasks'. Cod: {response.StatusCode}";
+                    string errorMessage = $"Error: Operation could not be completed. Cod: {response.StatusCode}";
                     CustomMessageBox.MostrarCustomMessageBox(errorMessage);
                     return null;
                 }
             }
             catch (Exception ex)
             {
-                string errorMessage = $"Error: Operation could not be completed 'GetTasks'. Message: {ex.Message}";
+                string errorMessage = $"Error: Operation could not be completed. Message: {ex.Message}";
                 CustomMessageBox.MostrarCustomMessageBox(errorMessage);
                 return null;
             }
         }
-        public List<TaskModel> GetWhere(string title, int userID)
+        public List<TaskModel> GetWhere(string title, string token)
         {
             try
             {
-                string apiUrl = (string)Application.Current.FindResource("GetTasksWhere?")+title+ "&userId="+userID;
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                string apiUrl = (string)Application.Current.FindResource("GetTasksWhere")+title;
                 List<TaskModel> tasksList = new List<TaskModel>();
                 HttpResponseMessage response = client.GetAsync(apiUrl).Result;
 
@@ -72,8 +76,9 @@ namespace AdministradorDeTareas.Model.DAO
                 return null;
             }
         }
-        public bool Delete(int id)
+        public bool Delete(int id, string token)
         {
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             string apiUrl = (string)Application.Current.FindResource("DeleteTask")+id;
             try
             {
@@ -98,10 +103,11 @@ namespace AdministradorDeTareas.Model.DAO
                 return false;
             }
         }
-        public bool Post(TaskModel task)
+        public bool Post(TaskModel task, string token)
         {
             try
             {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 string JsonTask = JsonConvert.SerializeObject(task);
                 // hacemos referencia al recurso donde se encuentran las Url de la Api
                 string urlApi = (string)Application.Current.FindResource("PostTask");
@@ -116,7 +122,7 @@ namespace AdministradorDeTareas.Model.DAO
                 }
                 else
                 {
-                    string Message = $"Error: Operation could not be completed. 'AddTasks' Cod: {response.StatusCode}";
+                    string Message = $"Error: Operation could not be completed. (AddTask) Cod: {response.StatusCode}";
                     CustomMessageBox.MostrarCustomMessageBox(Message);
                     return false;
                 }
@@ -128,11 +134,12 @@ namespace AdministradorDeTareas.Model.DAO
                 return false;
             }
         }
-        public TaskModel GetEspecificObject(int id, int userID)
+        public TaskModel GetSpecificObject(int id, string token)
         {
             try
             {
                 TaskModel task;
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 string apiUrl = (string)Application.Current.FindResource("GetEspecificTask")+id;
                 HttpResponseMessage response = client.GetAsync(apiUrl).Result;
                 if (response.IsSuccessStatusCode)
@@ -155,11 +162,12 @@ namespace AdministradorDeTareas.Model.DAO
                 return null;
             }
         }
-        public bool Put(int id , TaskModel task)
+        public bool Put(TaskModel task, string token)
         {
             try
             {
-                string urlApi = (string)Application.Current.FindResource("PutTask")+id;
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                string urlApi = (string)Application.Current.FindResource("PutTask");
                 string jsonPrioritie = JsonConvert.SerializeObject(task);
                 // configurar la solicitud HTTP Put con el contenido JSON
                 HttpResponseMessage response = client.PutAsync(urlApi, new StringContent(jsonPrioritie, Encoding.UTF8, "application/json")).Result;

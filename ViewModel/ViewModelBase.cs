@@ -12,6 +12,15 @@ namespace AdministradorDeTareas.ViewModel
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
         public static UsersModel user = new UsersModel();
+        protected static string JwtToken { get; set; }
+        protected void SetToken(string token)
+        {
+            JwtToken = token;
+        }
+        protected string GetToken()
+        {
+            return JwtToken;
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string propertyName)

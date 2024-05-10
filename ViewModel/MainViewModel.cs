@@ -58,7 +58,7 @@ namespace AdministradorDeTareas.ViewModel
         }
         private void ExecuteShowViewOptionsCommand(object obj)
         {
-            CurrentChildView = new ViewOptionsModel();
+            CurrentChildView = new ViewModelUserAccount();
         }
         private void ExecuteShowTaskManagmentCommand(object obj)
         {

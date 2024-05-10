@@ -3,6 +3,7 @@ using AdministradorDeTareas.Model.DAO;
 using AdministradorDeTareas.View;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.VisualBasic.ApplicationServices;
 
 namespace AdministradorDeTareas.ViewModel
 {
@@ -38,23 +39,41 @@ namespace AdministradorDeTareas.ViewModel
         }
         public void ExecuteLogin(object obj)
         {
-            if (Username.Length >= 3 && Password.Length >= 4)
+           Login();
+        }
+        public void ExecuteRegister(object obj)
+        { 
+            ViewRegister viewRegister = new ViewRegister();
+            viewRegister.Show();
+            Window window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == this);
+            // cerrar la ventana si se encuentra
+            if (window != null)
+            {
+                window.Close();
+            }
+        }
+
+        public async void Login()
+        {
+            if (Username != null && Password != null)
             {
                 UsersModel checkUser = new UsersModel();
 
+                checkUser.UserId = 0;
                 checkUser.PasswordHash = Password;
                 checkUser.UserName = Username;
-                checkUser.Email = "default";
-                checkUser.UserID = -1;
-                checkUser.Name = "deafult";
+                checkUser.Email = "string";
+                checkUser.FullName = "string";
 
-                UsersModel isValisUser = UserDAO.Put(checkUser);
-                if (isValisUser != null)
+                string token = UserDAO.Put(checkUser);
+                if (token != null)
                 {
                     // si la autentificacion es correcta insertamos al usuario obtenido en el 
                     // campo statico user de ViewModelBase para que asi todos nuestros ViewModel 
                     // tengan acceso a los datos del usuario que ha iniciado sesion
-                    ViewModelBase.user = isValisUser;
+                    UsersModel logUser = UserDAO.GetSpecificObject(0,token);
+                    ViewModelBase.JwtToken = token;
+                    ViewModelBase.user = logUser;
                     MainWindow Main = new MainWindow();
                     Main.Show();
                     Window window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == this);
@@ -68,17 +87,6 @@ namespace AdministradorDeTareas.ViewModel
             else
             {
                 CustomMessageBox.MostrarCustomMessageBox("Please enter valid credentials");
-            }
-        }
-        public void ExecuteRegister(object obj)
-        { 
-            ViewRegister viewRegister = new ViewRegister();
-            viewRegister.Show();
-            Window window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == this);
-            // cerrar la ventana si se encuentra
-            if (window != null)
-            {
-                window.Close();
             }
         }
 

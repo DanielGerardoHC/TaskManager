@@ -2,18 +2,18 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
                     xmlns:system="clr-namespace:System;assembly=netstandard">
     <!-- Urls de la tabla Task -->
-    <system:String x:Key="GetTasksUrl">https://localhost:44384/api/Tasks?userId=</system:String>
-    <system:String x:Key="GetTasksWhere?">https://localhost:44384/api/Tasks?TaskName=</system:String>
-    <system:String x:Key="DeleteTask">https://localhost:44384/api/Tasks/</system:String>
-    <system:String x:Key="PostTask">https://localhost:44384/api/Tasks</system:String>
-    <system:String x:Key="GetEspecificTask">https:localhost:44384/api/Tasks/</system:String>
-    <system:String x:Key="PutTask">https://localhost:44384/api/Tasks/</system:String>
+    <system:String x:Key="GetTasks">https://localhost:7040/TM/Tasks</system:String>
+    <system:String x:Key="GetTasksWhere">https://localhost:7040/TM/Tasks/Title=</system:String>
+    <system:String x:Key="DeleteTask">https://localhost:7040/TM/Tasks/</system:String>
+    <system:String x:Key="PostTask">https://localhost:7040/TM/Tasks</system:String>
+    <system:String x:Key="GetSpecificTask">https://localhost:7040/TM/Tasks/</system:String>
+    <system:String x:Key="PutTask">https://localhost:7040/TM/Tasks/</system:String>
 
     <!-- Urls de la tabla Usuarios -->
-    <system:String x:Key="GetUsersUrl">https://localhost:44384/api/Users</system:String>
-    <system:String x:Key="DeleteUser">https://localhost:44384/api/Users/</system:String>
-    <system:String x:Key="PostUser">https://localhost:44384/api/Users</system:String>
-    <system:String x:Key="GetEspecificUser">https://localhost:44384/api/Users/</system:String>
-    <system:String x:Key="PutUser">https://localhost:44384/api/Users/</system:String>
+    <system:String x:Key="GetUser">https://localhost:7040/TM/Users</system:String>
+    <system:String x:Key="DeleteUser">https://localhost:7040/TM/Users/</system:String>
+    <system:String x:Key="PostUser">https://localhost:7040/TM/Users</system:String>
+    <system:String x:Key="PutUser">https://localhost:7040/TM/Users/</system:String>
+    <system:String x:Key="AuthUser">https://localhost:7040/TM/Users/auth</system:String>
 
 </ResourceDictionary>

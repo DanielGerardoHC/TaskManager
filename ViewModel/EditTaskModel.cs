@@ -83,7 +83,7 @@ namespace AdministradorDeTareas.ViewModel
             SelectedTask.StatusID++;
             SelectedTask.Priority.PriorityID = SelectedTask.PriorityID;
             SelectedTask.TaskStatus.StatusID = SelectedTask.StatusID;
-            if (taskModelDAO.Put((int)SelectedTask.TaskID,SelectedTask))
+            if (taskModelDAO.Put(SelectedTask, ViewModelBase.JwtToken))
             {
                 TaskEdited.Invoke();
                 // buscamos la ventana actual

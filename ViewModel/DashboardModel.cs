@@ -81,7 +81,7 @@ namespace AdministradorDeTareas.ViewModel
         {
             try
             {
-                TasksList = await Task.Run(() => taskModelDAO.GetAll((int)ViewModelBase.user.UserID));
+                TasksList = await Task.Run(() => taskModelDAO.GetAll(ViewModelBase.JwtToken));
                 if (TasksList != null)
                 {
                     CreatePieCharts();
@@ -90,8 +90,7 @@ namespace AdministradorDeTareas.ViewModel
             }
             catch (Exception ex)
             {
-                string errorMessage = $"Error: Operation could not be completed. message: {ex.Message}";
-                CustomMessageBox.MostrarCustomMessageBox(errorMessage);
+                CustomMessageBox.MostrarCustomMessageBox($"Error in dashboard. Operation could not be completed. message: {ex.Message}");
             }
         }
         private void CreatePieCharts()
@@ -124,16 +123,23 @@ namespace AdministradorDeTareas.ViewModel
             }
         }
         private void ShowTasksInfo()
-        { 
-            // filtramos las tareas que tengan un estado pendiente
-            var PendingTasks_aux = TasksList.Where(x => x.TaskStatus.StatusName == "Pending" ).Reverse();
-            var HighPriorityTasks_aux = TasksList.Where(x => x.Priority != null).Where(x => x.Priority.PriorityStatus == "High" ).Reverse();
-            var LasTaskAdded_aux = TasksList.ToList();
-            LasTaskAdded_aux.Reverse();
-            // usaremos unicamente los primeros 3 registros
-            HighPrirityTasks = HighPriorityTasks_aux.Take(3).ToList();
-            LastTaskAdded = LasTaskAdded_aux.Take(3).ToList();
-            PendingTasks = PendingTasks_aux.Take(3).ToList(); 
+        {
+            try
+            {
+                // filtramos las tareas que tengan un estado pendiente
+                var PendingTasks_aux = TasksList.Where(x => x.StatusID == 1).Reverse().ToList();
+                var HighPriorityTasks_aux = TasksList.Where(x => x.PriorityID == 3).Reverse().ToList();
+                var LasTaskAdded_aux = TasksList.ToList();
+                LasTaskAdded_aux.Reverse();
+                // usaremos unicamente los primeros 3 registros
+                HighPrirityTasks = HighPriorityTasks_aux.Take(3).ToList();
+                LastTaskAdded = LasTaskAdded_aux.Take(3).ToList();
+                PendingTasks = PendingTasks_aux.Take(3).ToList();
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox.MostrarCustomMessageBox($"Error in dashboard. Operation could not be completed. message: {ex.Message}");
+            }
         }
         
     }

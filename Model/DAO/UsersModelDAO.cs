@@ -6,16 +6,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
 namespace AdministradorDeTareas.Model.DAO
 {
-    public class UsersModelDAO : ITaskManagerServiceDAO<UsersModel>
+    public class UsersModelDAO : ITaskManagerServiceDAO<UsersModel> 
     {
         public static readonly HttpClient client = new HttpClient();
-        public bool Delete(int id)
+        public bool Delete(int id, string token)
         {
             string apiUrl = $"https://localhost:44384/api/Users/{id}";
             try
@@ -44,16 +46,17 @@ namespace AdministradorDeTareas.Model.DAO
                 return false;
             }
         }
-        public List<UsersModel> GetAll(int userID)
+        public List<UsersModel> GetAll(string token)
         {
             throw new NotImplementedException();
         }
-        public UsersModel GetEspecificObject(int id, int userID)
+        public UsersModel GetSpecificObject(int id, string token)
         {
             try
             {
                 UsersModel user;
-                string apiUrl = (string)Application.Current.FindResource("GetEspecificUser")+userID; 
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                string apiUrl = (string)Application.Current.FindResource("GetUser"); 
                 HttpResponseMessage response =  client.GetAsync(apiUrl).Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -77,15 +80,16 @@ namespace AdministradorDeTareas.Model.DAO
                 return null;
             }
         }
-
-        public List<UsersModel> GetWhere(string userName, int userID)
+        public List<UsersModel> GetWhere(string userName, string token)
         {
             throw new NotImplementedException();
         }
-        public bool Post(UsersModel user)
+        public bool Post(UsersModel user, string token)
         {
             try
             {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 // Serializamos al usuario en json
                 string jsonUser = JsonConvert.SerializeObject(user);
                 // Configure the HTTP POST request with the JSON content
@@ -115,13 +119,14 @@ namespace AdministradorDeTareas.Model.DAO
                 return false;
             }
         }
-        public bool Put(int id , UsersModel user)
+        public bool Put(UsersModel user, string token)
         {
             try
             {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 string jsonPrioritie = JsonConvert.SerializeObject(user);
                 // Metodo Put que evalua las credenciales del usuario y devuelve tru si son correctas
-                string urlApi = (string)Application.Current.FindResource("PutUser")+user.UserID;
+                string urlApi = (string)Application.Current.FindResource("PutUser");
                 // configurar la solicitud HTTP put con el contenido JSON
                 HttpResponseMessage response = client.PutAsync(urlApi, new StringContent(jsonPrioritie, Encoding.UTF8, "application/json")).Result;
                 // verificar si la solicitud fue exitosa
@@ -148,28 +153,31 @@ namespace AdministradorDeTareas.Model.DAO
                 return false;
             }
         }
-        public UsersModel Put(UsersModel user)
+        public string Put(UsersModel user)
         {
-            UsersModel? resultUser = null;
             try
             {              
                 string jsonPrioritie = JsonConvert.SerializeObject(user);
-                string urlApi = (string)Application.Current.FindResource("PutUser");
+
+                string urlApi = "https://localhost:7040/TM/Users/auth";
                 // configurar la solicitud HTTP put con el contenido JSON
-                HttpResponseMessage response = client.PutAsync(urlApi, new StringContent(jsonPrioritie, Encoding.UTF8, "application/json")).Result;
+                HttpResponseMessage response = client.PostAsync(urlApi, new StringContent(jsonPrioritie, Encoding.UTF8, "application/json")).Result;
                 // verificar si la solicitud fue exitosa
                 if (response.IsSuccessStatusCode)
                 {
-                    string json = response.Content.ReadAsStringAsync().Result;
-                    resultUser = JsonConvert.DeserializeObject<UsersModel>(json);
-                    return resultUser;
+                    string jsonResponse = response.Content.ReadAsStringAsync().Result;
+
+                    // Deserializa la respuesta JSON para obtener el token
+                    var tokenResponse = JsonConvert.DeserializeObject<dynamic>(jsonResponse);
+                    string token = tokenResponse.token;
+                    return token;
                 }
                 else
                 {
                     string Message = $"The Password or Username are incorrect: {response.StatusCode}";
                     CustomMessageBox customMessageBox = new CustomMessageBox(Message);
                     customMessageBox.ShowDialog();
-                    return resultUser;
+                    return null;
                 }
             }
             catch (Exception ex)
@@ -177,7 +185,7 @@ namespace AdministradorDeTareas.Model.DAO
                 string Message = $"Error: Operation could not be completed. Cod: {ex.Message}";
                 CustomMessageBox customMessageBox = new CustomMessageBox(Message);
                 customMessageBox.ShowDialog();
-                return resultUser;
+                return null;
             }
         }
     }

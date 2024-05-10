@@ -10,7 +10,7 @@
         Title="CustomMessagebox"
         WindowStyle="None"
         ResizeMode="NoResize"
-        Height="120" Width="300"
+        Height="140" Width="350"
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="True"
         Background="Transparent"

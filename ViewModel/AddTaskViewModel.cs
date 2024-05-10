@@ -75,7 +75,7 @@ namespace AdministradorDeTareas.ViewModel
             newTask.Title = Title;
             newTask.Description = Description;
             newTask.DueDate = DueDate;
-            newTask.UserID = (int)ViewModelBase.user.UserID;
+            newTask.UserID = (int)ViewModelBase.user.UserId;
             newTask.TaskID = null;
             newTask.Priority = null;
             newTask.TaskStatus = null;
@@ -83,7 +83,7 @@ namespace AdministradorDeTareas.ViewModel
 
             // llamamos al metodo de la clase DAO
 
-            if (taskModelDao.Post(newTask))
+            if (taskModelDao.Post(newTask, ViewModelBase.JwtToken))
             {
                 TaskAdded?.Invoke();
                 // buscamos la ventana actual

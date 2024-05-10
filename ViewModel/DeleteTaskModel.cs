@@ -42,7 +42,7 @@ namespace AdministradorDeTareas.ViewModel
         public async void DeleteTaskAsync()
         {
             int taskID = (int)SelectedTask.TaskID;
-            if (taskModelDAO.Delete(taskID))
+            if (taskModelDAO.Delete(taskID, ViewModelBase.JwtToken))
             {
                 TaskDeleted?.Invoke();
                 // buscamos la ventana actual
@@ -53,7 +53,7 @@ namespace AdministradorDeTareas.ViewModel
                     window.Close();
                 }
             }
-            TasksList = taskModelDAO.GetAll(1);
+            TasksList = taskModelDAO.GetAll(ViewModelBase.JwtToken);
         }
     }
 }
