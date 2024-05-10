@@ -15,7 +15,7 @@
         AllowsTransparency="True"
         Background="Transparent">
     <Window.DataContext>
-        <viewModel:DeleteTaskModel/>
+        <viewModel:ViewModelDeleteTask/>
     </Window.DataContext>
     <Border CornerRadius="10">
         <Border.Background>

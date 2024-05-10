@@ -18,14 +18,14 @@ using AdministradorDeTareas.ViewModel;
 namespace AdministradorDeTareas
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ViewMainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ViewMainWindow : Window
     {
-        public MainWindow()
+        public ViewMainWindow()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
+            DataContext = new ViewModelMain();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
         }
 

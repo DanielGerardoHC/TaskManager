@@ -79,7 +79,7 @@ namespace AdministradorDeTareas.Model.DAO
         public bool Delete(int id, string token)
         {
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            string apiUrl = (string)Application.Current.FindResource("DeleteTask")+id;
+            string apiUrl = (string)Application.Current.FindResource("ViewModelDeleteTask")+id;
             try
             {
                 HttpResponseMessage response = client.DeleteAsync(apiUrl).Result;

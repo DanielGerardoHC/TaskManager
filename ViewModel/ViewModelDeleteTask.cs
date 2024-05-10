@@ -13,7 +13,7 @@ using System.Windows.Input;
 
 namespace AdministradorDeTareas.ViewModel
 {
-    public class DeleteTaskModel : EditActionsModel
+    public class ViewModelDeleteTask : ViewModelEditActions
     {
         private static readonly TaskModelDAO taskModelDAO = new TaskModelDAO();
         public delegate void TaskDeletedEventHandler();
@@ -29,7 +29,7 @@ namespace AdministradorDeTareas.ViewModel
             }
         }
         public ICommand DeleteTask { get; }
-        public DeleteTaskModel()
+        public ViewModelDeleteTask()
         {
             DeleteTask = new ViewModelCommand(ExecuteDeleteTask);
         }

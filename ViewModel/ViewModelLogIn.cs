@@ -7,7 +7,7 @@ using Microsoft.VisualBasic.ApplicationServices;
 
 namespace AdministradorDeTareas.ViewModel
 {
-    public class LoginViewModel : ViewModelBase
+    public class ViewModelLogIn : ViewModelBase
     {
         UsersModelDAO UserDAO = new UsersModelDAO();
         private string _password;
@@ -32,7 +32,7 @@ namespace AdministradorDeTareas.ViewModel
         }
         public ICommand LoginCommand { get; }
         public ICommand RegisterCommand { get; }
-        public LoginViewModel()
+        public ViewModelLogIn()
         {
             LoginCommand = new ViewModelCommand(ExecuteLogin);
             RegisterCommand = new ViewModelCommand(ExecuteRegister);
@@ -74,7 +74,7 @@ namespace AdministradorDeTareas.ViewModel
                     UsersModel logUser = UserDAO.GetSpecificObject(0,token);
                     ViewModelBase.JwtToken = token;
                     ViewModelBase.user = logUser;
-                    MainWindow Main = new MainWindow();
+                    ViewMainWindow Main = new ViewMainWindow();
                     Main.Show();
                     Window window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == this);
                     // cerrar la ventana si se encuentra y si la tarea se modifico con exito

@@ -16,7 +16,7 @@
         AllowsTransparency="True"
         Background="Transparent">
     <Window.DataContext>
-        <viewModel:EditTaskModel/>
+        <viewModel:ViewViewModelEditTask/>
     </Window.DataContext>
     <Border CornerRadius="20">
         <Border.Background>

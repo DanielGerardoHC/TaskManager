@@ -11,7 +11,7 @@
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              d:DesignHeight="536.05" d:DesignWidth="1200">
     <UserControl.DataContext>
-        <viewModel:DashboardModel/>
+        <viewModel:ViewModelDashBoard/>
     </UserControl.DataContext>
     
     <ScrollViewer HorizontalScrollBarVisibility="Disabled"  VerticalScrollBarVisibility="Auto">
@@ -75,7 +75,6 @@
                         Background="Transparent" 
                         d:ItemsSource="{d:SampleData ItemCount=3}"
                         IsHitTestVisible="False">
-                        <!--Este atributo me permite eliminar la opcion de selection mode-->
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Vertical">
@@ -138,7 +137,6 @@
                         Background="Transparent" 
                         d:ItemsSource="{d:SampleData ItemCount=3}"
                         IsHitTestVisible="False">
-                        <!--Este atributo me permite eliminar la opcion de selection mode-->
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Vertical">
@@ -182,7 +180,6 @@
                         Background="Transparent" 
                         d:ItemsSource="{d:SampleData ItemCount=3}"
                         IsHitTestVisible="False">
-                        <!--Este atributo me permite eliminar la opcion de selection mode-->
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Vertical">

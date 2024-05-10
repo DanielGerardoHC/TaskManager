@@ -26,7 +26,7 @@ namespace AdministradorDeTareas.View
         {
             InitializeComponent();
             this.SelectedTask = Task;
-            ((DeleteTaskModel)DataContext).SelectedTask = Task;
+            ((ViewModelDeleteTask)DataContext).SelectedTask = Task;
         }
         private void Close_Window(object sender, RoutedEventArgs e)
         {

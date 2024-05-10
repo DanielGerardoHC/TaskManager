@@ -18,7 +18,7 @@ using static System.Net.WebRequestMethods;
 
 namespace AdministradorDeTareas.ViewModel
 {
-    public class EditActionsModel : ViewModelBase
+    public class ViewModelEditActions : ViewModelBase
     {
         #region Atributos
         private static TaskModelDAO taskModelDAO = new TaskModelDAO();
@@ -61,7 +61,7 @@ namespace AdministradorDeTareas.ViewModel
 
         }
         #endregion
-        public EditActionsModel()
+        public ViewModelEditActions()
         {
             // inicializamos todos los comandos que usaremos
             ShowAddTask = new ViewModelCommand(ExecuteShowAddTask);
@@ -86,12 +86,12 @@ namespace AdministradorDeTareas.ViewModel
         {
             // Creamos una instancia de la vista viewAddTask
             ViewAddTask viewAddTask = new ViewAddTask();
-            AddTaskViewModel addTaskModel = viewAddTask.DataContext as AddTaskViewModel;
-            if (addTaskModel != null)
+            ViewModelAddTask viewModelAddTask = viewAddTask.DataContext as ViewModelAddTask;
+            if (viewModelAddTask != null)
             {
                 // enviamos el metodo RechargeTaskList al delegado del viewModel de
                 // la vista viewAddTask
-                addTaskModel.TaskAdded += RechargeTaskList;
+                viewModelAddTask.TaskAdded += RechargeTaskList;
                 viewAddTask.ShowDialog();
             }
         }
@@ -104,10 +104,10 @@ namespace AdministradorDeTareas.ViewModel
             if (SelectedTask != null)
             {
                 ViewEditTask viewEditTask = new ViewEditTask(SelectedTask);
-                EditTaskModel editTaskModel = viewEditTask.DataContext as EditTaskModel;
-                if (editTaskModel != null)
+                ViewViewModelEditTask viewViewModelEditTask = viewEditTask.DataContext as ViewViewModelEditTask;
+                if (viewViewModelEditTask != null)
                 {
-                    editTaskModel.TaskEdited += RechargeTaskList;
+                    viewViewModelEditTask.TaskEdited += RechargeTaskList;
                     viewEditTask.ShowDialog();
                 }
             }
@@ -123,11 +123,11 @@ namespace AdministradorDeTareas.ViewModel
             {
                 ViewDeleteTask viewDeleteTask = new ViewDeleteTask(SelectedTask);
                 // Asignacion del viewModel como contexto de datos para la vista ViewDeleteTask
-                DeleteTaskModel deleteTaskModel = viewDeleteTask.DataContext as DeleteTaskModel;
-                if (deleteTaskModel != null)
+                ViewModelDeleteTask viewModelDeleteTask = viewDeleteTask.DataContext as ViewModelDeleteTask;
+                if (viewModelDeleteTask != null)
                 {
                     // asignacion del metodo RechargeTaskList al delegado de la VistaModelo
-                    deleteTaskModel.TaskDeleted += RechargeTaskList;
+                    viewModelDeleteTask.TaskDeleted += RechargeTaskList;
                     viewDeleteTask.ShowDialog();
                 }
             }

@@ -35,9 +35,6 @@
     <Resource Include="Images\Checking.png" />
     <Resource Include="Images\fondo.jpg" />
     <Resource Include="Images\Icon.png" />
-    <Resource Include="Images\Key.png" />
-    <Resource Include="Images\Menu-Icon.jpg" />
-    <Resource Include="Images\User.png" />
   </ItemGroup>
 
 </Project>

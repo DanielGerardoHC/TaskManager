@@ -76,7 +76,7 @@ namespace AdministradorDeTareas.ViewModel
         }
         public void ReturnLoginPage()
         {
-            LoginView loginView = new LoginView();
+            ViewLogin loginView = new ViewLogin();
             loginView.Show();
             Window window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == this);
             // cerrar la ventana si se encuentra
@@ -102,7 +102,7 @@ namespace AdministradorDeTareas.ViewModel
                         if (usersModelDAO.Post(newUser, ViewModelBase.JwtToken))
                         {
                             // regresamos al usuario a la vista del log in
-                            LoginView loginView = new LoginView();
+                            ViewLogin loginView = new ViewLogin();
                             loginView.Show();
                            
                             Window window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == this);

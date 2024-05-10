@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace AdministradorDeTareas.View
 {
     /// <summary>
-    /// Lógica de interacción para ViewOptions.xaml
+    /// Lógica de interacción para ViewUserAccount.xaml
     /// </summary>
-    public partial class ViewOptions : UserControl
+    public partial class ViewUserAccount : UserControl
     {
-        public ViewOptions()
+        public ViewUserAccount()
         {
             InitializeComponent();
         }

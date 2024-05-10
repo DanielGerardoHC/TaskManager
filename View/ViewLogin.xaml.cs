@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace AdministradorDeTareas.View
 {
     /// <summary>
-    /// Lógica de interacción para LoginView.xaml
+    /// Lógica de interacción para ViewLogin.xaml
     /// </summary>
-    public partial class LoginView : Window
+    public partial class ViewLogin : Window
     {
-        public LoginView()
+        public ViewLogin()
         {
             InitializeComponent();
         }
@@ -44,7 +44,7 @@ namespace AdministradorDeTareas.View
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {  
             
-            MainWindow Main = new MainWindow();
+            ViewMainWindow Main = new ViewMainWindow();
             Main.Show();
             this.Close();
         }

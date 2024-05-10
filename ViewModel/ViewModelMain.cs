@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace AdministradorDeTareas.ViewModel
 {
-    public class MainViewModel : ViewModelBase
+    public class ViewModelMain : ViewModelBase
     {
         private ViewModelBase _currentChildView;
         public ICommand ShowEditActionsCommand { get; }
@@ -31,7 +31,7 @@ namespace AdministradorDeTareas.ViewModel
             }
         }
 
-        public MainViewModel()
+        public ViewModelMain()
         {
             //comands
             ShowViewOptionsCommand = new ViewModelCommand(ExecuteShowViewOptionsCommand);
@@ -54,7 +54,7 @@ namespace AdministradorDeTareas.ViewModel
         }
         private void ExecuteShowEditActionsCommand(object obj)
         {
-            CurrentChildView = new EditActionsModel();
+            CurrentChildView = new ViewModelEditActions();
         }
         private void ExecuteShowViewOptionsCommand(object obj)
         {
@@ -62,7 +62,7 @@ namespace AdministradorDeTareas.ViewModel
         }
         private void ExecuteShowTaskManagmentCommand(object obj)
         {
-            CurrentChildView = new DashboardModel();
+            CurrentChildView = new ViewModelDashBoard();
         }
 
     }

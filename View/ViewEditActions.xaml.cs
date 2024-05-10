@@ -17,11 +17,11 @@ using System.Windows.Shapes;
 namespace AdministradorDeTareas.View
 {
     /// <summary>
-    /// Lógica de interacción para EditActions.xaml
+    /// Lógica de interacción para ViewEditActions.xaml
     /// </summary>
-    public partial class EditActions : UserControl
+    public partial class ViewEditActions : UserControl
     {
-        public EditActions()
+        public ViewEditActions()
         {
             InitializeComponent();
            

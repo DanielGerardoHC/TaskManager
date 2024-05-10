@@ -1,4 +1,4 @@
-﻿using AdministradorDeTareas.Model;
+﻿ using AdministradorDeTareas.Model;
 using AdministradorDeTareas.Model.DAO;
 using AdministradorDeTareas.View;
 using Newtonsoft.Json;
@@ -6,24 +6,34 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Security.Policy;
-using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+
 namespace AdministradorDeTareas.ViewModel
 {
-    public class AddTaskViewModel : EditActionsModel
+    public class ViewViewModelEditTask : ViewModelEditActions
     {
-        private static readonly TaskModelDAO taskModelDao = new TaskModelDAO();
+        private TaskModelDAO taskModelDAO = new TaskModelDAO();
+        public delegate void TaskEditedEventHandler();
+        public event TaskEditedEventHandler TaskEdited;
         private int? _prioritySelect;
         private string? _description;
         private string? _title;
         private DateTime? _dueDate;
-
-        public delegate void TaskAddedEventHandler();
-        public event TaskAddedEventHandler TaskAdded;
+        private TaskModel _selectedTask;
+        public new TaskModel  SelectedTask
+        {
+            get { return _selectedTask;  }
+            set
+            {
+                _selectedTask = value;
+                _selectedTask.PriorityID = value.PriorityID - 1;
+                _selectedTask.StatusID = value.StatusID - 1;
+                OnPropertyChanged(nameof(SelectedTask));
+            }
+        }
         public int? PrioritySelect
         {
             get { return _prioritySelect; }
@@ -62,30 +72,20 @@ namespace AdministradorDeTareas.ViewModel
             }
         }
         public ICommand CreateTask { get; }
-        public AddTaskViewModel()
+        public ViewViewModelEditTask()
         {
-            CreateTask = new ViewModelCommand(ExecuteCreateTask);
+            CreateTask = new ViewModelCommand(ExecuteEditTask);
         }
-        // Método para agregar una nueva tarea y disparar el evento TaskAdded
-        private void AddTask()
+        private void ExecuteEditTask(object obj)
         {
-            TaskModel newTask = new TaskModel();
-            newTask.StatusID = 1;
-            newTask.PriorityID = (int)(PrioritySelect + 1);
-            newTask.Title = Title;
-            newTask.Description = Description;
-            newTask.DueDate = DueDate;
-            newTask.UserID = (int)ViewModelBase.user.UserId;
-            newTask.TaskID = null;
-            newTask.Priority = null;
-            newTask.TaskStatus = null;
-            newTask.Users = null;
-
-            // llamamos al metodo de la clase DAO
-
-            if (taskModelDao.Post(newTask, ViewModelBase.JwtToken))
+            // llamamos al metodo que ejecutara el verbo put 
+            SelectedTask.PriorityID++;
+            SelectedTask.StatusID++;
+            SelectedTask.Priority.PriorityID = SelectedTask.PriorityID;
+            SelectedTask.TaskStatus.StatusID = SelectedTask.StatusID;
+            if (taskModelDAO.Put(SelectedTask, ViewModelBase.JwtToken))
             {
-                TaskAdded?.Invoke();
+                TaskEdited.Invoke();
                 // buscamos la ventana actual
                 Window window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == this);
                 // cerrar la ventana si se encuentra y si la tarea se modifico con exito
@@ -93,11 +93,9 @@ namespace AdministradorDeTareas.ViewModel
                 {
                     window.Close();
                 }
-            }          
-        }
-        private void ExecuteCreateTask(object obj)
-        {
-            AddTask();
+            }
+
         }
     }
+
 }

@@ -22,10 +22,10 @@ using AdministradorDeTareas.View;
 
 namespace AdministradorDeTareas.ViewModel
 {
-    public class DashboardModel : ViewModelBase
+    public class ViewModelDashBoard : ViewModelBase
     {
-        private static readonly HttpClient client = new HttpClient();
-        private TaskModelDAO  taskModelDAO = new TaskModelDAO();
+        #region Campos
+        private readonly TaskModelDAO _taskModelDao = new TaskModelDAO();
         private List<TaskModel>? _tasks;
         private List<TaskModel>? _pendingTasks;
         private List<TaskModel>? _highPriorityTasks;
@@ -48,13 +48,13 @@ namespace AdministradorDeTareas.ViewModel
                 OnPropertyChanged(nameof(PendingTasks));
             }
         }
-        public List<TaskModel> HighPrirityTasks
+        public List<TaskModel> HighPriorityTasks
         {
             get { return _highPriorityTasks; }
             set
             {
                 _highPriorityTasks = value;
-                OnPropertyChanged(nameof(HighPrirityTasks));
+                OnPropertyChanged(nameof(HighPriorityTasks));
             }
         }
         public List<TaskModel> LastTaskAdded
@@ -68,20 +68,21 @@ namespace AdministradorDeTareas.ViewModel
         }        
         public SeriesCollection SeriesCollection { get; set; }
         public SeriesCollection TaskCompletedCollection { get; set; }
-        public DashboardModel()
+        #endregion campos
+        public ViewModelDashBoard()
         {
             SeriesCollection = new SeriesCollection();
             TaskCompletedCollection = new SeriesCollection();
 
-            // llamamos al metodo que ara la consulta get a la Api
+            // llamada al metodo get al crear una instancia de la VistaModelo
             GetTasksFromApi();
         }
-        // metodo para ejecutar el verbo get de la api y mostrar las estadisticas
-        private async Task GetTasksFromApi()
+        #region Metodos
+        private async Task GetTasksFromApi() // metodo asincrono para obtener las tareas
         {
             try
             {
-                TasksList = await Task.Run(() => taskModelDAO.GetAll(ViewModelBase.JwtToken));
+                TasksList = await Task.Run(() => _taskModelDao.GetAll(ViewModelBase.JwtToken));
                 if (TasksList != null)
                 {
                     CreatePieCharts();
@@ -93,13 +94,13 @@ namespace AdministradorDeTareas.ViewModel
                 CustomMessageBox.MostrarCustomMessageBox($"Error in dashboard. Operation could not be completed. message: {ex.Message}");
             }
         }
-        private void CreatePieCharts()
+        private void CreatePieCharts() // metodo para crear los graficos de pastel
         {
-            //agrupamos las tareas mediante su Priority y por la cantidad de registros
+            //agrupar las tareas mediante su Priority y por la cantidad de registros
             //que posean el mismo ProrityStatus
             var tasksByPriority = TasksList.Where(x => x.Priority != null).GroupBy(t => t.Priority.PriorityStatus)
                               .Select(c => new { PriorityStatus = c.Key, Count = c.Count() });
-            //agrupamos las tareas mediante su TaskStatus y por la cantidad de registros
+            //agrupar las tareas mediante su TaskStatus y por la cantidad de registros
             //que posean el mismo StatusName
             var tasksByStatus = TasksList.Where(x => x.TaskStatus != null).GroupBy(t => t.TaskStatus.StatusName)
                                  .Select(t => new { StatusName = t.Key, Count = t.Count() });
@@ -113,6 +114,7 @@ namespace AdministradorDeTareas.ViewModel
                     Values = new ChartValues<int> { Group.Count }
                 });
             }
+            //agregar los datos al grafico de pastel
             foreach (var Group in tasksByPriority)
             {
                 SeriesCollection.Add(new PieSeries
@@ -126,21 +128,26 @@ namespace AdministradorDeTareas.ViewModel
         {
             try
             {
-                // filtramos las tareas que tengan un estado pendiente
-                var PendingTasks_aux = TasksList.Where(x => x.StatusID == 1).Reverse().ToList();
-                var HighPriorityTasks_aux = TasksList.Where(x => x.PriorityID == 3).Reverse().ToList();
-                var LasTaskAdded_aux = TasksList.ToList();
-                LasTaskAdded_aux.Reverse();
-                // usaremos unicamente los primeros 3 registros
-                HighPrirityTasks = HighPriorityTasks_aux.Take(3).ToList();
-                LastTaskAdded = LasTaskAdded_aux.Take(3).ToList();
-                PendingTasks = PendingTasks_aux.Take(3).ToList();
+                //filtrar las tareas que tengan un estado pendiente
+                var pendingTasks = TasksList.Where(x => x.StatusID == 1).Reverse().ToList();
+                
+                //filtrar  las tareas que tengan prioridad  alta
+                var highPriorityTasks = TasksList.Where(x => x.PriorityID == 3).Reverse().ToList();
+                
+                //ordenar las tareas por las ultimas agregadas 
+                var lasTaskAdded = TasksList.ToList();
+                lasTaskAdded.Reverse();
+                
+                //usar unicamente los primeros 3 registros
+                HighPriorityTasks = highPriorityTasks.Take(3).ToList();
+                LastTaskAdded = lasTaskAdded.Take(3).ToList();
+                PendingTasks = pendingTasks.Take(3).ToList();
             }
             catch (Exception ex)
             {
                 CustomMessageBox.MostrarCustomMessageBox($"Error in dashboard. Operation could not be completed. message: {ex.Message}");
             }
         }
-        
+        #endregion Metodos
     }
 }
