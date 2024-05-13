@@ -112,7 +112,7 @@
                                Margin="0,0,0,0"
                                HorizontalAlignment="Center"
                                Foreground="White"/>
-                    <lvc:PieChart Series="{Binding SeriesCollection}"
+                    <lvc:PieChart Series="{Binding PriorityTasksCollection}"
                       LegendLocation="Bottom"
                                   Width="240"
                                   Height="140"/>
@@ -131,7 +131,7 @@
                                Margin="15,0,0,0"
                                Foreground="White"/>
                     <ListBox
-                        ItemsSource="{Binding Path=HighPrirityTasks}" 
+                        ItemsSource="{Binding Path=HighPriorityTasks}" 
                         SelectionMode="Extended"
                         BorderBrush="Transparent"
                         Background="Transparent" 
@@ -218,7 +218,7 @@
                                FontSize="30"
                                Foreground="White"/>
                     <TextBlock/>
-                    <lvc:PieChart Series="{Binding TaskCompletedCollection}"
+                    <lvc:PieChart Series="{Binding StatusTasksCollection}"
                       LegendLocation="Bottom"
                                   Width="240"
                                   Height="140"/>

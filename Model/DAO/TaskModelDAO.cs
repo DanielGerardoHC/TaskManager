@@ -24,26 +24,30 @@ namespace AdministradorDeTareas.Model.DAO
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 string apiUrl = (string)Application.Current.FindResource("GetTasks");
-                List<TaskModel> tasksList = new List<TaskModel>();
-
                 HttpResponseMessage response = client.GetAsync(apiUrl).Result;
+
                 if (response.IsSuccessStatusCode)
                 {
                     string json = response.Content.ReadAsStringAsync().Result;
-                    tasksList = JsonConvert.DeserializeObject<List<TaskModel>>(json);
+                    List<TaskModel> tasksList = JsonConvert.DeserializeObject<List<TaskModel>>(json);
                     return tasksList;
                 }
                 else
                 {
-                    string errorMessage = $"Error: Operation could not be completed. Cod: {response.StatusCode}";
-                    CustomMessageBox.MostrarCustomMessageBox(errorMessage);
+                    CustomMessageBox.MostrarCustomMessageBox($"Error: Operation could not be completed. Cod: {response.StatusCode}");
                     return null;
                 }
             }
+            
+            catch (TaskCanceledException)
+            {
+                CustomMessageBox.MostrarCustomMessageBox("The request has time out");
+                return null;
+            }
+            
             catch (Exception ex)
             {
-                string errorMessage = $"Error: Operation could not be completed. Message: {ex.Message}";
-                CustomMessageBox.MostrarCustomMessageBox(errorMessage);
+                CustomMessageBox.MostrarCustomMessageBox($"Error: Operation could not be completed. Message: {ex.Message}");
                 return null;
             }
         }
@@ -78,10 +82,12 @@ namespace AdministradorDeTareas.Model.DAO
         }
         public bool Delete(int id, string token)
         {
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            string apiUrl = (string)Application.Current.FindResource("ViewModelDeleteTask")+id;
             try
             {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                
+                string apiUrl = (string)Application.Current.FindResource("DeleteTask")+id;
+                
                 HttpResponseMessage response = client.DeleteAsync(apiUrl).Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -116,21 +122,18 @@ namespace AdministradorDeTareas.Model.DAO
                 // verificar si la solicitud fue exitosa
                 if (response.IsSuccessStatusCode)
                 {
-                    string description = "Task Added Successflly";
-                    CustomMessageBox.MostrarCustomMessageBox(description);
+                    CustomMessageBox.MostrarCustomMessageBox("Task Added Successflly");
                     return true;
                 }
                 else
                 {
-                    string Message = $"Error: Operation could not be completed. (AddTask) Cod: {response.StatusCode}";
-                    CustomMessageBox.MostrarCustomMessageBox(Message);
+                    CustomMessageBox.MostrarCustomMessageBox($"Error: Operation could not be completed. (AddTask) Cod: {response.StatusCode}");
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                string Message = $"Error: Operation could not be completed. 'AddTasks' CodServer: {ex.Message}";
-                CustomMessageBox.MostrarCustomMessageBox(Message);
+                CustomMessageBox.MostrarCustomMessageBox($"Error: Operation could not be completed. 'AddTasks' CodServer: {ex.Message}");
                 return false;
             }
         }
@@ -150,15 +153,13 @@ namespace AdministradorDeTareas.Model.DAO
                 }
                 else
                 {
-                    string errorMessage = $"Error: Operation could not be completed. Code: {response.StatusCode}";
-                    CustomMessageBox.MostrarCustomMessageBox(errorMessage);
+                    CustomMessageBox.MostrarCustomMessageBox($"Error: Operation could not be completed. Code: {response.StatusCode}");
                     return null;
                 }
             }
             catch (Exception ex)
             {
-                string errorMessage = $"Error: Operation could not be completed. Message: {ex.Message}";
-                CustomMessageBox.MostrarCustomMessageBox(errorMessage);
+                CustomMessageBox.MostrarCustomMessageBox($"Error: Operation could not be completed. Message: {ex.Message}");
                 return null;
             }
         }
@@ -174,21 +175,18 @@ namespace AdministradorDeTareas.Model.DAO
                 // verificar si la solicitud fue exitosa
                 if (response.IsSuccessStatusCode)
                 {
-                    string description = "Task Edited Successflly";
-                    CustomMessageBox.MostrarCustomMessageBox(description);
+                    CustomMessageBox.MostrarCustomMessageBox("Task Edited Successflly");
                     return true;
                 }
                 else
                 {
-                    string Message = $"Error: Operation could not be completed. Server Cod: {response.StatusCode}";
-                    CustomMessageBox.MostrarCustomMessageBox(Message);
+                    CustomMessageBox.MostrarCustomMessageBox($"Error: Operation could not be completed. Server Cod: {response.StatusCode}");
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                string Message = $"Error: Operation could not be completed. Cod: {ex.Message}";
-                CustomMessageBox.MostrarCustomMessageBox(Message);
+                CustomMessageBox.MostrarCustomMessageBox($"Error: Operation could not be completed. Cod: {ex.Message}");
                 return false;
             }
         }

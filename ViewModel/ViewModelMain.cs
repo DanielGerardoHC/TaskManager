@@ -15,7 +15,7 @@ namespace AdministradorDeTareas.ViewModel
     {
         private ViewModelBase _currentChildView;
         public ICommand ShowEditActionsCommand { get; }
-        public ICommand ShowTaskManagmentCommand { get; }
+        public ICommand ShowDashBoardCommand { get; }
         public ICommand ShowViewOptionsCommand { get; }
         public ICommand OpenGithubProfile {  get; }
         public ViewModelBase CurrentChildView
@@ -30,16 +30,16 @@ namespace AdministradorDeTareas.ViewModel
                 OnPropertyChanged(nameof(CurrentChildView));
             }
         }
-
+        
         public ViewModelMain()
         {
             //comands
             ShowViewOptionsCommand = new ViewModelCommand(ExecuteShowViewOptionsCommand);
             ShowEditActionsCommand = new ViewModelCommand(ExecuteShowEditActionsCommand);
-            ShowTaskManagmentCommand = new ViewModelCommand(ExecuteShowTaskManagmentCommand);
+            ShowDashBoardCommand = new ViewModelCommand(ExecuteShowDashBoardCommand);
             OpenGithubProfile = new ViewModelCommand(ExecuteOpenGithubProfile);
             //Default 
-            ExecuteShowTaskManagmentCommand(null);
+            ExecuteShowDashBoardCommand(null);
         }
 
         private void ExecuteOpenGithubProfile(object obj)
@@ -60,7 +60,7 @@ namespace AdministradorDeTareas.ViewModel
         {
             CurrentChildView = new ViewModelUserAccount();
         }
-        private void ExecuteShowTaskManagmentCommand(object obj)
+        private void ExecuteShowDashBoardCommand(object? obj)
         {
             CurrentChildView = new ViewModelDashBoard();
         }

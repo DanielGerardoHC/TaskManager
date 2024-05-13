@@ -1,13 +1,6 @@
 ﻿using AdministradorDeTareas.Model;
 using AdministradorDeTareas.Model.DAO;
 using AdministradorDeTareas.View;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -41,19 +34,26 @@ namespace AdministradorDeTareas.ViewModel
         }
         public async void DeleteTaskAsync()
         {
-            int taskID = (int)SelectedTask.TaskID;
-            if (taskModelDAO.Delete(taskID, ViewModelBase.JwtToken))
+            try
             {
-                TaskDeleted?.Invoke();
-                // buscamos la ventana actual
-                Window window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == this);
-                // cerrar la ventana si se encuentra y si la tarea se modifico con exito
-                if (window != null)
+                int taskId = (int)SelectedTask.TaskID;
+                if (await Task.Run(() => taskModelDAO.Delete(taskId, ViewModelBase.JwtToken)))
                 {
-                    window.Close();
+                    TaskDeleted.Invoke();
+                    // buscamos la ventana actual
+                   Window window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == this);
+                    //cerrar la ventana si se encuentra y si la tarea se modifico con exito
+                   if (window != null)
+                   {
+                       window.Close();
+                    }
                 }
+                
             }
-            TasksList = taskModelDAO.GetAll(ViewModelBase.JwtToken);
+            catch (Exception ex)
+            {
+                CustomMessageBox.MostrarCustomMessageBox("Error: Operation Could not be completed : "+ ex.Message);
+            }
         }
     }
 }

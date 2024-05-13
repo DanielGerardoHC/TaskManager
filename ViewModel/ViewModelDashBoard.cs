@@ -1,22 +1,6 @@
 ﻿using AdministradorDeTareas.Model;
-using AdministradorDeTareas.ViewModel;
 using LiveCharts;
 using LiveCharts.Wpf;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Text.Json.Nodes;
-using System.Windows;
-using LiveCharts.Helpers;
 using AdministradorDeTareas.Model.DAO;
 using AdministradorDeTareas.View;
 
@@ -31,8 +15,33 @@ namespace AdministradorDeTareas.ViewModel
         private List<TaskModel>? _highPriorityTasks;
         private List<TaskModel>? _lastTaskAdded;
         public List<TaskModel> TasksList
-        { 
-            get { return _tasks; }
+        {
+            get
+            {
+                if (_tasks == null)
+                {
+                    return
+                    [
+                        new TaskModel
+                        {
+                            PriorityID = 3, StatusID = 1, Title = "Loading",
+                            TaskStatus = new TaskStatusModel { StatusName = "Loading" , StatusID = 1},
+                            Priority = new PriorityModel { PriorityStatus = "Loading", PriorityID = 3},
+                        },
+
+                        new TaskModel
+                        {
+                            PriorityID = 3, StatusID = 1, Title = "Loading",
+                            TaskStatus = new TaskStatusModel { StatusName = "Loading", StatusID = 1},
+                            Priority = new PriorityModel { PriorityStatus = "Loading", PriorityID = 3},
+                        }
+                    ];
+                }
+                else
+                {
+                    return _tasks;
+                }
+            }
             set
             {
                 _tasks = value;
@@ -66,61 +75,67 @@ namespace AdministradorDeTareas.ViewModel
                 OnPropertyChanged(nameof(LastTaskAdded));
             }
         }        
-        public SeriesCollection SeriesCollection { get; set; }
-        public SeriesCollection TaskCompletedCollection { get; set; }
+        public SeriesCollection PriorityTasksCollection { get; set; }
+        public SeriesCollection StatusTasksCollection { get; set; }
         #endregion campos
         public ViewModelDashBoard()
         {
-            SeriesCollection = new SeriesCollection();
-            TaskCompletedCollection = new SeriesCollection();
-
-            // llamada al metodo get al crear una instancia de la VistaModelo
+            PriorityTasksCollection = new SeriesCollection();
+            StatusTasksCollection = new SeriesCollection();
+            
+            // cargar los piechart con una lista de tareas default
+            // mientras se ejecuta la llamada al verbo get de la Api
+            CreatePieCharts(); 
+            ShowTasksInfo();
+            
             GetTasksFromApi();
         }
         #region Metodos
-        private async Task GetTasksFromApi() // metodo asincrono para obtener las tareas
+        private async Task GetTasksFromApi()
         {
+            // llamada al verbo get de la Api
+            TasksList = await Task.Run(() => _taskModelDao.GetAll(ViewModelBase.JwtToken));
+            
+            // limpiar los piechart 
+            PriorityTasksCollection.Clear();
+            StatusTasksCollection.Clear();
             try
-            {
-                TasksList = await Task.Run(() => _taskModelDao.GetAll(ViewModelBase.JwtToken));
-                if (TasksList != null)
-                {
-                    CreatePieCharts();
-                    ShowTasksInfo();
-                }
+            { 
+                CreatePieCharts(); 
+                ShowTasksInfo();
             }
             catch (Exception ex)
             {
                 CustomMessageBox.MostrarCustomMessageBox($"Error in dashboard. Operation could not be completed. message: {ex.Message}");
             }
         }
-        private void CreatePieCharts() // metodo para crear los graficos de pastel
+        private void CreatePieCharts()
         {
-            //agrupar las tareas mediante su Priority y por la cantidad de registros
-            //que posean el mismo ProrityStatus
+            // agrupar por estados de las tareas
+            var tasksByStatus = TasksList.Where(x => x.TaskStatus != null).GroupBy(t => t.TaskStatus.StatusName)
+                .Select(c => new { StatusName = c.Key, Count = c.Count() });
+            
+            // agrupar por prioridad de las tareas
             var tasksByPriority = TasksList.Where(x => x.Priority != null).GroupBy(t => t.Priority.PriorityStatus)
                               .Select(c => new { PriorityStatus = c.Key, Count = c.Count() });
-            //agrupar las tareas mediante su TaskStatus y por la cantidad de registros
-            //que posean el mismo StatusName
-            var tasksByStatus = TasksList.Where(x => x.TaskStatus != null).GroupBy(t => t.TaskStatus.StatusName)
-                                 .Select(t => new { StatusName = t.Key, Count = t.Count() });
 
-            //agregar los datos al gráfico de pastel
-            foreach (var Group in tasksByStatus)
+            // cargar la agrupacion en la collection del piechart
+            foreach (var group in tasksByStatus)
             {
-                TaskCompletedCollection.Add(new PieSeries
+                StatusTasksCollection.Add(new PieSeries
                 {
-                    Title = Group.StatusName,
-                    Values = new ChartValues<int> { Group.Count }
+                    Title = group.StatusName,
+                    Values = new ChartValues<int> { group.Count }
                 });
             }
-            //agregar los datos al grafico de pastel
-            foreach (var Group in tasksByPriority)
+            
+           // cargar la agrupacion en la collection del piechart
+            foreach (var group in tasksByPriority)
             {
-                SeriesCollection.Add(new PieSeries
+                PriorityTasksCollection.Add(new PieSeries
                 {
-                    Title = Group.PriorityStatus,
-                    Values = new ChartValues<int> { Group.Count }
+                    Title = group.PriorityStatus,
+                    Values = new ChartValues<int> { group.Count }
                 });
             }
         }
@@ -145,7 +160,7 @@ namespace AdministradorDeTareas.ViewModel
             }
             catch (Exception ex)
             {
-                CustomMessageBox.MostrarCustomMessageBox($"Error in dashboard. Operation could not be completed. message: {ex.Message}");
+                CustomMessageBox.MostrarCustomMessageBox($"Error in dashboard. Operation could not be completed 'Load info tasks'. message: {ex.Message}");
             }
         }
         #endregion Metodos

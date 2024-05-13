@@ -84,10 +84,9 @@
                         </TextBlock>
                     </StackPanel>
                     <RadioButton Style="{StaticResource menuButton}"                          
-                             Command="{Binding ShowTaskManagmentCommand}"
+                             Command="{Binding ShowDashBoardCommand}"
                              HorizontalAlignment="Center"
                              Width="250"
-                             Name="btnTaskManagment"
                              Checked="RadioButton_Checked">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="HomeAlt" HorizontalAlignment="Left" Foreground="White" Margin="10,0,0,0" Height="30" Width="30"/>
@@ -102,7 +101,6 @@
                              Command="{Binding ShowEditActionsCommand}"
                              HorizontalAlignment="Center"
                              Width="250"
-                             x:Name="btnEditActions"
                             Checked="RadioButton_Checked">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="wandmagicsparkles" HorizontalAlignment="Left" Foreground="White" Margin="10,0,0,0" Height="30" Width="30"/>
@@ -117,7 +115,6 @@
                              Command="{Binding ShowViewOptionsCommand}"
                              HorizontalAlignment="Center"
                              Width="250"
-                             x:Name="btnViewOptions"
                              Checked="RadioButton_Checked">
 
                         <StackPanel Orientation="Horizontal">
@@ -151,7 +148,7 @@
                         <RowDefinition Height="35"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <StackPanel x:Name="pnlControlBar"
+                    <StackPanel 
                                 Grid.Row="0"
                                 Orientation="Horizontal"
                                 FlowDirection="RightToLeft"

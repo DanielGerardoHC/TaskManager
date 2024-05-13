@@ -3,11 +3,92 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              xmlns:local="clr-namespace:AdministradorDeTareas.View"
+             xmlns:viewModel="clr-namespace:AdministradorDeTareas.ViewModel"
              mc:Ignorable="d" 
              Background="#2B1380"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <UserControl.DataContext>
+        <viewModel:ViewModelUserAccount/>
+    </UserControl.DataContext>
+    
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled"  VerticalScrollBarVisibility="Auto">
+        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Border Margin="8" 
+                    CornerRadius="12"
+                    Width="250"
+                    Height="435"
+                    Background="#51d53a"
+                    Style="{StaticResource panelControl}">
+                <StackPanel Orientation="Vertical">
+                    <fa:IconImage
+                        Icon = "UserAlt"
+                        Foreground="White"
+                        Width="200"
+                        Margin="0,30,0,0"
+                        />
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage
+                            Icon="UserLock"
+                            Foreground="White"
+                            Width="30"
+                            Margin="10,25,0,0"/>
+                        <TextBlock
+                            Margin="10,40,0,0"
+                            FontSize="12"
+                            Foreground="White"
+                            Text="{Binding currentUser.UserName }"
+                        />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage
+                            Icon="User"
+                            Foreground="White"
+                            Width="30"
+                            Margin="10,20,0,0"/>
+                        <TextBlock
+                        Margin="10,40,0,0"
+                        FontSize="12"
+                        Foreground="White"
+                        Text="{Binding currentUser.FullName }"
+                        />
+                        
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage
+                            Icon="Envelope"
+                            Foreground="White"
+                            Width="30"
+                            Margin="10,25,0,0"/>
+                        <TextBlock
+                            Margin="10,40,0,0"
+                            FontSize="12"
+                            Foreground="White"
+                            Text="{Binding currentUser.Email }"
+                        />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <Border Margin="8" 
+                    CornerRadius="12"
+                    Width="210"
+                    Height="435"
+                    Background="#9ae342"
+                    Style="{StaticResource panelControl}">
+                <StackPanel Orientation="Vertical">
 
-    </Grid>
+                </StackPanel>
+            </Border>
+            <Border Margin="8" 
+                    CornerRadius="12"
+                    Width="250"
+                    Height="435"
+                    Background="#e6f14b"
+                    Style="{StaticResource panelControl}">
+                <StackPanel>
+                </StackPanel>
+            </Border>
+        </WrapPanel>
+    </ScrollViewer>
 </UserControl>
