@@ -17,12 +17,12 @@ namespace AdministradorDeTareas.Model.DAO
     public class UsersModelDAO : ITaskManagerServiceDAO<UsersModel> 
     {
         public static readonly HttpClient client = new HttpClient();
-        public bool Delete(int id, string token)
+        public async Task<bool> Delete(int id, string token)
         {
             string apiUrl = $"https://localhost:44384/api/Users/{id}";
             try
             {
-                HttpResponseMessage response = client.DeleteAsync(apiUrl).Result;
+                HttpResponseMessage response = await client.DeleteAsync(apiUrl);
                 if (response.IsSuccessStatusCode)
                 {
                     string Message = "User deleted successfully";
@@ -46,18 +46,18 @@ namespace AdministradorDeTareas.Model.DAO
                 return false;
             }
         }
-        public List<UsersModel> GetAll(string token)
+        public async Task<List<UsersModel>> GetAll(string token)
         {
             throw new NotImplementedException();
         }
-        public UsersModel GetSpecificObject(int id, string token)
+        public async Task<UsersModel> GetSpecificObject(int id, string token)
         {
             try
             {
                 UsersModel user;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 string apiUrl = (string)Application.Current.FindResource("GetUser"); 
-                HttpResponseMessage response =  client.GetAsync(apiUrl).Result;
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
                 if (response.IsSuccessStatusCode)
                 {
                     string json =  response.Content.ReadAsStringAsync().Result;
@@ -80,11 +80,11 @@ namespace AdministradorDeTareas.Model.DAO
                 return null;
             }
         }
-        public List<UsersModel> GetWhere(string userName, string token)
+        public async Task<List<UsersModel>> GetWhere(string userName, string token)
         {
             throw new NotImplementedException();
         }
-        public bool Post(UsersModel user, string token)
+        public async Task<bool> Post(UsersModel user, string token)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace AdministradorDeTareas.Model.DAO
                 string jsonUser = JsonConvert.SerializeObject(user);
                 // Configure the HTTP POST request with the JSON content
                 string apiURL = (string)Application.Current.FindResource("PostUser");
-                HttpResponseMessage response = client.PostAsync(apiURL, new StringContent(jsonUser, Encoding.UTF8, "application/json")).Result;
+                HttpResponseMessage response = await client.PostAsync(apiURL, new StringContent(jsonUser, Encoding.UTF8, "application/json"));
                 // Check if the request was successful
                 if (response.IsSuccessStatusCode)
                 {
@@ -119,49 +119,42 @@ namespace AdministradorDeTareas.Model.DAO
                 return false;
             }
         }
-        public bool Put(UsersModel user, string token)
+        public async Task<bool> Put(UsersModel user, string token)
         {
             try
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 string jsonPrioritie = JsonConvert.SerializeObject(user);
-                // Metodo Put que evalua las credenciales del usuario y devuelve tru si son correctas
-                string urlApi = (string)Application.Current.FindResource("PutUser");
-                // configurar la solicitud HTTP put con el contenido JSON
-                HttpResponseMessage response = client.PutAsync(urlApi, new StringContent(jsonPrioritie, Encoding.UTF8, "application/json")).Result;
-                // verificar si la solicitud fue exitosa
+                string urlApi = (string)Application.Current.FindResource("PutUser")+user.UserId;
+                HttpResponseMessage response = await client.PutAsync(urlApi, new StringContent(jsonPrioritie, Encoding.UTF8, "application/json"));
                 if (response.IsSuccessStatusCode)
                 {
-                    string description = "User Modified Successflly";
-                    CustomMessageBox messageBox = new CustomMessageBox(description);
+                    CustomMessageBox messageBox = new CustomMessageBox("User Modified Successflly");
                     messageBox.ShowDialog();
                     return true;
                 }
                 else
                 {
-                    string Message = $"Error: Operation could not be completed. Cod: {response.StatusCode}";
-                    CustomMessageBox customMessageBox = new CustomMessageBox(Message);
+                    CustomMessageBox customMessageBox = new CustomMessageBox($"Error: Operation could not be completed. Cod: {response.StatusCode}");
                     customMessageBox.ShowDialog();
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                string Message = $"Error: Operation could not be completed. Cod: {ex.Message}";
-                CustomMessageBox customMessageBox = new CustomMessageBox(Message);
+                CustomMessageBox customMessageBox = new CustomMessageBox($"Error: Operation could not be completed. Cod: {ex.Message}");
                 customMessageBox.ShowDialog();
                 return false;
             }
         }
-        public string Put(UsersModel user)
+        public async Task<string> Put(UsersModel user)
         {
             try
             {              
                 string jsonPrioritie = JsonConvert.SerializeObject(user);
-
-                string urlApi = "https://localhost:7040/TM/Users/auth";
+                string urlApi = (string)Application.Current.FindResource("AuthUser");
                 // configurar la solicitud HTTP put con el contenido JSON
-                HttpResponseMessage response = client.PostAsync(urlApi, new StringContent(jsonPrioritie, Encoding.UTF8, "application/json")).Result;
+                HttpResponseMessage response = await client.PostAsync(urlApi, new StringContent(jsonPrioritie, Encoding.UTF8, "application/json"));
                 // verificar si la solicitud fue exitosa
                 if (response.IsSuccessStatusCode)
                 {
@@ -174,18 +167,44 @@ namespace AdministradorDeTareas.Model.DAO
                 }
                 else
                 {
-                    string Message = $"The Password or Username are incorrect: {response.StatusCode}";
-                    CustomMessageBox customMessageBox = new CustomMessageBox(Message);
+                    CustomMessageBox customMessageBox = new CustomMessageBox($"The Password or Username are incorrect: {response.StatusCode}");
                     customMessageBox.ShowDialog();
                     return null;
                 }
             }
             catch (Exception ex)
             {
-                string Message = $"Error: Operation could not be completed. Cod: {ex.Message}";
-                CustomMessageBox customMessageBox = new CustomMessageBox(Message);
+                CustomMessageBox customMessageBox = new CustomMessageBox($"Error: Operation could not be completed. Cod: {ex.Message}");
                 customMessageBox.ShowDialog();
                 return null;
+            }
+        }
+        public async Task<bool> ChangePass(object changePassRequest, string token)
+        {
+            try
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                string jsonPrioritie = JsonConvert.SerializeObject(changePassRequest);
+                string urlApi = (string)Application.Current.FindResource("ChangePass");
+                HttpResponseMessage response = await client.PutAsync(urlApi, new StringContent(jsonPrioritie, Encoding.UTF8, "application/json"));
+                if (response.IsSuccessStatusCode)
+                {
+                    CustomMessageBox messageBox = new CustomMessageBox("Password Changed Successfully");
+                    messageBox.ShowDialog();
+                    return true;
+                }
+                else
+                {
+                    CustomMessageBox customMessageBox = new CustomMessageBox($"Error: Operation could not be completed. Cod: {response.StatusCode}");
+                    customMessageBox.ShowDialog();
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox customMessageBox = new CustomMessageBox($"Error: Operation could not be completed. Cod: {ex.Message}");
+                customMessageBox.ShowDialog();
+                return false;
             }
         }
     }

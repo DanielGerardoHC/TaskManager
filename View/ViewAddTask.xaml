@@ -83,7 +83,7 @@
                      x:Name="ComboPriority"                
                      materialDesign:HintAssist.Hint="Select Priority"
                      materialDesign:TextFieldAssist.HasClearButton="True"
-                     SelectedIndex="{Binding PrioritySelect, Mode=TwoWay}"                  
+                     SelectedIndex="{Binding PrioritySelect, Mode=OneWayToSource}"                  
                      Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                     <ComboBoxItem Content="Low"/>
                     <ComboBoxItem Content="Medium"/>
@@ -93,7 +93,7 @@
                   Width="127"
                   Height="36"
                   Margin="20,0,0,10"
-                  SelectedDate="{Binding DueDate, Mode=TwoWay}"
+                  SelectedDate="{Binding DueDate, Mode=OneWayToSource}"
                   materialDesign:HintAssist.Hint="Pick Date"
                   materialDesign:TextFieldAssist.HasClearButton="True"
                   Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />

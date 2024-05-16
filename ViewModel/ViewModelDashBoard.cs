@@ -18,29 +18,7 @@ namespace AdministradorDeTareas.ViewModel
         {
             get
             {
-                if (_tasks == null)
-                {
-                    return
-                    [
-                        new TaskModel
-                        {
-                            PriorityID = 3, StatusID = 1, Title = "Loading",
-                            TaskStatus = new TaskStatusModel { StatusName = "Loading" , StatusID = 1},
-                            Priority = new PriorityModel { PriorityStatus = "Loading", PriorityID = 3},
-                        },
-
-                        new TaskModel
-                        {
-                            PriorityID = 3, StatusID = 1, Title = "Loading",
-                            TaskStatus = new TaskStatusModel { StatusName = "Loading", StatusID = 1},
-                            Priority = new PriorityModel { PriorityStatus = "Loading", PriorityID = 3},
-                        }
-                    ];
-                }
-                else
-                {
-                    return _tasks;
-                }
+                return _tasks;
             }
             set
             {
@@ -85,24 +63,23 @@ namespace AdministradorDeTareas.ViewModel
             
             // cargar los piechart con una lista de tareas default
             // mientras se ejecuta la llamada al verbo get de la Api
-            CreatePieCharts(); 
-            ShowTasksInfo();
             
             GetTasksFromApi();
         }
         #region Metodos
-        private async Task GetTasksFromApi()
+        private async void GetTasksFromApi()
         {
-            // llamada al verbo get de la Api
-            TasksList = await Task.Run(() => _taskModelDao.GetAll(ViewModelBase.JwtToken));
-            
-            // limpiar los piechart 
-            PriorityTasksCollection.Clear();
-            StatusTasksCollection.Clear();
             try
             { 
-                CreatePieCharts(); 
-                ShowTasksInfo();
+               // llamada al verbo get de la Api
+               TasksList = await _taskModelDao.GetAll(ViewModelBase.JwtToken);
+            
+               // limpiar los piechart 
+               if (TasksList != null)
+               {
+                   CreatePieCharts();
+                   ShowTasksInfo();
+               }
             }
             catch (Exception ex)
             {

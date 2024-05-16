@@ -32,28 +32,26 @@ namespace AdministradorDeTareas.ViewModel
         {
             DeleteTaskAsync();
         }
+
         public async void DeleteTaskAsync()
         {
-            try
+            if (SelectedTask.TaskStatus != null)
             {
                 int taskId = (int)SelectedTask.TaskID;
-                if (await Task.Run(() => taskModelDAO.Delete(taskId, ViewModelBase.JwtToken)))
+                if (await taskModelDAO.Delete(taskId, ViewModelBase.JwtToken))
                 {
                     TaskDeleted.Invoke();
                     // buscamos la ventana actual
-                   Window window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == this);
+                    Window window = Application.Current.Windows.OfType<Window>()
+                        .SingleOrDefault(w => w.DataContext == this);
                     //cerrar la ventana si se encuentra y si la tarea se modifico con exito
-                   if (window != null)
-                   {
-                       window.Close();
+                    if (window != null)
+                    {
+                        window.Close();
                     }
                 }
-                
-            }
-            catch (Exception ex)
-            {
-                CustomMessageBox.MostrarCustomMessageBox("Error: Operation Could not be completed : "+ ex.Message);
             }
         }
+        
     }
 }

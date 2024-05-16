@@ -1,12 +1,6 @@
-﻿using AdministradorDeTareas.Model;
-using AdministradorDeTareas.View;
-using FontAwesome.Sharp;
-using System;
-using System.Collections.Generic;
+﻿using AdministradorDeTareas.View;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace AdministradorDeTareas.ViewModel
@@ -18,6 +12,7 @@ namespace AdministradorDeTareas.ViewModel
         public ICommand ShowDashBoardCommand { get; }
         public ICommand ShowViewOptionsCommand { get; }
         public ICommand OpenGithubProfile {  get; }
+        public ICommand LogOutCommand { get; }
         public ViewModelBase CurrentChildView
         {
             get
@@ -38,6 +33,7 @@ namespace AdministradorDeTareas.ViewModel
             ShowEditActionsCommand = new ViewModelCommand(ExecuteShowEditActionsCommand);
             ShowDashBoardCommand = new ViewModelCommand(ExecuteShowDashBoardCommand);
             OpenGithubProfile = new ViewModelCommand(ExecuteOpenGithubProfile);
+            LogOutCommand = new ViewModelCommand(ExecuteLogOutCommand);
             //Default 
             ExecuteShowDashBoardCommand(null);
         }
@@ -63,6 +59,19 @@ namespace AdministradorDeTareas.ViewModel
         private void ExecuteShowDashBoardCommand(object? obj)
         {
             CurrentChildView = new ViewModelDashBoard();
+        }
+        private void ExecuteLogOutCommand(object obj)
+        {
+            ViewModelBase.JwtToken = null;
+            ViewModelBase.SetCurrentUser(null);
+            ViewLogin viewLogin = new ViewLogin();
+            viewLogin.Show();
+            Window window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == this);
+            //cerrar la ventana si se encuentra y si la tarea se modifico con exito
+            if (window != null)
+            {
+                window.Close();
+            }
         }
 
     }

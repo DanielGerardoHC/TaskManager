@@ -15,5 +15,6 @@
     <system:String x:Key="PostUser">https://localhost:7040/TM/Users</system:String>
     <system:String x:Key="PutUser">https://localhost:7040/TM/Users/</system:String>
     <system:String x:Key="AuthUser">https://localhost:7040/TM/Users/auth</system:String>
+    <system:String x:Key="ChangePass">https://localhost:7040/TM/Users/ChangePass</system:String>
 
 </ResourceDictionary>

@@ -65,15 +65,15 @@ namespace AdministradorDeTareas.ViewModel
                 checkUser.Email = "string";
                 checkUser.FullName = "string";
 
-                string token = UserDAO.Put(checkUser);
+                string token = await UserDAO.Put(checkUser);
                 if (token != null)
                 {
                     // si la autentificacion es correcta insertamos al usuario obtenido en el 
                     // campo statico user de ViewModelBase para que asi todos nuestros ViewModel 
                     // tengan acceso a los datos del usuario que ha iniciado sesion
-                    UsersModel logUser = UserDAO.GetSpecificObject(0,token);
+                    UsersModel logUser = await UserDAO.GetSpecificObject(0,token);
                     ViewModelBase.JwtToken = token;
-                    ViewModelBase.user = logUser;
+                    ViewModelBase.SetCurrentUser(logUser);
                     ViewMainWindow Main = new ViewMainWindow();
                     Main.Show();
                     Window window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.DataContext == this);

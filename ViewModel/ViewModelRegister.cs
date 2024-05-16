@@ -85,7 +85,7 @@ namespace AdministradorDeTareas.ViewModel
                 window.Close();
             }
         }
-        public void Register()
+        public async void Register()
         {
             try
             {
@@ -99,7 +99,7 @@ namespace AdministradorDeTareas.ViewModel
                 {
                     if (password.Length >= 6)
                     {
-                        if (usersModelDAO.Post(newUser, ViewModelBase.JwtToken))
+                        if (await usersModelDAO.Post(newUser, ViewModelBase.JwtToken))
                         {
                             // regresamos al usuario a la vista del log in
                             ViewLogin loginView = new ViewLogin();

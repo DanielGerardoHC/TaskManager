@@ -104,10 +104,10 @@ namespace AdministradorDeTareas.ViewModel
             if (SelectedTask != null)
             {
                 ViewEditTask viewEditTask = new ViewEditTask(SelectedTask);
-                ViewViewModelEditTask viewViewModelEditTask = viewEditTask.DataContext as ViewViewModelEditTask;
-                if (viewViewModelEditTask != null)
+                ViewModelEditTask viewModelEditTask = viewEditTask.DataContext as ViewModelEditTask;
+                if (viewModelEditTask != null)
                 {
-                    viewViewModelEditTask.TaskEdited += RechargeTaskList;
+                    viewModelEditTask.TaskEdited += RechargeTaskList;
                     viewEditTask.ShowDialog();
                 }
             }
@@ -140,12 +140,12 @@ namespace AdministradorDeTareas.ViewModel
         {
             if (TxtSearch != null || TxtSearch != "")
             {
-                TasksList = await Task.Run(() => taskModelDAO.GetWhere(TxtSearch, ViewModelBase.JwtToken));
+                TasksList = await taskModelDAO.GetWhere(TxtSearch, ViewModelBase.JwtToken);
             }
         }
         public async Task GetAllTasks()
         {
-            TasksList = await Task.Run(() => taskModelDAO.GetAll(ViewModelBase.JwtToken));
+            TasksList = await taskModelDAO.GetAll(ViewModelBase.JwtToken);
         }
         #endregion
     }

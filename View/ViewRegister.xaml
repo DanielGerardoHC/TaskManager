@@ -13,7 +13,7 @@
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"    
-        Title="RegisterView" Height="540" Width="450">
+        Title="RegisterView" Height="360" Width="730">
     <Window.DataContext>
         <viewModel:ViewModelRegister/>
     </Window.DataContext>
@@ -32,29 +32,70 @@
             </Border.Background>
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="80"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0"
-                            Grid.Column="0"
-                            Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal"
-                                Margin="0,20,0,0">
+                <Grid
+                        Grid.Row="2"
+                        Margin="0,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    
+                    <Button
+                              Width="90"
+                              Margin="0,0,0,5"
+                              Grid.Column="1"
+                              Content="Register!"
+                              Command="{Binding RegisterCommand}"
+                              Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                              ToolTip="Add register"/>
+                    <Button
+                        Width="30"
+                        Height="30"
+                        HorizontalAlignment="Right"
+                        Grid.Column="2"
+                        Margin="0,0,10,10"
+                        Command="{Binding ReturnLoginPageCommand}"
+                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                        ToolTip="Return to log in page"
+                             >
                         <fa:IconImage
+                                Width="20"
+                                Height="20"
+                                Icon="ArrowAltCircleLeft"
+                                Foreground="White"/>
+                    </Button>
+                </Grid>
+                <StackPanel Orientation="Horizontal"
+                                Margin="0,20,0,0"
+                                Grid.Row="0">
+                    <fa:IconImage
                             Icon="PenToSquare"
                             Foreground="White"
                             Height="40"
                             Width="40"
                             Margin="20,0,0,0">
-                        </fa:IconImage>
-                        <TextBlock FontSize="20"
+                    </fa:IconImage>
+                    <TextBlock FontSize="20"
                                    Foreground="White"
                                    FontFamily="Didot"
                                    Margin="20,15,0,0">
                                Register a new user
-                        </TextBlock>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
+                    </TextBlock>
+                </StackPanel>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Row="1"
+                            Grid.Column="0"
+                            Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
                         <fa:IconImage
                             Icon="UserAlt"
                             Foreground="White"
@@ -63,7 +104,7 @@
                             Margin="20,40,0,0">
                         </fa:IconImage>
                         <TextBox
-                            Width="330"
+                            Width="250"
                             Margin="20,40,0,0"
                             Foreground="White"
                             Text="{Binding userName, Mode=TwoWay}"
@@ -89,16 +130,16 @@
                                 Foreground="White"/>
                         </Button>  
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <fa:IconImage
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage
                             Icon="Key"
                             Foreground="White"
                             Height="30"
                             Width="30"
                             Margin="20,60,0,0">
-                        </fa:IconImage>
-                        <TextBox
-                            Width="330"
+                            </fa:IconImage>
+                            <TextBox
+                            Width="250"
                             Margin="20,60,0,0"
                             Foreground="White"
                             Text="{Binding password, Mode=TwoWay}"
@@ -107,19 +148,22 @@
                             materialDesign:HintAssist.Foreground="White"
                             materialDesign:HintAssist.HelperTextFontSize="12"
                             >
-                        </TextBox>
+                            </TextBox>
+                        </StackPanel>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <fa:IconImage
+                    <StackPanel Grid.Column="1"
+                                Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage
                             Icon="EnvelopeSquare"
                             Foreground="White"
                             Height="30"
                             Width="30"
-                            Margin="20,60,0,0">
-                        </fa:IconImage>
-                        <TextBox
-                            Width="330"
-                            Margin="20,60,0,0"
+                            Margin="20,40,0,0">
+                            </fa:IconImage>
+                            <TextBox
+                            Width="250"
+                            Margin="20,40,0,0"
                             Foreground="White"
                             Text="{Binding email, Mode=TwoWay}"
                             materialDesign:HintAssist.IsFloating="True"
@@ -127,18 +171,18 @@
                             materialDesign:HintAssist.Foreground="White"
                             materialDesign:HintAssist.HelperTextFontSize="12"
                             >
-                        </TextBox>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <fa:IconImage
+                            </TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage
                             Icon="UserTag"
                             Foreground="White"
                             Height="30"
                             Width="30"
                             Margin="20,60,0,0">
-                        </fa:IconImage>
-                        <TextBox
-                            Width="330"
+                            </fa:IconImage>
+                            <TextBox
+                            Width="250"
                             Margin="20,60,0,0"
                             Foreground="White"
                             Text="{Binding name, Mode=TwoWay}"
@@ -147,41 +191,10 @@
                             materialDesign:HintAssist.Foreground="White"
                             materialDesign:HintAssist.HelperTextFontSize="12"
                             >
-                        </TextBox>
+                            </TextBox>
+                        </StackPanel>
                     </StackPanel>
-                    <Grid
-                        Grid.Row="1"
-                        Margin="0,50,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Button
-                              Width="90"
-                              Margin="0,20,10,0"
-                              Grid.Column="1"
-                              Content="Register!"
-                              Command="{Binding RegisterCommand}"
-                              Style="{StaticResource MaterialDesignRaisedDarkButton}"
-                              ToolTip="Add register"/>
-                        <Button
-                        Width="30"
-                        Height="30"
-                        Grid.Column="2"
-                        Margin="100,20,20,0"
-                        Command="{Binding ReturnLoginPageCommand}"
-                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
-                        ToolTip="Return to log in page"
-                             >
-                            <fa:IconImage
-                                Width="20"
-                                Height="20"
-                                Icon="ArrowAltCircleLeft"
-                                Foreground="White"/>
-                        </Button>
-                    </Grid>
-                </StackPanel>
+                </Grid>
             </Grid>
         </Border>
     </Border>

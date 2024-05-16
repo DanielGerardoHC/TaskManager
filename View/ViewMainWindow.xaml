@@ -126,19 +126,34 @@
                                        HorizontalAlignment="Center" />
                         </StackPanel>
                     </RadioButton>
-                    <Button
+                    <StackPanel Orientation="Horizontal">
+                        <Button
+                      Width="35"
+                      Height="35"
+                      Margin="16"
+                      HorizontalAlignment="Left"
+                      Command="{Binding LogOutCommand}"
+                      Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}"
+                      ToolTip="Log Out">
+                            <fa:IconImage
+                                Icon="ArrowAltCircleLeft"
+                                Foreground="White"
+                                Width="28"/>
+                        </Button>
+                        <Button
                       Width="35"
                       Height="35"
                       Margin="16"
                       HorizontalAlignment="Left"
                       Command="{Binding OpenGithubProfile}"
                       Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}"
-                      ToolTip="Hi im Daniel please check my profile in GitHub :D">
-                      <materialDesign:PackIcon
+                      ToolTip="Hi im Daniel, check my profile in GitHub :D">
+                            <materialDesign:PackIcon
                            Width="30"
                            Height="30"
                            Kind="Github" />
-                   </Button>
+                        </Button>
+                    </StackPanel>
                 </StackPanel>
             </ScrollViewer>
             <Border Grid.Column="1" Grid.RowSpan="2">

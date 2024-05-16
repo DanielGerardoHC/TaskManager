@@ -53,14 +53,8 @@
             Grid.Column="1"
             Grid.Row="1"
             Margin="10,10,0,0"
+            
             >
-            <Border.Background>
-                <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
-                    <GradientStop Color="#000066" Offset="1"/>
-                    <GradientStop Color="#000066" Offset="1"/>
-                    <GradientStop Color="#000033" Offset="0.6"/>
-                </LinearGradientBrush>
-            </Border.Background>
             <ScrollViewer HorizontalScrollBarVisibility="Auto"  
                       VerticalScrollBarVisibility="Auto"                     
                       CanContentScroll="True"

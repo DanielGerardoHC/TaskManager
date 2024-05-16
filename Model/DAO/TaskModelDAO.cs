@@ -18,13 +18,13 @@ namespace AdministradorDeTareas.Model.DAO
     public class TaskModelDAO : ITaskManagerServiceDAO<TaskModel>
     {
         public static readonly HttpClient client = new HttpClient();
-        public List<TaskModel> GetAll(string token)
+        public async Task<List<TaskModel>> GetAll(string token)
         {
             try
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 string apiUrl = (string)Application.Current.FindResource("GetTasks");
-                HttpResponseMessage response = client.GetAsync(apiUrl).Result;
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -51,14 +51,14 @@ namespace AdministradorDeTareas.Model.DAO
                 return null;
             }
         }
-        public List<TaskModel> GetWhere(string title, string token)
+        public async Task<List<TaskModel>> GetWhere(string title, string token)
         {
             try
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 string apiUrl = (string)Application.Current.FindResource("GetTasksWhere")+title;
                 List<TaskModel> tasksList = new List<TaskModel>();
-                HttpResponseMessage response = client.GetAsync(apiUrl).Result;
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -80,7 +80,7 @@ namespace AdministradorDeTareas.Model.DAO
                 return null;
             }
         }
-        public bool Delete(int id, string token)
+        public async Task<bool> Delete(int id, string token)
         {
             try
             {
@@ -88,7 +88,7 @@ namespace AdministradorDeTareas.Model.DAO
                 
                 string apiUrl = (string)Application.Current.FindResource("DeleteTask")+id;
                 
-                HttpResponseMessage response = client.DeleteAsync(apiUrl).Result;
+                HttpResponseMessage response = await client.DeleteAsync(apiUrl);
                 if (response.IsSuccessStatusCode)
                 {
                     string Message = "Task deleted successfully";
@@ -109,17 +109,14 @@ namespace AdministradorDeTareas.Model.DAO
                 return false;
             }
         }
-        public bool Post(TaskModel task, string token)
+        public async Task<bool> Post(TaskModel task, string token)
         {
             try
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 string JsonTask = JsonConvert.SerializeObject(task);
-                // hacemos referencia al recurso donde se encuentran las Url de la Api
                 string urlApi = (string)Application.Current.FindResource("PostTask");
-                // configurar la solicitud HTTP POST con el contenido JSON
-                HttpResponseMessage response = client.PostAsync(urlApi, new StringContent(JsonTask, Encoding.UTF8, "application/json")).Result;
-                // verificar si la solicitud fue exitosa
+                HttpResponseMessage response = await client.PostAsync(urlApi, new StringContent(JsonTask, Encoding.UTF8, "application/json"));
                 if (response.IsSuccessStatusCode)
                 {
                     CustomMessageBox.MostrarCustomMessageBox("Task Added Successflly");
@@ -137,18 +134,17 @@ namespace AdministradorDeTareas.Model.DAO
                 return false;
             }
         }
-        public TaskModel GetSpecificObject(int id, string token)
+        public async Task<TaskModel> GetSpecificObject(int id, string token)
         {
             try
             {
-                TaskModel task;
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 string apiUrl = (string)Application.Current.FindResource("GetEspecificTask")+id;
-                HttpResponseMessage response = client.GetAsync(apiUrl).Result;
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
                 if (response.IsSuccessStatusCode)
                 {
                     string json = response.Content.ReadAsStringAsync().Result;
-                    task = JsonConvert.DeserializeObject<TaskModel>(json);
+                    TaskModel task = JsonConvert.DeserializeObject<TaskModel>(json);
                     return task;
                 }
                 else
@@ -163,16 +159,14 @@ namespace AdministradorDeTareas.Model.DAO
                 return null;
             }
         }
-        public bool Put(TaskModel task, string token)
+        public async Task<bool> Put(TaskModel task, string token)
         {
             try
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 string urlApi = (string)Application.Current.FindResource("PutTask");
                 string jsonPrioritie = JsonConvert.SerializeObject(task);
-                // configurar la solicitud HTTP Put con el contenido JSON
-                HttpResponseMessage response = client.PutAsync(urlApi, new StringContent(jsonPrioritie, Encoding.UTF8, "application/json")).Result;
-                // verificar si la solicitud fue exitosa
+                HttpResponseMessage response = await client.PutAsync(urlApi, new StringContent(jsonPrioritie, Encoding.UTF8, "application/json"));
                 if (response.IsSuccessStatusCode)
                 {
                     CustomMessageBox.MostrarCustomMessageBox("Task Edited Successflly");

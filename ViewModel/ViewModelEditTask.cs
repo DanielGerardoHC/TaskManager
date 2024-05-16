@@ -13,7 +13,7 @@ using System.Windows.Input;
 
 namespace AdministradorDeTareas.ViewModel
 {
-    public class ViewViewModelEditTask : ViewModelEditActions
+    public class ViewModelEditTask : ViewModelEditActions
     {
         private TaskModelDAO taskModelDAO = new TaskModelDAO();
         public delegate void TaskEditedEventHandler();
@@ -72,18 +72,18 @@ namespace AdministradorDeTareas.ViewModel
             }
         }
         public ICommand CreateTask { get; }
-        public ViewViewModelEditTask()
+        public ViewModelEditTask()
         {
             CreateTask = new ViewModelCommand(ExecuteEditTask);
         }
-        private void ExecuteEditTask(object obj)
+        private async void ExecuteEditTask(object obj)
         {
             // llamamos al metodo que ejecutara el verbo put 
             SelectedTask.PriorityID++;
             SelectedTask.StatusID++;
             SelectedTask.Priority.PriorityID = SelectedTask.PriorityID;
             SelectedTask.TaskStatus.StatusID = SelectedTask.StatusID;
-            if (taskModelDAO.Put(SelectedTask, ViewModelBase.JwtToken))
+            if (await  taskModelDAO.Put(SelectedTask, ViewModelBase.JwtToken))
             {
                 TaskEdited.Invoke();
                 // buscamos la ventana actual

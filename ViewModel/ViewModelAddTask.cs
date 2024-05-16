@@ -70,7 +70,7 @@ namespace AdministradorDeTareas.ViewModel
         }
 
         #region Metodos
-        private void AddTask()
+        private async void AddTask()
         {
             TaskModel newTask = new TaskModel();
             newTask.StatusID = 1; //estado pendiente por default al agregar una nueva tarea
@@ -78,8 +78,8 @@ namespace AdministradorDeTareas.ViewModel
             newTask.Title = Title;
             newTask.Description = Description;
             newTask.DueDate = DueDate;
-            newTask.UserID = (int)ViewModelBase.user.UserId; //id del usuario que ha iniciado sesion
-            if (_taskModelDao.Post(newTask, ViewModelBase.JwtToken))
+            newTask.UserID = (int)ViewModelBase.GetCurrentUser().UserId; //id del usuario que ha iniciado sesion
+            if (await _taskModelDao.Post(newTask, ViewModelBase.JwtToken))
             {
                 //si el metodo post nos devuelve un true se llama al delegado
                 TaskAdded?.Invoke();
