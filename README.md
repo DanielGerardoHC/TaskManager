@@ -1,4 +1,4 @@
-## Task Manager
+# Task Manager
 
 **Descripcion**
 
@@ -26,7 +26,7 @@ Actualizar Usuario: Proporciona la funcionalidad de que los usuario puedan modif
 
 .NET8, C#, WPF, ademas del uso de la biblioteca **Material Design Theme** para un diseño atractivo de la aplicacion
 
-**Estructura del Proyecto**
+# Estructura del Proyecto
 
 Images: Contiene las imagenes utilizadas en la interfaz de usuario
 
@@ -42,7 +42,8 @@ ViewModel: Contiene las clases que manejan la logica de manipulacion y presentac
 
 View: Contiene los archivos XAML de la (UI) para la presentacion eh interaccion de los datos
 
-AppResource: Contiene diccionarios de recursos de estilos de componentes especificos para ser utilizados por las vistas
+AppResource: Contiene diccionarios de recursos de estilos de componentes especificos para ser utilizados por las vistas ademas del diccionario de recursos
+Que contiene las Url de los endpoints de la API
 
 **Requisitos**
 
